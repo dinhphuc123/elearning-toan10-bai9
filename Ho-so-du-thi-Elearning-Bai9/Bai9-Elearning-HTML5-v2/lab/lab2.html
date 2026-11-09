@@ -6,6 +6,7 @@
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="data:," />
     <title>Mô phỏng tương tác Bài 9: Tích của một vectơ với một số</title>
+    <link rel="stylesheet" href="../katex/katex.min.css" />
     <style>
       :root{
         --navy:#0b5394; --navy-dark:#083d6d; --ink:#1b2f42; --muted:#51708c;
@@ -18,7 +19,7 @@
       body{
         margin:0; background:#fff; color:var(--ink);
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
-        font-size:16px; line-height:1.55;
+        font-size:16px; line-height:1.6;
       }
       button, input{ font:inherit; }
       button{ cursor:pointer; }
@@ -77,13 +78,13 @@
 
       /* Data table */
       table.data{ width:100%; border-collapse:collapse; font-size:15.5px; }
-      table.data th, table.data td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
-      table.data th{ font-weight:600; color:var(--muted); width:44%; }
+      table.data th, table.data td{ text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
+      table.data th{ font-weight:600; color:var(--muted); width:48%; }
       table.data td{ font-weight:600; }
       table.data tr:last-child th, table.data tr:last-child td{ border-bottom:none; }
 
       .badge{
-        display:inline-block; padding:5px 12px; border-radius:999px; font-weight:700; font-size:14.5px;
+        display:inline-block; padding:6px 13px; border-radius:999px; font-weight:700; font-size:14.5px;
         background:var(--soft2); color:var(--navy-dark);
       }
       .badge.ok{ background:var(--green-bg); color:var(--green); }
@@ -116,16 +117,9 @@
       }
       .stepper .sv{ min-width:26px; text-align:center; font-weight:800; color:var(--navy-dark); }
 
-      /* Vector + fraction notation (SGK style) */
-      .vec{ position:relative; display:inline-block; padding-top:.24em; font-weight:700; line-height:1.1; }
-      .vec::before{ content:""; position:absolute; top:.03em; left:0; right:3px; border-top:1.7px solid currentColor; }
-      .vec::after{
-        content:""; position:absolute; top:-.015em; right:0;
-        border-left:5.5px solid currentColor; border-top:3.2px solid transparent; border-bottom:3.2px solid transparent;
-      }
-      .frac{ display:inline-flex; flex-direction:column; align-items:stretch; vertical-align:middle; margin:0 .12em; font-size:.76em; line-height:1.12; font-weight:700; }
-      .frac .frac-num{ border-bottom:1.6px solid currentColor; padding:0 .22em; text-align:center; }
-      .frac .frac-den{ padding:0 .22em; text-align:center; }
+      /* KaTeX inline wrapper: never break inside formula */
+      .math-nowrap{ white-space:nowrap; display:inline-block; vertical-align:baseline; }
+      .math-nowrap .katex{ font-size:1.04em; }
       .eq{ font-size:17px; }
 
       /* Quiz */
@@ -162,6 +156,7 @@
   <body>
     <div id="root"></div>
 
+    <script src="../katex/katex.min.js"></script>
     <script src="assets/react.min.js"></script>
     <script src="assets/react-dom.min.js"></script>
     <script>
@@ -175,7 +170,7 @@
         d = d == null ? 2 : d;
         return n.toFixed(d).replace(".", ",").replace("-", MINUS);
       }
-      function fmtT(n) { // trim trailing zeros
+      function fmtT(n) {
         let s = n.toFixed(2);
         if (s.indexOf(".") >= 0) s = s.replace(/0+$/, "").replace(/\.$/, "");
         return s.replace(".", ",").replace("-", MINUS);
@@ -183,31 +178,35 @@
       function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { const t = a % b; a = b; b = t; } return a || 1; }
       function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
 
-      function Vec(props) { return h("span", { className: "vec" }, props.children); }
-      function Frac(props) {
-        return h("span", { className: "frac" },
-          h("span", { className: "frac-num" }, props.n),
-          h("span", { className: "frac-den" }, props.d));
+      function M(tex) {
+        if (window.katex) {
+          return h("span", {
+            className: "math-nowrap",
+            dangerouslySetInnerHTML: { __html: window.katex.renderToString(tex, { throwOnError: false }) }
+          });
+        }
+        return h("span", { className: "math-nowrap" }, tex);
       }
-      // k is a multiple of 0.5 -> render as integer or fraction
+      function Vec(props) {
+        const txt = String(props.children || "");
+        return M(txt.length > 1 ? "\\overrightarrow{" + txt + "}" : "\\vec{" + txt + "}");
+      }
+      function Frac(props) {
+        return M("\\dfrac{" + props.n + "}{" + props.d + "}");
+      }
       function kNode(k) {
         if (Number.isInteger(k)) return String(k).replace("-", MINUS);
-        return h("span", null, k < 0 ? MINUS : null, h(Frac, { n: Math.abs(k * 2), d: 2 }));
+        return M((k < 0 ? "-" : "") + "\\dfrac{" + Math.abs(k * 2) + "}{2}");
       }
-      function kText(k) { // plain text for slider-adjacent HTML
-        if (Number.isInteger(k)) return String(k).replace("-", MINUS);
-        return (k < 0 ? MINUS : "") + Math.abs(k * 2) + "\u2044" + "2";
-      }
-      function kSvg(k) { // prefix text for SVG labels (plain slash only)
+      function kSvg(k) {
         if (Number.isInteger(k)) return String(k).replace("-", MINUS);
         return (k < 0 ? MINUS : "") + Math.abs(k * 2) + "/2";
       }
-      // Vector label drawn in SVG: letter + a real drawn arrow above it (no combining glyphs)
       function svgVecLabel(lx, ly, prefix, letter, color, key) {
         const charW = prefix.length * 10.5, letterW = 12;
         return h("g", { key: key },
           prefix ? h("text", { x: lx, y: ly, fontSize: 19, fontWeight: 700, fill: color }, prefix) : null,
-          h("text", { x: lx + charW, y: ly, fontSize: 19, fontWeight: 700, fill: color }, letter),
+          h("text", { x: lx + charW, y: ly, fontSize: 19, fontWeight: 700, fontStyle: "italic", fill: color }, letter),
           h("line", { x1: lx + charW - 1, y1: ly - 17, x2: lx + charW + letterW, y2: ly - 17, stroke: color, strokeWidth: 1.9 }),
           h("polygon", {
             points: (lx + charW + letterW + 5) + "," + (ly - 17) + " " + (lx + charW + letterW - 1) + "," + (ly - 20.5) + " " + (lx + charW + letterW - 1) + "," + (ly - 13.5),
@@ -222,7 +221,7 @@
       function Lab1() {
         const [a, setA] = useState({ x: 3, y: 2 });
         const [k, setK] = useState(2);
-        const [chal, setChal] = useState(null); // null | 'ok' | 'no'
+        const [chal, setChal] = useState(null);
         const dragRef = useRef(false);
         const svgRef = useRef(null);
 
@@ -235,7 +234,7 @@
         function setK2(v) { setK(v); setChal(null); }
         function trySetA(nx, ny) {
           nx = clamp(nx, -3, 3); ny = clamp(ny, -3, 3);
-          if (nx === 0 && ny === 0) return; // không cho vectơ-không
+          if (nx === 0 && ny === 0) return;
           setA({ x: nx, y: ny });
         }
         function pointerMath(e) {
@@ -264,18 +263,18 @@
         }
 
         const dirNode = k > 0
-          ? h("span", { className: "badge ok" }, "k > 0: k", h(Vec, null, "a"), " cùng hướng với ", h(Vec, null, "a"))
+          ? h("span", { className: "badge ok" }, M("k > 0"), ": ", M("k\\vec{a}"), " cùng hướng với ", M("\\vec{a}"))
           : k < 0
-            ? h("span", { className: "badge warn" }, "k < 0: k", h(Vec, null, "a"), " ngược hướng với ", h(Vec, null, "a"))
-            : h("span", { className: "badge" }, "k = 0: k", h(Vec, null, "a"), " = ", h(Vec, null, "0"), " (vectơ-không)");
+            ? h("span", { className: "badge warn" }, M("k < 0"), ": ", M("k\\vec{a}"), " ngược hướng với ", M("\\vec{a}"))
+            : h("span", { className: "badge" }, M("k = 0"), ": ", M("k\\vec{a} = \\vec{0}"), " (vectơ-không)");
 
         const quickVals = [-2, -1, -0.5, 0, 0.5, 1, 2, 3];
 
         return h("section", { className: "lab", "aria-labelledby": "lab1-title" },
           h("h2", { id: "lab1-title" }, "Lab 1 · Nhân vectơ với một số"),
           h("p", { className: "lab-sub" },
-            "Kéo đầu mút của vectơ ", h(Vec, null, "a"), " trên lưới, rồi thay đổi hệ số k để quan sát vectơ k", h(Vec, null, "a"),
-            ": độ dài thay đổi theo |k|, hướng đổi chiều khi k âm."),
+            "Kéo đầu mút của vectơ ", M("\\vec{a}"), " trên lưới, rồi thay đổi hệ số ", M("k"), " để quan sát vectơ ", M("k\\vec{a}"),
+            ": độ dài thay đổi theo ", M("|k|"), ", hướng đổi chiều khi ", M("k"), " âm."),
           h("div", { className: "lab-grid" },
             h("div", { className: "stage" },
               h("svg", {
@@ -296,24 +295,19 @@
                 h("line", { x1: L1_C, y1: L1_SIZE - 8, x2: L1_C, y2: 8, stroke: "#8fb0cf", strokeWidth: 1.6, markerEnd: "url(#arrAxis)" }),
                 h("text", { x: L1_SIZE - 22, y: L1_C - 10, fontSize: 17, fontStyle: "italic", fill: "#51708c" }, "x"),
                 h("text", { x: L1_C + 10, y: 26, fontSize: 17, fontStyle: "italic", fill: "#51708c" }, "y"),
-                // projections of a
                 h("line", { x1: X(a.x), y1: Y(a.y), x2: X(a.x), y2: L1_C, stroke: "#9db8d2", strokeWidth: 1.2, strokeDasharray: "5 4" }),
                 h("line", { x1: X(a.x), y1: Y(a.y), x2: L1_C, y2: Y(a.y), stroke: "#9db8d2", strokeWidth: 1.2, strokeDasharray: "5 4" }),
-                // vector ka (drawn first, underneath)
                 k !== 0 && h("line", { x1: L1_C, y1: L1_C, x2: X(ka.x), y2: Y(ka.y), stroke: "#c2510a", strokeWidth: 3.4, markerEnd: "url(#arrK)" }),
                 k === 0 && h("circle", { cx: L1_C, cy: L1_C, r: 6, fill: "#c2510a" }),
-                // vector a
                 h("line", { x1: L1_C, y1: L1_C, x2: X(a.x), y2: Y(a.y), stroke: "#0b5394", strokeWidth: 3.4, markerEnd: "url(#arrA)" }),
                 h("circle", { cx: L1_C, cy: L1_C, r: 4.5, fill: "#16324a" }),
                 h("text", { x: L1_C - 22, y: L1_C + 24, fontSize: 17, fontWeight: 700, fill: "#16324a" }, "O"),
-                // labels (arrow drawn as strokes, not a combining glyph)
                 svgVecLabel(a.x >= 0 ? X(a.x) + 10 : X(a.x) - 22, Y(a.y) + (a.y >= 0 ? -12 : 28), "", "a", "#0b5394", "la"),
                 k !== 0 && svgVecLabel(
                   ka.x >= 0 ? X(ka.x) + 10 : X(ka.x) - 22 - kSvg(k).length * 10.5,
                   Y(ka.y) + (ka.y >= 0 ? -12 : 28),
                   kSvg(k), "a", "#c2510a", "lk"),
                 k === 0 && svgVecLabel(L1_C + 12, L1_C - 14, "", "0", "#c2510a", "l0"),
-                // drag handle
                 h("g", {
                   className: "handle", tabIndex: 0, role: "slider",
                   "aria-label": "Đầu mút của vectơ a. Dùng phím mũi tên để di chuyển.",
@@ -325,10 +319,10 @@
                   h("circle", { cx: X(a.x), cy: Y(a.y), r: 3.5, fill: "#0b5394", style: { pointerEvents: "none" } })
                 )
               ),
-              h("p", { className: "hint" }, "Kéo vòng tròn ở đầu mút để đổi vectơ ", h(Vec, null, "a"), " (chỉ nhận toạ độ nguyên, khác vectơ-không). Cũng có thể nhấp vào vòng tròn rồi dùng phím mũi tên.")
+              h("p", { className: "hint" }, "Kéo vòng tròn ở đầu mút để đổi vectơ ", M("\\vec{a}"), " (chỉ nhận toạ độ nguyên, khác vectơ-không). Cũng có thể nhấp vào vòng tròn rồi dùng phím mũi tên.")
             ),
             h("div", { className: "panel" },
-              h("h3", null, "Toạ độ đầu mút của ", h(Vec, null, "a")),
+              h("h3", null, "Toạ độ đầu mút của ", M("\\vec{a}")),
               h("div", null,
                 h("span", { className: "stepper" }, h("span", null, "x:"),
                   h("button", { type: "button", "aria-label": "Giảm x", onClick: () => trySetA(a.x - 1, a.y) }, MINUS),
@@ -340,13 +334,13 @@
                   h("button", { type: "button", "aria-label": "Tăng y", onClick: () => trySetA(a.x, a.y + 1) }, "+"))
               ),
               h("p", { style: { margin: "8px 0 0" } },
-                h(Vec, null, "a"), " = (" + a.x + "; " + a.y + ")",
-                "   ·   k", h(Vec, null, "a"), " = (" + fmtT(ka.x) + "; " + fmtT(ka.y) + ")"),
-              h("h3", null, "Hệ số k"),
+                M("\\vec{a} = (" + a.x + ";\\," + a.y + ")"),
+                "   ·   ", M("k\\vec{a} = (" + fmtT(ka.x) + ";\\," + fmtT(ka.y) + ")")),
+              h("h3", null, "Hệ số ", M("k")),
               h("div", { className: "ctl" },
                 h("div", { className: "ctl-head" },
-                  h("label", { htmlFor: "k-slider" }, "Trượt để đổi k"),
-                  h("span", { className: "ctl-val" }, "k = ", kNode(k))),
+                  h("label", { htmlFor: "k-slider" }, "Trượt để đổi ", M("k")),
+                  h("span", { className: "ctl-val" }, M("k = "), " ", kNode(k))),
                 h("input", {
                   id: "k-slider", type: "range", min: -3, max: 3, step: 0.5, value: k,
                   onChange: (e) => setK2(parseFloat(e.target.value)),
@@ -363,10 +357,10 @@
               h("h3", null, "Số liệu trực tiếp"),
               h("table", { className: "data" },
                 h("tbody", null,
-                  h("tr", null, h("th", null, "|", h(Vec, null, "a"), "|"), h("td", null, fmt(lenA), " (đơn vị lưới)")),
-                  h("tr", null, h("th", null, "k"), h("td", null, kNode(k))),
-                  h("tr", null, h("th", null, "|k", h(Vec, null, "a"), "|"), h("td", null, fmt(lenKA))),
-                  h("tr", null, h("th", null, "Kiểm tra |k", h(Vec, null, "a"), "| = |k|·|", h(Vec, null, "a"), "|"),
+                  h("tr", null, h("th", null, M("\\left|\\vec{a}\\right|")), h("td", null, fmt(lenA), " (đơn vị lưới)")),
+                  h("tr", null, h("th", null, M("k")), h("td", null, kNode(k))),
+                  h("tr", null, h("th", null, M("\\left|k\\vec{a}\\right|")), h("td", null, fmt(lenKA))),
+                  h("tr", null, h("th", null, "Kiểm tra ", M("\\left|k\\vec{a}\\right| = |k|\\cdot\\left|\\vec{a}\\right|")),
                     h("td", null, fmt(lenKA), " = ", fmt(Math.abs(k) * lenA), "  ✓"))
                 )
               ),
@@ -374,16 +368,16 @@
               h("p", { style: { marginTop: 12 } }, dirNode),
               h("div", { className: "box" },
                 h("h3", null, "Thử thách nhỏ"),
-                h("p", null, "Đặt k sao cho |k", h(Vec, null, "a"), "| = 2|", h(Vec, null, "a"), "| và k", h(Vec, null, "a"), " ngược hướng ", h(Vec, null, "a"), "."),
+                h("p", null, "Đặt ", M("k"), " sao cho ", M("\\left|k\\vec{a}\\right| = 2\\left|\\vec{a}\\right|"), " và ", M("k\\vec{a}"), " ngược hướng ", M("\\vec{a}"), "."),
                 h("button", {
                   type: "button", className: "btn",
                   onClick: () => setChal(k === -2 ? "ok" : "no")
                 }, "Kiểm tra"),
                 h("div", { className: "feedback " + (chal ? "show " + chal : ""), role: "status", "aria-live": "polite" },
                   chal === "ok"
-                    ? h("span", null, "Đúng! k = " + MINUS + "2: |k| = 2 nên độ dài gấp đôi, dấu âm làm k", h(Vec, null, "a"), " ngược hướng ", h(Vec, null, "a"), ".")
+                    ? h("span", null, "Đúng! ", M("k = -2"), ": ", M("|k| = 2"), " nên độ dài gấp đôi, dấu âm làm ", M("k\\vec{a}"), " ngược hướng ", M("\\vec{a}"), ".")
                     : chal === "no"
-                      ? "Chưa đúng. Cần đồng thời |k| = 2 và k < 0 — thử lại nhé."
+                      ? h("span", null, "Chưa đúng. Cần đồng thời ", M("|k| = 2"), " và ", M("k < 0"), " — thử lại nhé.")
                       : null)
               )
             )
@@ -397,7 +391,7 @@
       function Lab2() {
         const [mA, setMA] = useState(1);
         const [mB, setMB] = useState(3);
-        const [pos, setPos] = useState(10); // AM theo đơn vị đoạn, bước 0.25
+        const [pos, setPos] = useState(10);
         const [showAns, setShowAns] = useState(false);
         const dragRef = useRef(false);
         const svgRef = useRef(null);
@@ -408,7 +402,7 @@
         const balanced = Math.abs(diff) <= (mA + mB) * 0.125 + 1e-9;
         const tilt = balanced ? 0 : clamp(-diff * 0.08, -7, 7);
         const Mx = BEAM_X1 + pos * PXU;
-        const starAM = AB_UNITS * mB / (mA + mB); // vị trí cân bằng đúng
+        const starAM = AB_UNITS * mB / (mA + mB);
         const starX = BEAM_X1 + starAM * PXU;
         const gRatio = gcd(mB, mA);
         const gFrac = gcd(mB, mA + mB);
@@ -446,19 +440,15 @@
               "aria-label": "Đòn AB với hai vật nặng tại A, B và trụ đỡ M có thể kéo dọc đoạn AB",
               onPointerDown: onDown, onPointerMove: onMove, onPointerUp: onUp, onPointerCancel: onUp
             },
-              // ground
               h("line", { x1: 36, y1: 234, x2: 604, y2: 234, stroke: "#8fb0cf", strokeWidth: 2 }),
               h("g", { transform: "rotate(" + tilt + " " + Mx + " " + BEAM_Y + ")" },
-                // beam
                 h("line", { x1: BEAM_X1 - 14, y1: BEAM_Y, x2: BEAM_X2 + 14, y2: BEAM_Y, stroke: "#0b5394", strokeWidth: 7, strokeLinecap: "round" }),
                 ticks,
-                // answer ghost marker
                 showAns && h("g", null,
                   h("line", { x1: starX, y1: BEAM_Y - 52, x2: starX, y2: BEAM_Y + 20, stroke: "#1e7d32", strokeWidth: 2, strokeDasharray: "6 4" }),
                   h("path", { d: "M" + starX + "," + (BEAM_Y - 58) + " l7,9 h-14 Z", fill: "#1e7d32" }),
                   h("text", { x: clamp(starX, 78, 470), y: BEAM_Y - 64, fontSize: 14.5, fontWeight: 700, fill: "#1e7d32" }, "vị trí cân bằng")
                 ),
-                // masses
                 h("circle", { cx: BEAM_X1, cy: BEAM_Y - rA - 3, r: rA, fill: "#0b5394" }),
                 h("text", { x: BEAM_X1, y: BEAM_Y - rA + 2, fontSize: 13.5, fontWeight: 700, fill: "#fff", textAnchor: "middle" }, mA + " kg"),
                 h("circle", { cx: BEAM_X2, cy: BEAM_Y - rB - 3, r: rB, fill: "#c2510a" }),
@@ -466,7 +456,6 @@
                 h("text", { x: BEAM_X1, y: BEAM_Y + 38, fontSize: 19, fontWeight: 800, fill: "#0b5394", textAnchor: "middle" }, "A"),
                 h("text", { x: BEAM_X2, y: BEAM_Y + 38, fontSize: 19, fontWeight: 800, fill: "#c2510a", textAnchor: "middle" }, "B")
               ),
-              // fulcrum (not rotated)
               h("polygon", { points: Mx + "," + (BEAM_Y + 5) + " " + (Mx - 25) + ",234 " + (Mx + 25) + ",234", fill: "#5b7a99" }),
               h("circle", { "data-mdrag": "1", cx: Mx, cy: BEAM_Y, r: 21, fill: "transparent", style: { cursor: "ew-resize" } }),
               h("circle", { cx: Mx, cy: BEAM_Y, r: 9, fill: "#fff", stroke: "#16324a", strokeWidth: 3, style: { pointerEvents: "none" } }),
@@ -485,14 +474,14 @@
               h("h3", null, "Khối lượng hai vật"),
               h("div", { className: "ctl" },
                 h("div", { className: "ctl-head" },
-                  h("label", { htmlFor: "mA-slider" }, "Vật tại A (m", h("sub", null, "A"), ")"),
+                  h("label", { htmlFor: "mA-slider" }, "Vật tại A (", M("m_A"), ")"),
                   h("span", { className: "ctl-val" }, mA + " kg")),
                 h("input", { id: "mA-slider", type: "range", min: 1, max: 6, step: 1, value: mA, onChange: (e) => setMA(parseInt(e.target.value, 10)), "aria-label": "Khối lượng vật tại A, từ 1 đến 6 kilôgam" }),
                 h("div", { className: "scale" }, h("span", null, "1 kg"), h("span", null, "6 kg"))
               ),
               h("div", { className: "ctl" },
                 h("div", { className: "ctl-head" },
-                  h("label", { htmlFor: "mB-slider" }, "Vật tại B (m", h("sub", null, "B"), ")"),
+                  h("label", { htmlFor: "mB-slider" }, "Vật tại B (", M("m_B"), ")"),
                   h("span", { className: "ctl-val" }, mB + " kg")),
                 h("input", { id: "mB-slider", type: "range", min: 1, max: 6, step: 1, value: mB, onChange: (e) => setMB(parseInt(e.target.value, 10)), "aria-label": "Khối lượng vật tại B, từ 1 đến 6 kilôgam" }),
                 h("div", { className: "scale" }, h("span", null, "1 kg"), h("span", null, "6 kg"))
@@ -509,9 +498,9 @@
               ),
               showAns && h("div", { className: "box", style: { marginTop: 4 } },
                 h("h3", null, "Vị trí cân bằng đúng"),
-                h("p", null, "M chia AB theo tỉ lệ AM : MB = m", h("sub", null, "B"), " : m", h("sub", null, "A"), " = ", (mB / gRatio) + " : " + (mA / gRatio), "."),
-                h("p", { className: "eq" }, "AM/AB = ", h(Frac, { n: mB / gFrac, d: (mA + mB) / gFrac }), " ≈ ", fmt(mB / (mA + mB))),
-                h("p", null, "Tức AM = ", fmtT(starAM), " (trên 20 phần của AB)."),
+                h("p", null, "M chia AB theo tỉ lệ ", M("AM : MB = m_B : m_A = " + (mB / gRatio) + " : " + (mA / gRatio)), "."),
+                h("p", { className: "eq" }, M("\\dfrac{AM}{AB} = \\dfrac{" + (mB / gFrac) + "}{" + ((mA + mB) / gFrac) + "} \\approx " + fmt(mB / (mA + mB)))),
+                h("p", null, "Tức ", M("AM = " + fmtT(starAM)), " (trên 20 phần của AB)."),
                 h("button", { type: "button", className: "btn", onClick: () => setPos(starAM) }, "Đặt M vào vị trí này")
               )
             ),
@@ -526,17 +515,17 @@
               ),
               h("h3", null, "So sánh hai mô-men"),
               h("div", { className: "bar-row" },
-                h("span", null, "m", h("sub", null, "A"), "·MA = ", h("strong", null, fmtT(momA))),
+                h("span", null, M("m_A \\cdot MA"), " = ", h("strong", null, fmtT(momA))),
                 h("div", { className: "bar-track" }, h("div", { className: "bar-fill", style: { width: (momA / maxMom * 100) + "%" } }))),
               h("div", { className: "bar-row" },
-                h("span", null, "m", h("sub", null, "B"), "·MB = ", h("strong", null, fmtT(momB))),
+                h("span", null, M("m_B \\cdot MB"), " = ", h("strong", null, fmtT(momB))),
                 h("div", { className: "bar-track" }, h("div", { className: "bar-fill b", style: { width: (momB / maxMom * 100) + "%" } }))),
               h("h3", null, "Điều kiện cân bằng viết bằng vectơ"),
               h("p", { className: "eq" },
-                "m", h("sub", null, "A"), "·", h(Vec, null, "MA"), " + m", h("sub", null, "B"), "·", h(Vec, null, "MB"), " = ", h(Vec, null, "0")),
+                M("m_A\\overrightarrow{MA} + m_B\\overrightarrow{MB} = \\vec{0}")),
               h("p", { style: { color: "var(--muted)", marginTop: 4 } },
-                "Hai vectơ ", h(Vec, null, "MA"), " và ", h(Vec, null, "MB"), " ngược hướng, nên đẳng thức vectơ trên tương đương với m",
-                h("sub", null, "A"), "·MA = m", h("sub", null, "B"), "·MB về độ dài.")
+                "Hai vectơ ", M("\\overrightarrow{MA}"), " và ", M("\\overrightarrow{MB}"), " ngược hướng, nên đẳng thức vectơ trên tương đương với ",
+                M("m_A \\cdot MA = m_B \\cdot MB"), " về độ dài.")
             )
           )
         );
@@ -545,27 +534,27 @@
       /* ================= LAB 3 ================= */
       const QUIZ = [
         {
-          q: () => h("span", null, "Cho |", h(Vec, null, "a"), "| = 5. Tính |", MINUS, "3", h(Vec, null, "a"), "|."),
+          q: () => h("span", null, "Cho ", M("\\left|\\vec{a}\\right| = 5"), ". Tính ", M("\\left|-3\\vec{a}\\right|"), "."),
           options: [MINUS + "15", "15", MINUS + "5", "5"],
           correct: 1,
-          explain: () => h("span", null, "Độ dài không bao giờ âm: |", MINUS, "3", h(Vec, null, "a"), "| = |", MINUS, "3| · |", h(Vec, null, "a"), "| = 3 · 5 = 15.")
+          explain: () => h("span", null, "Độ dài không bao giờ âm: ", M("\\left|-3\\vec{a}\\right| = |-3| \\cdot \\left|\\vec{a}\\right| = 3 \\cdot 5 = 15"), ".")
         },
         {
-          q: () => h("span", null, "Vectơ ", MINUS, "2", h(Vec, null, "a"), " có hướng thế nào so với ", h(Vec, null, "a"), " (", h(Vec, null, "a"), " ≠ ", h(Vec, null, "0"), ")?"),
+          q: () => h("span", null, "Vectơ ", M("-2\\vec{a}"), " có hướng thế nào so với ", M("\\vec{a}"), " (", M("\\vec{a} \\neq \\vec{0}"), ")?"),
           options: ["Cùng hướng, dài gấp đôi", "Ngược hướng, dài gấp đôi", "Ngược hướng, dài bằng nửa", "Cùng hướng, dài bằng nửa"],
           correct: 1,
-          explain: () => h("span", null, "k = ", MINUS, "2 < 0 nên ", MINUS, "2", h(Vec, null, "a"), " ngược hướng với ", h(Vec, null, "a"), "; |k| = 2 nên độ dài gấp đôi.")
+          explain: () => h("span", null, M("k = -2 < 0"), " nên ", M("-2\\vec{a}"), " ngược hướng với ", M("\\vec{a}"), "; ", M("|k| = 2"), " nên độ dài gấp đôi.")
         },
         {
-          q: () => h("span", null, "Điểm K thoả mãn ", h(Vec, null, "KA"), " + 2", h(Vec, null, "KB"), " = ", h(Vec, null, "0"), " nằm ở đâu trên đoạn AB?"),
+          q: () => h("span", null, "Điểm K thoả mãn ", M("\\overrightarrow{KA} + 2\\overrightarrow{KB} = \\vec{0}"), " nằm ở đâu trên đoạn AB?"),
           options: [
-            () => h("span", null, "AK = ", h(Frac, { n: 1, d: 3 }), "AB, K gần A hơn"),
+            () => h("span", null, M("AK = \\dfrac{1}{3}AB"), ", K gần A hơn"),
             "K là trung điểm của AB",
-            () => h("span", null, "AK = ", h(Frac, { n: 2, d: 3 }), "AB, K gần B hơn"),
+            () => h("span", null, M("AK = \\dfrac{2}{3}AB"), ", K gần B hơn"),
             "K nằm ngoài đoạn AB"
           ],
           correct: 2,
-          explain: () => h("span", null, "Từ đẳng thức, K nằm giữa A và B và AK = 2KB. Mà AK + KB = AB nên AK = ", h(Frac, { n: 2, d: 3 }), "AB — K gần B hơn.")
+          explain: () => h("span", null, "Từ đẳng thức, K nằm giữa A và B và ", M("AK = 2KB"), ". Mà ", M("AK + KB = AB"), " nên ", M("AK = \\dfrac{2}{3}AB"), " — K gần B hơn.")
         }
       ];
 
@@ -615,14 +604,14 @@
           }),
           done && h("div", { className: "final", role: "status" },
             h("p", { className: "big" }, "Hoàn thành! Em đạt " + score + "/3 điểm."),
-            h("p", null, "Nhớ: dấu của k quyết định hướng, |k| quyết định độ dài.")
+            h("p", null, "Nhớ: dấu của ", M("k"), " quyết định hướng, ", M("|k|"), " quyết định độ dài.")
           )
         );
       }
 
       /* ================= APP ================= */
       function App() {
-        const [tab, setTab] = useState(0);
+        const [tab, setTab] = useState(1);
         const tabs = [
           { no: "Lab 1", name: "Nhân vectơ với một số", node: h(Lab1) },
           { no: "Lab 2", name: "Đòn cân bằng", node: h(Lab2) },
@@ -631,8 +620,8 @@
         return h("div", { className: "wrap" },
           h("header", { className: "intro" },
             h("h1", null, "Bài 9 · Tích của một vectơ với một số"),
-            h("p", null, "Ba phòng thí nghiệm tương tác cho học sinh lớp 10: tự tay kéo, trượt và kiểm chứng quy tắc k", h(Vec, null, "a"),
-              " — dấu của k quyết định hướng, |k| quyết định độ dài.")
+            h("p", null, "Ba phòng thí nghiệm tương tác cho học sinh lớp 10: tự tay kéo, trượt và kiểm chứng quy tắc ", M("k\\vec{a}"),
+              " — dấu của ", M("k"), " quyết định hướng, ", M("|k|"), " quyết định độ dài.")
           ),
           h("nav", { className: "tabs", role: "tablist", "aria-label": "Chọn phòng thí nghiệm" },
             tabs.map((t, i) => h("button", {
@@ -642,26 +631,11 @@
           ),
           tabs[tab].node,
           h("footer", { className: "source" },
-            "Nguồn: Bám sát SGK Toán 10 Kết nối tri thức, Bài 9 (tr. 55–59). Mọi đáp án đã kiểm chứng.")
-        );
+            "Nguồn: Bám sát SGK Toán 10, Bài 9 (tr. 55–59). Mọi đáp án đã kiểm chứng.")
+          );
       }
 
       ReactDOM.createRoot(document.getElementById("root")).render(h(App));
     </script>
-  
-<script>
-// Ban sao cho man hinh MH-09: tu dong chon tab Lab 2 sau khi ung dung tai xong
-(function(){
-  var tries = 0;
-  var iv = setInterval(function(){
-    tries++;
-    var els = document.querySelectorAll('button, [role="tab"], a');
-    for (var i = 0; i < els.length; i++) {
-      if (els[i].textContent.trim() === 'Lab 2') { els[i].click(); clearInterval(iv); return; }
-    }
-    if (tries > 40) clearInterval(iv);
-  }, 250);
-})();
-</script>
-</body>
+  </body>
 </html>

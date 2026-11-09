@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mô phỏng 3D — Con tàu quay đầu gấp đôi (Bài 9)</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;font-family:"Segoe UI",Arial,sans-serif;background:#dceefb;overflow:hidden}
@@ -41,6 +42,7 @@
   <label id="wrapAns"><input type="checkbox" id="chkAns"> Hiện độ dời (đáp án)</label>
 </div>
 <div id="prog"><i></i></div>
+<script src="../katex/katex.min.js"></script>
 <script src="three.min.js"></script>
 <script src="OrbitControls.js"></script>
 <script>
@@ -215,13 +217,16 @@ function stateAt(t) {
   t -= DUR.turn;
   var p3 = Math.min(t / DUR.leg2, 1); return { x: 3 - 6 * p3, heading: Math.PI, seg: p3 >= 1 ? "done" : "leg2" };
 }
+function KX(tex) {
+  return window.katex ? '<span style="white-space:nowrap">' + window.katex.renderToString(tex, { throwOnError: false }) + '</span>' : tex;
+}
 var PHASE_TXT = {
   idle: "Bấm <b>Chạy hành trình</b> để xem con tàu di chuyển. Kéo chuột để xoay góc nhìn, lăn chuột để phóng to.",
-  leg1: "Chặng 1: tàu đi <b>3 km về phía đông</b> — đây là vectơ <b><span class=\"vec\"><span class=\"arr\">→</span>a</span></b>.",
+  leg1: "Chặng 1: tàu đi <b>3 km về phía đông</b> — đây là vectơ " + KX("\\vec{a}") + ".",
   turn: "Tàu <b>quay đầu 180°</b> tại điểm cách xuất phát 3 km về phía đông.",
-  leg2: "Chặng 2: tàu đi ngược lại <b>gấp đôi</b> quãng đường — <b>6 km về phía tây</b> — đây là vectơ <b>−2<span class=\"vec\"><span class=\"arr\">→</span>a</span></b>.",
+  leg2: "Chặng 2: tàu đi ngược lại <b>gấp đôi</b> quãng đường — <b>6 km về phía tây</b> — đây là vectơ " + KX("-2\\vec{a}") + ".",
   doneHook: "Hành trình kết thúc. Theo em, tàu đang ở đâu so với điểm xuất phát? Hãy chọn dự đoán ở câu hỏi bên dưới.",
-  doneAnswer: "Độ dời = <span class=\"vec\"><span class=\"arr\">→</span>a</span> + (−2<span class=\"vec\"><span class=\"arr\">→</span>a</span>) = −<span class=\"vec\"><span class=\"arr\">→</span>a</span>: tàu ở <b>3 km về phía tây</b> so với điểm xuất phát."
+  doneAnswer: "Độ dời = " + KX("\\vec{a} + (-2\\vec{a}) = -\\vec{a}") + ": tàu ở <b>3 km về phía tây</b> so với điểm xuất phát."
 };
 var lastSeg = "";
 function applyState(now) {

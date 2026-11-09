@@ -132,6 +132,7 @@ table.kq th{background:#e8f0fe}
   iframe.lab{height:520px}
   .slot{min-width:140px}
 }
+.katex{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -140,7 +141,6 @@ table.kq th{background:#e8f0fe}
   <div><div class="t1">Bài 9 — Tích của một vectơ với một số</div><div class="t2">E-learning Toán 10</div></div>
   <div id="progress"><i></i></div>
   <span id="tierbadge"></span>
-  <a href="../KHBD_tieudinhphuc.pdf" target="_blank" style="flex:none;background:#ffffff22;border:1px solid #ffffff55;color:#fff;font-weight:700;font-size:13px;border-radius:999px;padding:4px 12px;text-decoration:none">📄 KHBD</a>
 </header>
 <div id="wrap">
   <aside id="menu"><h3>Mục lục bài học</h3><div id="menulist"></div></aside>
@@ -473,7 +473,7 @@ var SCREENS = [];
 /* ================= MH-01 ================= */
 SCREENS.push({ id:"mh01", code:"MH-01", title:"Giới thiệu và mục tiêu", gate:function(){ return !!S.readGoals; },
   html:function(){ return head("MH-01","Mở đầu","Bài 9 — Tích của một vectơ với một số")
-    + '<p style="color:#5b6b7c;font-size:14.5px;margin:0 0 10px">Giáo viên biên soạn: <b style="color:#0b5394">Tiêu Đình Phúc</b> — giáo viên Toán, Trường PTDTNT-THPT Bình Thuận · <a href="../KHBD_tieudinhphuc.pdf" target="_blank" style="color:#0b5394;font-weight:700;text-decoration:underline">📄 Xem Kế hoạch bài dạy (KHBD)</a></p>'
+    + '<p style="color:#5b6b7c;font-size:14.5px;margin:0 0 10px">Giáo viên biên soạn: <b style="color:#0b5394">Tiêu Đình Phúc</b> — giáo viên Toán, Trường PTDTNT-THPT Bình Thuận</p>'
     + narr("Chào các em! Thầy là thầy Phúc. Hôm nay chúng ta cùng khám phá một phép toán hoàn toàn mới của vectơ, bắt đầu từ một con tàu đổi hướng trên sông.", "mh01")
     + '<h2>Video giới thiệu bài học</h2>' + vidHtml("V0-Gioi-thieu.mp4", "V0-Gioi-thieu.vtt")
     + '<h2>Nhân vật đồng hành</h2><div class="chars">'

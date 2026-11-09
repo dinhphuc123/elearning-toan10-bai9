@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bài 9: Tích của một vectơ với một số | E-learning Toán 10</title>
+  <title>Bài 9: Tích của một vectơ với một số | Toán 10</title>
   <style>
     @font-face{font-family:"Be Vietnam Pro";src:url("Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/fonts/bvp-400-vietnamese.woff2") format("woff2");font-weight:400;font-display:swap;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0309,U+030B,U+0323,U+0328,U+1EA0-1EF9,U+20AB}
     @font-face{font-family:"Be Vietnam Pro";src:url("Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/fonts/bvp-400-latin.woff2") format("woff2");font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -14,21 +14,28 @@
 
     :root {
       --navy: #0b5394;
-      --navy2: #083d6b;
+      --navy-dark: #073561;
       --gold: #ffd966;
       --amber: #b45309;
-      --ink: #1c2430;
-      --sub: #5a6b7d;
+      --amber-light: #fef3c7;
+      --ink: #162231;
+      --sub: #54667a;
       --bg: #eef2f7;
-      --card: #ffffff;
-      --line: #d8e0ea;
+      --card: rgba(255, 255, 255, 0.92);
+      --line: #d6e1ed;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(at 15% 15%, rgba(11, 83, 148, 0.08) 0px, transparent 50%),
+        radial-gradient(at 85% 85%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
+        linear-gradient(to right, rgba(11, 83, 148, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(11, 83, 148, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
       color: var(--ink);
       min-height: 100vh;
       display: flex;
@@ -36,15 +43,17 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top bar đồng bộ với màn hình bài giảng */
+    /* Top Navigation Bar */
     .topbar {
-      background: var(--navy);
+      background: linear-gradient(90deg, var(--navy-dark) 0%, var(--navy) 100%);
       color: #fff;
-      padding: 12px 24px;
+      padding: 12px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(8, 61, 107, 0.18);
+      box-shadow: 0 4px 16px rgba(7, 53, 97, 0.16);
+      position: relative;
+      z-index: 10;
     }
     .topbar-left {
       display: flex;
@@ -56,40 +65,68 @@
       color: #4a3500;
       font-weight: 700;
       font-size: 12px;
-      padding: 3px 10px;
+      padding: 3.5px 11px;
       border-radius: 999px;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
     }
     .topbar-title {
       font-weight: 700;
       font-size: 15.5px;
+      letter-spacing: -0.1px;
     }
     .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
       font-size: 13.5px;
+    }
+    .khbd-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .khbd-pill:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #4a3500;
+    }
+    .school-name {
       opacity: 0.9;
+      font-weight: 500;
     }
 
-    /* Main Stage */
+    /* Main Center Stage */
     main {
       flex: 1;
-      max-width: 980px;
+      max-width: 920px;
       width: 100%;
       margin: 0 auto;
       padding: 32px 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 22px;
+      gap: 24px;
     }
 
-    /* Hero Banner */
+    /* Hero Card */
     .hero-card {
       background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 28px 32px;
-      box-shadow: 0 2px 12px rgba(11, 83, 148, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 22px;
+      padding: 38px 36px 32px;
+      box-shadow: 0 12px 32px -8px rgba(11, 83, 148, 0.12), 0 2px 6px rgba(11, 83, 148, 0.05);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -99,173 +136,152 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 5px;
-      background: linear-gradient(90deg, var(--navy) 0%, #2563eb 50%, var(--gold) 100%);
+      background: linear-gradient(90deg, var(--navy) 0%, #1d70b8 55%, var(--gold) 100%);
     }
-    .subject-tag {
-      display: inline-block;
-      background: #e8f0fe;
+    .subject-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e6f0fa;
       color: var(--navy);
       font-size: 13px;
       font-weight: 700;
-      padding: 4px 14px;
+      padding: 5px 16px;
       border-radius: 999px;
-      margin-bottom: 10px;
-      letter-spacing: 0.3px;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
     }
     h1 {
-      font-size: 28px;
-      color: var(--navy2);
+      font-size: clamp(24px, 3.6vw, 33px);
+      color: var(--navy-dark);
       font-weight: 700;
-      letter-spacing: -0.3px;
-      margin-bottom: 14px;
-      line-height: 1.3;
+      letter-spacing: -0.4px;
+      margin-bottom: 18px;
+      line-height: 1.28;
     }
-    .teacher-info {
+    .meta-row {
       display: inline-flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px 24px;
-      padding-top: 12px;
+      align-items: center;
+      gap: 10px 28px;
+      padding: 12px 24px 0;
       border-top: 1px solid var(--line);
-      font-size: 15px;
+      font-size: 15.5px;
       color: var(--sub);
     }
-    .teacher-info b {
+    .meta-row b {
       color: var(--ink);
+      font-weight: 700;
     }
 
-    /* 2 Nút chọn phiên bản */
+    /* Mode Selection Cards */
     .mode-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      gap: 22px;
     }
     .mode-card {
       background: var(--card);
-      border: 1.5px solid var(--line);
-      border-radius: 16px;
-      padding: 24px 26px;
-      box-shadow: 0 2px 12px rgba(11, 83, 148, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 28px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .mode-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(11, 83, 148, 0.12);
+      align-items: center;
+      text-align: center;
+      gap: 22px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+      position: relative;
     }
     .mode-card.judge {
-      border-color: #f59e0b;
-      background: linear-gradient(180deg, #fffdf9 0%, #ffffff 100%);
+      border: 1.5px solid rgba(245, 158, 11, 0.45);
+      box-shadow: 0 10px 28px -8px rgba(180, 83, 9, 0.12);
+    }
+    .mode-card.judge:hover {
+      transform: translateY(-5px);
+      border-color: #d97706;
+      box-shadow: 0 18px 36px -8px rgba(180, 83, 9, 0.22);
     }
     .mode-card.student {
+      border: 1.5px solid rgba(11, 83, 148, 0.35);
+      box-shadow: 0 10px 28px -8px rgba(11, 83, 148, 0.12);
+    }
+    .mode-card.student:hover {
+      transform: translateY(-5px);
       border-color: var(--navy);
-      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      box-shadow: 0 18px 36px -8px rgba(11, 83, 148, 0.22);
     }
-    .mode-badge {
-      display: inline-block;
-      align-self: flex-start;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 11px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 8px;
+
+    .icon-ring {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .judge .mode-badge {
-      background: #fef3c7;
+    .judge .icon-ring {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
       color: var(--amber);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), 0 6px 14px rgba(180, 83, 9, 0.12);
     }
-    .student .mode-badge {
-      background: #e8f0fe;
+    .student .icon-ring {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
       color: var(--navy);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), 0 6px 14px rgba(11, 83, 148, 0.12);
     }
+    .icon-ring svg {
+      width: 30px;
+      height: 30px;
+    }
+
     .mode-title {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
-      color: var(--navy2);
-      margin-bottom: 6px;
+      color: var(--navy-dark);
+      letter-spacing: -0.2px;
     }
-    .mode-sub {
-      font-size: 14.5px;
-      color: var(--sub);
-      line-height: 1.45;
-    }
+
     .btn {
+      width: 100%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 14px 22px;
+      border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
       text-decoration: none;
-      transition: background 0.2s ease;
-      cursor: pointer;
+      transition: all 0.2s ease;
     }
     .btn-judge {
-      background: var(--amber);
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
       color: #fff;
+      box-shadow: 0 4px 14px rgba(180, 83, 9, 0.28);
     }
-    .btn-judge:hover {
-      background: #92400e;
+    .mode-card.judge:hover .btn-judge {
+      background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+      box-shadow: 0 6px 18px rgba(180, 83, 9, 0.38);
     }
     .btn-student {
-      background: var(--navy);
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
       color: #fff;
+      box-shadow: 0 4px 14px rgba(11, 83, 148, 0.28);
     }
-    .btn-student:hover {
-      background: var(--navy2);
-    }
-
-    /* Hồ sơ đính kèm gọn gàng */
-    .docs-bar {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      box-shadow: 0 2px 10px rgba(11, 83, 148, 0.04);
-    }
-    .docs-label {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--navy2);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .docs-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .doc-link {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--navy);
-      background: #f4f8fd;
-      border: 1px solid var(--line);
-      padding: 6px 13px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-    .doc-link:hover {
-      background: #e8f0fe;
-      border-color: var(--navy);
+    .mode-card.student:hover .btn-student {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, #052647 100%);
+      box-shadow: 0 6px 18px rgba(11, 83, 148, 0.38);
     }
 
     footer {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(8px);
       border-top: 1px solid var(--line);
       padding: 12px 20px;
       text-align: center;
@@ -273,11 +289,11 @@
       color: var(--sub);
     }
 
-    @media (max-width: 720px) {
-      .topbar-right { display: none; }
-      h1 { font-size: 22px; }
+    @media (max-width: 680px) {
+      .school-name { display: none; }
+      .hero-card { padding: 28px 20px 24px; }
       .mode-grid { grid-template-columns: 1fr; }
-      .docs-bar { flex-direction: column; align-items: flex-start; }
+      .mode-card { padding: 24px 22px; }
     }
   </style>
 </head>
@@ -286,62 +302,51 @@
   <header class="topbar">
     <div class="topbar-left">
       <span class="topbar-badge">E-Learning</span>
-      <span class="topbar-title">Môn Toán — Lớp 10</span>
+      <span class="topbar-title">Toán 10</span>
     </div>
     <div class="topbar-right">
-      <a href="Ho-so-du-thi-Elearning-Bai9/KHBD_tieudinhphuc.pdf" target="_blank" style="color:#ffd966;text-decoration:none;font-weight:700;margin-right:16px">📄 Xem KHBD</a>
-      <span>Trường PTDTNT – THPT Bình Thuận</span>
+      <a href="Ho-so-du-thi-Elearning-Bai9/KHBD_tieudinhphuc.pdf" target="_blank" class="khbd-pill">📄 KHBD</a>
+      <span class="school-name">Trường PTDTNT – THPT Bình Thuận</span>
     </div>
   </header>
 
   <main>
     <section class="hero-card">
-      <span class="subject-tag">CHƯƠNG IV: VECTƠ</span>
+      <div class="subject-chip">Chương IV · Vectơ</div>
       <h1>BÀI 9: TÍCH CỦA MỘT VECTƠ VỚI MỘT SỐ</h1>
-      <div class="teacher-info">
-        <span>Giáo viên biên soạn: <b>Tiêu Đình Phúc</b></span>
+      <div class="meta-row">
+        <span>Giáo viên: <b>Tiêu Đình Phúc</b></span>
         <span>Đơn vị: <b>Trường PTDTNT – THPT Bình Thuận</b></span>
       </div>
     </section>
 
     <section class="mode-grid">
-      <div class="mode-card judge">
-        <div>
-          <span class="mode-badge">Dành cho Ban Giám Khảo</span>
-          <div class="mode-title">Bản Mở Khóa Toàn Bộ</div>
-          <p class="mode-sub">Mở sẵn 18 màn hình để xem tự do mọi hoạt động, phòng thí nghiệm và bài kiểm tra.</p>
+      <a href="Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-GiamKhao-MoKhoa-HTML5/index.html" class="mode-card judge">
+        <div class="icon-ring" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+          </svg>
         </div>
-        <a href="Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-GiamKhao-MoKhoa-HTML5/index.html" class="btn btn-judge">
-          Vào Bản Giám Khảo →
-        </a>
-      </div>
+        <div class="mode-title">Dành Cho Ban Giám Khảo</div>
+        <span class="btn btn-judge">Mở Bản Giám Khảo →</span>
+      </a>
 
-      <div class="mode-card student">
-        <div>
-          <span class="mode-badge">Dành cho Học Sinh</span>
-          <div class="mode-title">Bản Học Tập Tương Tác</div>
-          <p class="mode-sub">Học theo tiến trình từng bước từ khởi động, khám phá kiến thức đến luyện tập và kiểm tra.</p>
+      <a href="Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/index.html" class="mode-card student">
+        <div class="icon-ring" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+          </svg>
         </div>
-        <a href="Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/index.html" class="btn btn-student">
-          Bắt Đầu Bài Học →
-        </a>
-      </div>
-    </section>
-
-    <section class="docs-bar">
-      <div class="docs-label">📁 Hồ sơ bài giảng đính kèm:</div>
-      <div class="docs-links">
-        <a href="Ho-so-du-thi-Elearning-Bai9/KHBD_tieudinhphuc.pdf" target="_blank" class="doc-link" style="background:#e8f0fe;border-color:#0b5394;font-weight:700">📄 Kế hoạch bài dạy - KHBD (PDF)</a>
-        <a href="Ho-so-du-thi-Elearning-Bai9/KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.docx" download class="doc-link">📝 KHBD (.docx)</a>
-        <a href="Ho-so-du-thi-Elearning-Bai9/TieuDinhPhuc_ThuyetMinhBaiGiang-Bai9.pdf" target="_blank" class="doc-link">📄 Bản thuyết minh (PDF)</a>
-        <a href="Ho-so-du-thi-Elearning-Bai9/Kich-ban-elearning-chi-tiet-Bai9-v2.docx" download class="doc-link">📝 Kịch bản chi tiết (.docx)</a>
-        <a href="Ho-so-du-thi-Elearning-Bai9/DAP-AN-Bai9-elearning.md" target="_blank" class="doc-link">🔑 Bảng đáp án</a>
-      </div>
+        <div class="mode-title">Dành Cho Học Sinh</div>
+        <span class="btn btn-student">Bắt Đầu Học →</span>
+      </a>
     </section>
   </main>
 
   <footer>
-    Bài giảng E-learning môn Toán 10 · Giáo viên: Tiêu Đình Phúc — Trường PTDTNT – THPT Bình Thuận
+    Bài giảng E-learning Toán 10 · Giáo viên: Tiêu Đình Phúc — Trường PTDTNT – THPT Bình Thuận
   </footer>
 
 </body>
