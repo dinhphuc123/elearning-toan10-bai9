@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="data:," />
+    <title>Mô phỏng tương tác Bài 9: Tích của một vectơ với một số</title>
+    <style>
+      :root{
+        --navy:#0b5394; --navy-dark:#083d6d; --ink:#1b2f42; --muted:#51708c;
+        --line:#d9e6f2; --soft:#f2f7fc; --soft2:#e8f1fa;
+        --orange:#c2510a; --green:#1e7d32; --green-bg:#e6f4ea;
+        --red:#b3261e; --red-bg:#fdecea; --amber:#7a4b00; --amber-bg:#fdf3e0;
+      }
+      *{ box-sizing:border-box; }
+      html{ -webkit-text-size-adjust:100%; }
+      body{
+        margin:0; background:#fff; color:var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+        font-size:16px; line-height:1.55;
+      }
+      button, input{ font:inherit; }
+      button{ cursor:pointer; }
+      :focus-visible{ outline:3px solid rgba(11,83,148,.45); outline-offset:2px; }
+
+      .wrap{ max-width:1080px; margin:0 auto; padding:20px 16px 28px; }
+
+      header.intro{ border-bottom:3px solid var(--navy); padding-bottom:14px; margin-bottom:16px; }
+      header.intro h1{ font-size:clamp(22px, 4.5vw, 32px); line-height:1.25; margin:0 0 6px; color:var(--navy-dark); font-weight:800; }
+      header.intro p{ margin:0; color:var(--muted); max-width:70ch; }
+
+      /* Tabs */
+      .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+      .tab{
+        border:1.5px solid var(--navy); background:#fff; color:var(--navy);
+        padding:9px 14px; border-radius:8px; font-weight:600; font-size:15px;
+      }
+      .tab[aria-selected="true"]{ background:var(--navy); color:#fff; }
+      .tab .tab-no{ font-weight:800; margin-right:6px; }
+
+      section.lab{ border:1px solid var(--line); border-radius:10px; padding:18px; background:#fff; }
+      section.lab h2{ margin:0 0 4px; font-size:clamp(19px,3.5vw,24px); color:var(--navy-dark); font-weight:800; }
+      .lab-sub{ margin:0 0 16px; color:var(--muted); }
+      .lab-grid{ display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:20px; align-items:start; }
+      @media (max-width:860px){ .lab-grid{ grid-template-columns:1fr; } }
+
+      .stage{ background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:10px; }
+      .stage svg{ display:block; width:100%; height:auto; touch-action:none; }
+      .stage .hint{ margin:8px 4px 2px; font-size:14px; color:var(--muted); }
+
+      .panel h3{ margin:18px 0 8px; font-size:16px; color:var(--navy-dark); font-weight:700; }
+      .panel h3:first-child{ margin-top:0; }
+
+      /* Slider rows */
+      .ctl{ margin-bottom:14px; }
+      .ctl-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:4px; }
+      .ctl-head label{ font-weight:600; }
+      .ctl-val{ font-weight:800; color:var(--navy); font-size:18px; white-space:nowrap; }
+      input[type="range"]{ width:100%; accent-color:var(--navy); height:32px; margin:0; }
+      .scale{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-top:-4px; }
+
+      .quick{ display:flex; flex-wrap:wrap; gap:6px; }
+      .quick button{
+        border:1.5px solid var(--navy); background:#fff; color:var(--navy);
+        min-width:46px; padding:6px 10px; border-radius:7px; font-weight:700;
+      }
+      .quick button.on{ background:var(--navy); color:#fff; }
+
+      .btn{
+        border:1.5px solid var(--navy); background:var(--navy); color:#fff;
+        padding:9px 16px; border-radius:8px; font-weight:700;
+      }
+      .btn.ghost{ background:#fff; color:var(--navy); }
+      .btn:active{ transform:translateY(1px); }
+      .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+
+      /* Data table */
+      table.data{ width:100%; border-collapse:collapse; font-size:15.5px; }
+      table.data th, table.data td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+      table.data th{ font-weight:600; color:var(--muted); width:44%; }
+      table.data td{ font-weight:600; }
+      table.data tr:last-child th, table.data tr:last-child td{ border-bottom:none; }
+
+      .badge{
+        display:inline-block; padding:5px 12px; border-radius:999px; font-weight:700; font-size:14.5px;
+        background:var(--soft2); color:var(--navy-dark);
+      }
+      .badge.ok{ background:var(--green-bg); color:var(--green); }
+      .badge.warn{ background:var(--amber-bg); color:var(--amber); }
+
+      .box{ border:1px solid var(--line); border-radius:8px; background:var(--soft); padding:14px; margin-top:16px; }
+      .box h3{ margin-top:0; }
+      .box p{ margin:6px 0; }
+      .feedback{ margin-top:10px; padding:10px 12px; border-radius:7px; font-weight:600; display:none; }
+      .feedback.show{ display:block; }
+      .feedback.ok{ background:var(--green-bg); color:var(--green); }
+      .feedback.no{ background:var(--red-bg); color:var(--red); }
+
+      .status{ padding:12px 14px; border-radius:8px; font-weight:700; margin:14px 0 4px; }
+      .status.ok{ background:var(--green-bg); color:var(--green); }
+      .status.no{ background:var(--amber-bg); color:var(--amber); }
+
+      /* Moment bars */
+      .bar-row{ display:grid; grid-template-columns:118px 1fr; gap:10px; align-items:center; margin:8px 0; font-size:14.5px; }
+      .bar-track{ background:var(--soft2); border-radius:5px; height:20px; overflow:hidden; }
+      .bar-fill{ height:100%; background:var(--navy); }
+      .bar-fill.b{ background:var(--orange); }
+      @media (max-width:480px){ .bar-row{ grid-template-columns:96px 1fr; font-size:13.5px; } }
+
+      /* Steppers */
+      .stepper{ display:inline-flex; align-items:center; gap:6px; margin-right:14px; }
+      .stepper button{
+        width:34px; height:34px; border-radius:7px; border:1.5px solid var(--navy);
+        background:#fff; color:var(--navy); font-weight:800; font-size:17px; line-height:1;
+      }
+      .stepper .sv{ min-width:26px; text-align:center; font-weight:800; color:var(--navy-dark); }
+
+      /* Vector + fraction notation (SGK style) */
+      .vec{ position:relative; display:inline-block; padding-top:.24em; font-weight:700; line-height:1.1; }
+      .vec::before{ content:""; position:absolute; top:.03em; left:0; right:3px; border-top:1.7px solid currentColor; }
+      .vec::after{
+        content:""; position:absolute; top:-.015em; right:0;
+        border-left:5.5px solid currentColor; border-top:3.2px solid transparent; border-bottom:3.2px solid transparent;
+      }
+      .frac{ display:inline-flex; flex-direction:column; align-items:stretch; vertical-align:middle; margin:0 .12em; font-size:.76em; line-height:1.12; font-weight:700; }
+      .frac .frac-num{ border-bottom:1.6px solid currentColor; padding:0 .22em; text-align:center; }
+      .frac .frac-den{ padding:0 .22em; text-align:center; }
+      .eq{ font-size:17px; }
+
+      /* Quiz */
+      .quiz-head{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:6px; }
+      .score-chip{ background:var(--soft2); color:var(--navy-dark); font-weight:800; padding:6px 14px; border-radius:999px; }
+      .q{ border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+      .q p.qq{ margin:0 0 12px; font-weight:600; font-size:16.5px; }
+      .opts{ display:grid; gap:8px; }
+      .opt{
+        text-align:left; border:1.5px solid var(--line); background:#fff; border-radius:8px;
+        padding:11px 14px; font-weight:500; display:flex; gap:10px; align-items:baseline;
+      }
+      .opt .letter{ font-weight:800; color:var(--navy); }
+      .opt:not(:disabled):hover{ border-color:var(--navy); }
+      .opt.correct{ border-color:var(--green); background:var(--green-bg); }
+      .opt.correct .letter{ color:var(--green); }
+      .opt.wrong{ border-color:var(--red); background:var(--red-bg); }
+      .opt.wrong .letter{ color:var(--red); }
+      .opt:disabled{ cursor:default; opacity:1; color:var(--ink); }
+      .explain{ margin-top:12px; padding:10px 12px; background:var(--soft); border-radius:7px; font-size:15px; }
+      .explain .verdict{ font-weight:800; }
+      .explain .verdict.ok{ color:var(--green); }
+      .explain .verdict.no{ color:var(--red); }
+      .final{ margin-top:18px; padding:16px; border-radius:8px; background:var(--soft2); text-align:center; }
+      .final .big{ font-size:20px; font-weight:800; color:var(--navy-dark); margin:0 0 4px; }
+      .final p{ margin:4px 0; }
+
+      footer.source{ margin-top:22px; padding-top:12px; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }
+      .kbd-note{ font-size:13.5px; color:var(--muted); margin-top:6px; }
+      svg g.handle:focus{ outline:none; }
+      svg g.handle:focus .handle-ring{ stroke:var(--orange); stroke-width:3.5; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="assets/react.min.js"></script>
+    <script src="assets/react-dom.min.js"></script>
+    <script>
+      "use strict";
+      const h = React.createElement;
+      const { useState, useRef } = React;
+
+      /* ---------- Helpers ---------- */
+      const MINUS = "\u2212";
+      function fmt(n, d) {
+        d = d == null ? 2 : d;
+        return n.toFixed(d).replace(".", ",").replace("-", MINUS);
+      }
+      function fmtT(n) { // trim trailing zeros
+        let s = n.toFixed(2);
+        if (s.indexOf(".") >= 0) s = s.replace(/0+$/, "").replace(/\.$/, "");
+        return s.replace(".", ",").replace("-", MINUS);
+      }
+      function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { const t = a % b; a = b; b = t; } return a || 1; }
+      function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+
+      function Vec(props) { return h("span", { className: "vec" }, props.children); }
+      function Frac(props) {
+        return h("span", { className: "frac" },
+          h("span", { className: "frac-num" }, props.n),
+          h("span", { className: "frac-den" }, props.d));
+      }
+      // k is a multiple of 0.5 -> render as integer or fraction
+      function kNode(k) {
+        if (Number.isInteger(k)) return String(k).replace("-", MINUS);
+        return h("span", null, k < 0 ? MINUS : null, h(Frac, { n: Math.abs(k * 2), d: 2 }));
+      }
+      function kText(k) { // plain text for slider-adjacent HTML
+        if (Number.isInteger(k)) return String(k).replace("-", MINUS);
+        return (k < 0 ? MINUS : "") + Math.abs(k * 2) + "\u2044" + "2";
+      }
+      function kSvg(k) { // prefix text for SVG labels (plain slash only)
+        if (Number.isInteger(k)) return String(k).replace("-", MINUS);
+        return (k < 0 ? MINUS : "") + Math.abs(k * 2) + "/2";
+      }
+      // Vector label drawn in SVG: letter + a real drawn arrow above it (no combining glyphs)
+      function svgVecLabel(lx, ly, prefix, letter, color, key) {
+        const charW = prefix.length * 10.5, letterW = 12;
+        return h("g", { key: key },
+          prefix ? h("text", { x: lx, y: ly, fontSize: 19, fontWeight: 700, fill: color }, prefix) : null,
+          h("text", { x: lx + charW, y: ly, fontSize: 19, fontWeight: 700, fill: color }, letter),
+          h("line", { x1: lx + charW - 1, y1: ly - 17, x2: lx + charW + letterW, y2: ly - 17, stroke: color, strokeWidth: 1.9 }),
+          h("polygon", {
+            points: (lx + charW + letterW + 5) + "," + (ly - 17) + " " + (lx + charW + letterW - 1) + "," + (ly - 20.5) + " " + (lx + charW + letterW - 1) + "," + (ly - 13.5),
+            fill: color
+          })
+        );
+      }
+
+      /* ================= LAB 1 ================= */
+      const L1_SIZE = 600, L1_C = 300, L1_U = 28, L1_R = 10;
+
+      function Lab1() {
+        const [a, setA] = useState({ x: 3, y: 2 });
+        const [k, setK] = useState(2);
+        const [chal, setChal] = useState(null); // null | 'ok' | 'no'
+        const dragRef = useRef(false);
+        const svgRef = useRef(null);
+
+        const lenA = Math.hypot(a.x, a.y);
+        const ka = { x: k * a.x, y: k * a.y };
+        const lenKA = Math.hypot(ka.x, ka.y);
+        const X = (m) => L1_C + m * L1_U;
+        const Y = (m) => L1_C - m * L1_U;
+
+        function setK2(v) { setK(v); setChal(null); }
+        function trySetA(nx, ny) {
+          nx = clamp(nx, -3, 3); ny = clamp(ny, -3, 3);
+          if (nx === 0 && ny === 0) return; // không cho vectơ-không
+          setA({ x: nx, y: ny });
+        }
+        function pointerMath(e) {
+          const rect = svgRef.current.getBoundingClientRect();
+          const px = (e.clientX - rect.left) * (L1_SIZE / rect.width);
+          const py = (e.clientY - rect.top) * (L1_SIZE / rect.height);
+          return { mx: Math.round((px - L1_C) / L1_U), my: Math.round((L1_C - py) / L1_U) };
+        }
+        function onDown(e) {
+          if (!e.target.getAttribute || e.target.getAttribute("data-handle") !== "a") return;
+          dragRef.current = true;
+          e.currentTarget.setPointerCapture(e.pointerId);
+          const p = pointerMath(e); trySetA(p.mx, p.my);
+        }
+        function onMove(e) { if (!dragRef.current) return; const p = pointerMath(e); trySetA(p.mx, p.my); }
+        function onUp() { dragRef.current = false; }
+        function onKey(e) {
+          const step = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[e.key];
+          if (step) { e.preventDefault(); trySetA(a.x + step[0], a.y + step[1]); }
+        }
+
+        const gridLines = [];
+        for (let i = -L1_R; i <= L1_R; i++) {
+          gridLines.push(h("line", { key: "v" + i, x1: X(i), y1: 8, x2: X(i), y2: L1_SIZE - 8, stroke: "#dde9f4", strokeWidth: 1 }));
+          gridLines.push(h("line", { key: "h" + i, x1: 8, y1: Y(i), x2: L1_SIZE - 8, y2: Y(i), stroke: "#dde9f4", strokeWidth: 1 }));
+        }
+
+        const dirNode = k > 0
+          ? h("span", { className: "badge ok" }, "k > 0: k", h(Vec, null, "a"), " cùng hướng với ", h(Vec, null, "a"))
+          : k < 0
+            ? h("span", { className: "badge warn" }, "k < 0: k", h(Vec, null, "a"), " ngược hướng với ", h(Vec, null, "a"))
+            : h("span", { className: "badge" }, "k = 0: k", h(Vec, null, "a"), " = ", h(Vec, null, "0"), " (vectơ-không)");
+
+        const quickVals = [-2, -1, -0.5, 0, 0.5, 1, 2, 3];
+
+        return h("section", { className: "lab", "aria-labelledby": "lab1-title" },
+          h("h2", { id: "lab1-title" }, "Lab 1 · Nhân vectơ với một số"),
+          h("p", { className: "lab-sub" },
+            "Kéo đầu mút của vectơ ", h(Vec, null, "a"), " trên lưới, rồi thay đổi hệ số k để quan sát vectơ k", h(Vec, null, "a"),
+            ": độ dài thay đổi theo |k|, hướng đổi chiều khi k âm."),
+          h("div", { className: "lab-grid" },
+            h("div", { className: "stage" },
+              h("svg", {
+                ref: svgRef, viewBox: "0 0 600 600", role: "img",
+                "aria-label": "Lưới toạ độ với vectơ a và vectơ k a cùng gốc O",
+                onPointerDown: onDown, onPointerMove: onMove, onPointerUp: onUp, onPointerCancel: onUp
+              },
+                h("defs", null,
+                  h("marker", { id: "arrA", markerWidth: "9", markerHeight: "9", refX: "7", refY: "4.5", orient: "auto" },
+                    h("path", { d: "M0,0 L9,4.5 L0,9 Z", fill: "#0b5394" })),
+                  h("marker", { id: "arrK", markerWidth: "9", markerHeight: "9", refX: "7", refY: "4.5", orient: "auto" },
+                    h("path", { d: "M0,0 L9,4.5 L0,9 Z", fill: "#c2510a" })),
+                  h("marker", { id: "arrAxis", markerWidth: "8", markerHeight: "8", refX: "6", refY: "4", orient: "auto" },
+                    h("path", { d: "M0,0 L8,4 L0,8 Z", fill: "#8fb0cf" }))
+                ),
+                gridLines,
+                h("line", { x1: 8, y1: L1_C, x2: L1_SIZE - 8, y2: L1_C, stroke: "#8fb0cf", strokeWidth: 1.6, markerEnd: "url(#arrAxis)" }),
+                h("line", { x1: L1_C, y1: L1_SIZE - 8, x2: L1_C, y2: 8, stroke: "#8fb0cf", strokeWidth: 1.6, markerEnd: "url(#arrAxis)" }),
+                h("text", { x: L1_SIZE - 22, y: L1_C - 10, fontSize: 17, fontStyle: "italic", fill: "#51708c" }, "x"),
+                h("text", { x: L1_C + 10, y: 26, fontSize: 17, fontStyle: "italic", fill: "#51708c" }, "y"),
+                // projections of a
+                h("line", { x1: X(a.x), y1: Y(a.y), x2: X(a.x), y2: L1_C, stroke: "#9db8d2", strokeWidth: 1.2, strokeDasharray: "5 4" }),
+                h("line", { x1: X(a.x), y1: Y(a.y), x2: L1_C, y2: Y(a.y), stroke: "#9db8d2", strokeWidth: 1.2, strokeDasharray: "5 4" }),
+                // vector ka (drawn first, underneath)
+                k !== 0 && h("line", { x1: L1_C, y1: L1_C, x2: X(ka.x), y2: Y(ka.y), stroke: "#c2510a", strokeWidth: 3.4, markerEnd: "url(#arrK)" }),
+                k === 0 && h("circle", { cx: L1_C, cy: L1_C, r: 6, fill: "#c2510a" }),
+                // vector a
+                h("line", { x1: L1_C, y1: L1_C, x2: X(a.x), y2: Y(a.y), stroke: "#0b5394", strokeWidth: 3.4, markerEnd: "url(#arrA)" }),
+                h("circle", { cx: L1_C, cy: L1_C, r: 4.5, fill: "#16324a" }),
+                h("text", { x: L1_C - 22, y: L1_C + 24, fontSize: 17, fontWeight: 700, fill: "#16324a" }, "O"),
+                // labels (arrow drawn as strokes, not a combining glyph)
+                svgVecLabel(a.x >= 0 ? X(a.x) + 10 : X(a.x) - 22, Y(a.y) + (a.y >= 0 ? -12 : 28), "", "a", "#0b5394", "la"),
+                k !== 0 && svgVecLabel(
+                  ka.x >= 0 ? X(ka.x) + 10 : X(ka.x) - 22 - kSvg(k).length * 10.5,
+                  Y(ka.y) + (ka.y >= 0 ? -12 : 28),
+                  kSvg(k), "a", "#c2510a", "lk"),
+                k === 0 && svgVecLabel(L1_C + 12, L1_C - 14, "", "0", "#c2510a", "l0"),
+                // drag handle
+                h("g", {
+                  className: "handle", tabIndex: 0, role: "slider",
+                  "aria-label": "Đầu mút của vectơ a. Dùng phím mũi tên để di chuyển.",
+                  "aria-valuetext": "a bằng (" + a.x + "; " + a.y + ")",
+                  onKeyDown: onKey
+                },
+                  h("circle", { "data-handle": "a", cx: X(a.x), cy: Y(a.y), r: 24, fill: "transparent", style: { cursor: "grab" } }),
+                  h("circle", { className: "handle-ring", cx: X(a.x), cy: Y(a.y), r: 10.5, fill: "#fff", stroke: "#0b5394", strokeWidth: 3, style: { pointerEvents: "none" } }),
+                  h("circle", { cx: X(a.x), cy: Y(a.y), r: 3.5, fill: "#0b5394", style: { pointerEvents: "none" } })
+                )
+              ),
+              h("p", { className: "hint" }, "Kéo vòng tròn ở đầu mút để đổi vectơ ", h(Vec, null, "a"), " (chỉ nhận toạ độ nguyên, khác vectơ-không). Cũng có thể nhấp vào vòng tròn rồi dùng phím mũi tên.")
+            ),
+            h("div", { className: "panel" },
+              h("h3", null, "Toạ độ đầu mút của ", h(Vec, null, "a")),
+              h("div", null,
+                h("span", { className: "stepper" }, h("span", null, "x:"),
+                  h("button", { type: "button", "aria-label": "Giảm x", onClick: () => trySetA(a.x - 1, a.y) }, MINUS),
+                  h("span", { className: "sv" }, a.x),
+                  h("button", { type: "button", "aria-label": "Tăng x", onClick: () => trySetA(a.x + 1, a.y) }, "+")),
+                h("span", { className: "stepper" }, h("span", null, "y:"),
+                  h("button", { type: "button", "aria-label": "Giảm y", onClick: () => trySetA(a.x, a.y - 1) }, MINUS),
+                  h("span", { className: "sv" }, a.y),
+                  h("button", { type: "button", "aria-label": "Tăng y", onClick: () => trySetA(a.x, a.y + 1) }, "+"))
+              ),
+              h("p", { style: { margin: "8px 0 0" } },
+                h(Vec, null, "a"), " = (" + a.x + "; " + a.y + ")",
+                "   ·   k", h(Vec, null, "a"), " = (" + fmtT(ka.x) + "; " + fmtT(ka.y) + ")"),
+              h("h3", null, "Hệ số k"),
+              h("div", { className: "ctl" },
+                h("div", { className: "ctl-head" },
+                  h("label", { htmlFor: "k-slider" }, "Trượt để đổi k"),
+                  h("span", { className: "ctl-val" }, "k = ", kNode(k))),
+                h("input", {
+                  id: "k-slider", type: "range", min: -3, max: 3, step: 0.5, value: k,
+                  onChange: (e) => setK2(parseFloat(e.target.value)),
+                  "aria-label": "Hệ số k, từ trừ 3 đến 3"
+                }),
+                h("div", { className: "scale" }, h("span", null, MINUS + "3"), h("span", null, "0"), h("span", null, "3"))
+              ),
+              h("div", { className: "quick", role: "group", "aria-label": "Đặt nhanh giá trị k" },
+                quickVals.map((v) => h("button", {
+                  key: v, type: "button", className: k === v ? "on" : "",
+                  onClick: () => setK2(v), "aria-pressed": k === v
+                }, kNode(v)))
+              ),
+              h("h3", null, "Số liệu trực tiếp"),
+              h("table", { className: "data" },
+                h("tbody", null,
+                  h("tr", null, h("th", null, "|", h(Vec, null, "a"), "|"), h("td", null, fmt(lenA), " (đơn vị lưới)")),
+                  h("tr", null, h("th", null, "k"), h("td", null, kNode(k))),
+                  h("tr", null, h("th", null, "|k", h(Vec, null, "a"), "|"), h("td", null, fmt(lenKA))),
+                  h("tr", null, h("th", null, "Kiểm tra |k", h(Vec, null, "a"), "| = |k|·|", h(Vec, null, "a"), "|"),
+                    h("td", null, fmt(lenKA), " = ", fmt(Math.abs(k) * lenA), "  ✓"))
+                )
+              ),
+              h("p", { className: "kbd-note" }, "Hai vế của phép kiểm tra được tính từ giá trị chính xác, sau đó mới làm tròn đến 2 chữ số thập phân."),
+              h("p", { style: { marginTop: 12 } }, dirNode),
+              h("div", { className: "box" },
+                h("h3", null, "Thử thách nhỏ"),
+                h("p", null, "Đặt k sao cho |k", h(Vec, null, "a"), "| = 2|", h(Vec, null, "a"), "| và k", h(Vec, null, "a"), " ngược hướng ", h(Vec, null, "a"), "."),
+                h("button", {
+                  type: "button", className: "btn",
+                  onClick: () => setChal(k === -2 ? "ok" : "no")
+                }, "Kiểm tra"),
+                h("div", { className: "feedback " + (chal ? "show " + chal : ""), role: "status", "aria-live": "polite" },
+                  chal === "ok"
+                    ? h("span", null, "Đúng! k = " + MINUS + "2: |k| = 2 nên độ dài gấp đôi, dấu âm làm k", h(Vec, null, "a"), " ngược hướng ", h(Vec, null, "a"), ".")
+                    : chal === "no"
+                      ? "Chưa đúng. Cần đồng thời |k| = 2 và k < 0 — thử lại nhé."
+                      : null)
+              )
+            )
+          )
+        );
+      }
+
+      /* ================= LAB 2 ================= */
+      const AB_UNITS = 20, BEAM_Y = 150, BEAM_X1 = 70, BEAM_X2 = 570, PXU = (BEAM_X2 - BEAM_X1) / AB_UNITS;
+
+      function Lab2() {
+        const [mA, setMA] = useState(1);
+        const [mB, setMB] = useState(3);
+        const [pos, setPos] = useState(10); // AM theo đơn vị đoạn, bước 0.25
+        const [showAns, setShowAns] = useState(false);
+        const dragRef = useRef(false);
+        const svgRef = useRef(null);
+
+        const MB_len = AB_UNITS - pos;
+        const momA = mA * pos, momB = mB * MB_len;
+        const diff = momA - momB;
+        const balanced = Math.abs(diff) <= (mA + mB) * 0.125 + 1e-9;
+        const tilt = balanced ? 0 : clamp(-diff * 0.08, -7, 7);
+        const Mx = BEAM_X1 + pos * PXU;
+        const starAM = AB_UNITS * mB / (mA + mB); // vị trí cân bằng đúng
+        const starX = BEAM_X1 + starAM * PXU;
+        const gRatio = gcd(mB, mA);
+        const gFrac = gcd(mB, mA + mB);
+        const maxMom = Math.max(momA, momB, 1);
+
+        function pointerPos(e) {
+          const rect = svgRef.current.getBoundingClientRect();
+          const px = (e.clientX - rect.left) * (640 / rect.width);
+          const raw = (px - BEAM_X1) / PXU;
+          return clamp(Math.round(raw / 0.25) * 0.25, 0, AB_UNITS);
+        }
+        function onDown(e) {
+          if (!e.target.getAttribute || e.target.getAttribute("data-mdrag") !== "1") return;
+          dragRef.current = true;
+          e.currentTarget.setPointerCapture(e.pointerId);
+          setPos(pointerPos(e));
+        }
+        function onMove(e) { if (dragRef.current) setPos(pointerPos(e)); }
+        function onUp() { dragRef.current = false; }
+
+        const ticks = [];
+        for (let i = 0; i <= AB_UNITS; i++) {
+          const x = BEAM_X1 + i * PXU;
+          ticks.push(h("line", { key: i, x1: x, y1: BEAM_Y + 5, x2: x, y2: BEAM_Y + (i % 5 === 0 ? 15 : 10), stroke: "#8fb0cf", strokeWidth: 1.2 }));
+        }
+        const rA = 15 + 3 * mA, rB = 15 + 3 * mB;
+
+        return h("section", { className: "lab", "aria-labelledby": "lab2-title" },
+          h("h2", { id: "lab2-title" }, "Lab 2 · Đòn cân bằng: tìm điểm khối tâm"),
+          h("p", { className: "lab-sub" },
+            "Hai vật nặng đặt tại A và B. Kéo trụ đỡ M dọc đoạn AB để đòn cân bằng — đó là lúc điểm khối tâm của hệ hai vật nằm ngay trên trụ đỡ."),
+          h("div", { className: "stage" },
+            h("svg", {
+              ref: svgRef, viewBox: "0 0 640 300", role: "img",
+              "aria-label": "Đòn AB với hai vật nặng tại A, B và trụ đỡ M có thể kéo dọc đoạn AB",
+              onPointerDown: onDown, onPointerMove: onMove, onPointerUp: onUp, onPointerCancel: onUp
+            },
+              // ground
+              h("line", { x1: 36, y1: 234, x2: 604, y2: 234, stroke: "#8fb0cf", strokeWidth: 2 }),
+              h("g", { transform: "rotate(" + tilt + " " + Mx + " " + BEAM_Y + ")" },
+                // beam
+                h("line", { x1: BEAM_X1 - 14, y1: BEAM_Y, x2: BEAM_X2 + 14, y2: BEAM_Y, stroke: "#0b5394", strokeWidth: 7, strokeLinecap: "round" }),
+                ticks,
+                // answer ghost marker
+                showAns && h("g", null,
+                  h("line", { x1: starX, y1: BEAM_Y - 52, x2: starX, y2: BEAM_Y + 20, stroke: "#1e7d32", strokeWidth: 2, strokeDasharray: "6 4" }),
+                  h("path", { d: "M" + starX + "," + (BEAM_Y - 58) + " l7,9 h-14 Z", fill: "#1e7d32" }),
+                  h("text", { x: clamp(starX, 78, 470), y: BEAM_Y - 64, fontSize: 14.5, fontWeight: 700, fill: "#1e7d32" }, "vị trí cân bằng")
+                ),
+                // masses
+                h("circle", { cx: BEAM_X1, cy: BEAM_Y - rA - 3, r: rA, fill: "#0b5394" }),
+                h("text", { x: BEAM_X1, y: BEAM_Y - rA + 2, fontSize: 13.5, fontWeight: 700, fill: "#fff", textAnchor: "middle" }, mA + " kg"),
+                h("circle", { cx: BEAM_X2, cy: BEAM_Y - rB - 3, r: rB, fill: "#c2510a" }),
+                h("text", { x: BEAM_X2, y: BEAM_Y - rB + 2, fontSize: 13.5, fontWeight: 700, fill: "#fff", textAnchor: "middle" }, mB + " kg"),
+                h("text", { x: BEAM_X1, y: BEAM_Y + 38, fontSize: 19, fontWeight: 800, fill: "#0b5394", textAnchor: "middle" }, "A"),
+                h("text", { x: BEAM_X2, y: BEAM_Y + 38, fontSize: 19, fontWeight: 800, fill: "#c2510a", textAnchor: "middle" }, "B")
+              ),
+              // fulcrum (not rotated)
+              h("polygon", { points: Mx + "," + (BEAM_Y + 5) + " " + (Mx - 25) + ",234 " + (Mx + 25) + ",234", fill: "#5b7a99" }),
+              h("circle", { "data-mdrag": "1", cx: Mx, cy: BEAM_Y, r: 21, fill: "transparent", style: { cursor: "ew-resize" } }),
+              h("circle", { cx: Mx, cy: BEAM_Y, r: 9, fill: "#fff", stroke: "#16324a", strokeWidth: 3, style: { pointerEvents: "none" } }),
+              h("text", { x: Mx, y: 258, fontSize: 18, fontWeight: 800, fill: "#16324a", textAnchor: "middle" }, "M"),
+              h("text", { x: BEAM_X1, y: 282, fontSize: 13.5, fill: "#51708c" }, "AM = " + fmtT(pos)),
+              h("text", { x: BEAM_X2, y: 282, fontSize: 13.5, fill: "#51708c", textAnchor: "end" }, "MB = " + fmtT(MB_len))
+            ),
+            h("p", { className: "hint" }, "Đoạn AB được chia thành 20 phần bằng nhau; kéo điểm M trên đòn (snap theo bước 0,25 phần) hoặc dùng thanh trượt bên dưới.")
+          ),
+          h("div", { className: "status " + (balanced ? "ok" : "no"), role: "status", "aria-live": "polite" },
+            balanced
+              ? "CÂN BẰNG — hai mô-men bằng nhau, M chính là điểm khối tâm của hệ hai vật."
+              : "Chưa cân bằng — đòn nghiêng về phía " + (diff > 0 ? "A" : "B") + " (phía có mô-men lớn hơn)."),
+          h("div", { className: "lab-grid", style: { marginTop: 14 } },
+            h("div", { className: "panel" },
+              h("h3", null, "Khối lượng hai vật"),
+              h("div", { className: "ctl" },
+                h("div", { className: "ctl-head" },
+                  h("label", { htmlFor: "mA-slider" }, "Vật tại A (m", h("sub", null, "A"), ")"),
+                  h("span", { className: "ctl-val" }, mA + " kg")),
+                h("input", { id: "mA-slider", type: "range", min: 1, max: 6, step: 1, value: mA, onChange: (e) => setMA(parseInt(e.target.value, 10)), "aria-label": "Khối lượng vật tại A, từ 1 đến 6 kilôgam" }),
+                h("div", { className: "scale" }, h("span", null, "1 kg"), h("span", null, "6 kg"))
+              ),
+              h("div", { className: "ctl" },
+                h("div", { className: "ctl-head" },
+                  h("label", { htmlFor: "mB-slider" }, "Vật tại B (m", h("sub", null, "B"), ")"),
+                  h("span", { className: "ctl-val" }, mB + " kg")),
+                h("input", { id: "mB-slider", type: "range", min: 1, max: 6, step: 1, value: mB, onChange: (e) => setMB(parseInt(e.target.value, 10)), "aria-label": "Khối lượng vật tại B, từ 1 đến 6 kilôgam" }),
+                h("div", { className: "scale" }, h("span", null, "1 kg"), h("span", null, "6 kg"))
+              ),
+              h("div", { className: "btn-row" },
+                h("button", {
+                  type: "button", className: "btn",
+                  onClick: () => { setMA(1); setMB(3); setPos(10); setShowAns(false); }
+                }, "Đặt như SGK: 1 kg và 3 kg"),
+                h("button", {
+                  type: "button", className: "btn ghost", "aria-expanded": showAns,
+                  onClick: () => setShowAns(!showAns)
+                }, showAns ? "Ẩn đáp án" : "Xem đáp án")
+              ),
+              showAns && h("div", { className: "box", style: { marginTop: 4 } },
+                h("h3", null, "Vị trí cân bằng đúng"),
+                h("p", null, "M chia AB theo tỉ lệ AM : MB = m", h("sub", null, "B"), " : m", h("sub", null, "A"), " = ", (mB / gRatio) + " : " + (mA / gRatio), "."),
+                h("p", { className: "eq" }, "AM/AB = ", h(Frac, { n: mB / gFrac, d: (mA + mB) / gFrac }), " ≈ ", fmt(mB / (mA + mB))),
+                h("p", null, "Tức AM = ", fmtT(starAM), " (trên 20 phần của AB)."),
+                h("button", { type: "button", className: "btn", onClick: () => setPos(starAM) }, "Đặt M vào vị trí này")
+              )
+            ),
+            h("div", { className: "panel" },
+              h("h3", null, "Vị trí trụ đỡ M"),
+              h("div", { className: "ctl" },
+                h("div", { className: "ctl-head" },
+                  h("label", { htmlFor: "pos-slider" }, "AM (đơn vị đoạn)"),
+                  h("span", { className: "ctl-val" }, fmtT(pos) + " / 20")),
+                h("input", { id: "pos-slider", type: "range", min: 0, max: AB_UNITS, step: 0.25, value: pos, onChange: (e) => setPos(parseFloat(e.target.value)), "aria-label": "Vị trí M: độ dài AM theo đơn vị đoạn" }),
+                h("div", { className: "scale" }, h("span", null, "A (0)"), h("span", null, "B (20)"))
+              ),
+              h("h3", null, "So sánh hai mô-men"),
+              h("div", { className: "bar-row" },
+                h("span", null, "m", h("sub", null, "A"), "·MA = ", h("strong", null, fmtT(momA))),
+                h("div", { className: "bar-track" }, h("div", { className: "bar-fill", style: { width: (momA / maxMom * 100) + "%" } }))),
+              h("div", { className: "bar-row" },
+                h("span", null, "m", h("sub", null, "B"), "·MB = ", h("strong", null, fmtT(momB))),
+                h("div", { className: "bar-track" }, h("div", { className: "bar-fill b", style: { width: (momB / maxMom * 100) + "%" } }))),
+              h("h3", null, "Điều kiện cân bằng viết bằng vectơ"),
+              h("p", { className: "eq" },
+                "m", h("sub", null, "A"), "·", h(Vec, null, "MA"), " + m", h("sub", null, "B"), "·", h(Vec, null, "MB"), " = ", h(Vec, null, "0")),
+              h("p", { style: { color: "var(--muted)", marginTop: 4 } },
+                "Hai vectơ ", h(Vec, null, "MA"), " và ", h(Vec, null, "MB"), " ngược hướng, nên đẳng thức vectơ trên tương đương với m",
+                h("sub", null, "A"), "·MA = m", h("sub", null, "B"), "·MB về độ dài.")
+            )
+          )
+        );
+      }
+
+      /* ================= LAB 3 ================= */
+      const QUIZ = [
+        {
+          q: () => h("span", null, "Cho |", h(Vec, null, "a"), "| = 5. Tính |", MINUS, "3", h(Vec, null, "a"), "|."),
+          options: [MINUS + "15", "15", MINUS + "5", "5"],
+          correct: 1,
+          explain: () => h("span", null, "Độ dài không bao giờ âm: |", MINUS, "3", h(Vec, null, "a"), "| = |", MINUS, "3| · |", h(Vec, null, "a"), "| = 3 · 5 = 15.")
+        },
+        {
+          q: () => h("span", null, "Vectơ ", MINUS, "2", h(Vec, null, "a"), " có hướng thế nào so với ", h(Vec, null, "a"), " (", h(Vec, null, "a"), " ≠ ", h(Vec, null, "0"), ")?"),
+          options: ["Cùng hướng, dài gấp đôi", "Ngược hướng, dài gấp đôi", "Ngược hướng, dài bằng nửa", "Cùng hướng, dài bằng nửa"],
+          correct: 1,
+          explain: () => h("span", null, "k = ", MINUS, "2 < 0 nên ", MINUS, "2", h(Vec, null, "a"), " ngược hướng với ", h(Vec, null, "a"), "; |k| = 2 nên độ dài gấp đôi.")
+        },
+        {
+          q: () => h("span", null, "Điểm K thoả mãn ", h(Vec, null, "KA"), " + 2", h(Vec, null, "KB"), " = ", h(Vec, null, "0"), " nằm ở đâu trên đoạn AB?"),
+          options: [
+            () => h("span", null, "AK = ", h(Frac, { n: 1, d: 3 }), "AB, K gần A hơn"),
+            "K là trung điểm của AB",
+            () => h("span", null, "AK = ", h(Frac, { n: 2, d: 3 }), "AB, K gần B hơn"),
+            "K nằm ngoài đoạn AB"
+          ],
+          correct: 2,
+          explain: () => h("span", null, "Từ đẳng thức, K nằm giữa A và B và AK = 2KB. Mà AK + KB = AB nên AK = ", h(Frac, { n: 2, d: 3 }), "AB — K gần B hơn.")
+        }
+      ];
+
+      function Lab3() {
+        const [answers, setAnswers] = useState([null, null, null]);
+        const score = QUIZ.reduce((s, q, i) => s + (answers[i] === q.correct ? 1 : 0), 0);
+        const done = answers.every((x) => x !== null);
+
+        function choose(qi, oi) {
+          if (answers[qi] !== null) return;
+          const next = answers.slice(); next[qi] = oi; setAnswers(next);
+        }
+        function optNode(opt) { return typeof opt === "function" ? opt() : opt; }
+
+        return h("section", { className: "lab", "aria-labelledby": "lab3-title" },
+          h("h2", { id: "lab3-title" }, "Lab 3 · Thử thách nhanh"),
+          h("div", { className: "quiz-head" },
+            h("p", { className: "lab-sub", style: { margin: 0 } }, "Ba câu hỏi ngắn. Chọn đáp án để nhận phản hồi ngay."),
+            h("span", { className: "score-chip", "aria-live": "polite" }, "Điểm: " + score + "/3"),
+            h("button", { type: "button", className: "btn ghost", onClick: () => setAnswers([null, null, null]) }, "Làm lại")
+          ),
+          QUIZ.map((q, qi) => {
+            const chosen = answers[qi];
+            return h("div", { className: "q", key: qi },
+              h("p", { className: "qq" }, "Câu " + (qi + 1) + ". ", q.q()),
+              h("div", { className: "opts", role: "group", "aria-label": "Các lựa chọn của câu " + (qi + 1) },
+                q.options.map((opt, oi) => {
+                  let cls = "opt";
+                  if (chosen !== null) {
+                    if (oi === q.correct) cls += " correct";
+                    else if (oi === chosen) cls += " wrong";
+                  }
+                  return h("button", {
+                    key: oi, type: "button", className: cls, disabled: chosen !== null,
+                    onClick: () => choose(qi, oi),
+                    "aria-label": "Đáp án " + "ABCD"[oi] + (chosen !== null && oi === q.correct ? " (đáp án đúng)" : "")
+                  },
+                    h("span", { className: "letter" }, "ABCD"[oi] + "."),
+                    h("span", null, optNode(opt)));
+                })
+              ),
+              chosen !== null && h("div", { className: "explain", role: "status" },
+                h("span", { className: "verdict " + (chosen === q.correct ? "ok" : "no") },
+                  chosen === q.correct ? "Đúng! " : "Chưa đúng. "),
+                q.explain())
+            );
+          }),
+          done && h("div", { className: "final", role: "status" },
+            h("p", { className: "big" }, "Hoàn thành! Em đạt " + score + "/3 điểm."),
+            h("p", null, "Nhớ: dấu của k quyết định hướng, |k| quyết định độ dài.")
+          )
+        );
+      }
+
+      /* ================= APP ================= */
+      function App() {
+        const [tab, setTab] = useState(0);
+        const tabs = [
+          { no: "Lab 1", name: "Nhân vectơ với một số", node: h(Lab1) },
+          { no: "Lab 2", name: "Đòn cân bằng", node: h(Lab2) },
+          { no: "Lab 3", name: "Thử thách nhanh", node: h(Lab3) }
+        ];
+        return h("div", { className: "wrap" },
+          h("header", { className: "intro" },
+            h("h1", null, "Bài 9 · Tích của một vectơ với một số"),
+            h("p", null, "Ba phòng thí nghiệm tương tác cho học sinh lớp 10: tự tay kéo, trượt và kiểm chứng quy tắc k", h(Vec, null, "a"),
+              " — dấu của k quyết định hướng, |k| quyết định độ dài.")
+          ),
+          h("nav", { className: "tabs", role: "tablist", "aria-label": "Chọn phòng thí nghiệm" },
+            tabs.map((t, i) => h("button", {
+              key: i, type: "button", role: "tab", className: "tab",
+              "aria-selected": tab === i, onClick: () => setTab(i)
+            }, h("span", { className: "tab-no" }, t.no), t.name))
+          ),
+          tabs[tab].node,
+          h("footer", { className: "source" },
+            "Nguồn: Bám sát SGK Toán 10 Kết nối tri thức, Bài 9 (tr. 55–59). Mọi đáp án đã kiểm chứng.")
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+    </script>
+  
+<script>
+// Ban sao cho man hinh MH-09: tu dong chon tab Lab 2 sau khi ung dung tai xong
+(function(){
+  var tries = 0;
+  var iv = setInterval(function(){
+    tries++;
+    var els = document.querySelectorAll('button, [role="tab"], a');
+    for (var i = 0; i < els.length; i++) {
+      if (els[i].textContent.trim() === 'Lab 2') { els[i].click(); clearInterval(iv); return; }
+    }
+    if (tries > 40) clearInterval(iv);
+  }, 250);
+})();
+</script>
+</body>
+</html>

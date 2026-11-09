@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/giam-khao",
+      "destination": "/Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-GiamKhao-MoKhoa-HTML5/index.html"
+    },
+    {
+      "source": "/hoc-sinh",
+      "destination": "/Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/index.html"
+    },
+    {
+      "source": "/thuyet-minh",
+      "destination": "/Ho-so-du-thi-Elearning-Bai9/TieuDinhPhuc_ThuyetMinhBaiGiang-Bai9.pdf"
+    },
+    {
+      "source": "/khbd",
+      "destination": "/Ho-so-du-thi-Elearning-Bai9/KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.pdf"
+    },
+    {
+      "source": "/dap-an",
+      "destination": "/Ho-so-du-thi-Elearning-Bai9/DAP-AN-Bai9-elearning.md"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(mp4|mp3|woff2|woff)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+HỒ SƠ DỰ THI E-LEARNING
+Bài 9: TÍCH CỦA MỘT VECTƠ VỚI MỘT SỐ — Toán 10, Kết nối tri thức với cuộc sống
+Tác giả: Tiêu Đình Phúc — Giáo viên Toán, Trường PTDTNT-THPT Bình Thuận
+
+THÀNH PHẦN HỒ SƠ
+1. KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.docx / .pdf
+   Kế hoạch bài dạy theo Công văn 5512 (2 tiết, hình thức e-learning).
+2. TieuDinhPhuc_ThuyetMinhBaiGiang-Bai9.docx / .pdf
+   Bản thuyết minh bài giảng: đặt vấn đề, ý tưởng sư phạm, điểm mới, cấu trúc, công nghệ, hiệu quả, cam kết.
+3. Kich-ban-elearning-chi-tiet-Bai9-v2.docx
+   Kịch bản chi tiết 18 màn hình: nội dung, lời thuyết minh, tương tác, đáp án, bản đồ năng lực.
+4. Bai9-Elearning-SCORM12-v2.zip
+   Gói bài giảng chuẩn SCORM 1.2 — nạp trực tiếp lên LMS (điểm đạt 80).
+5. Bai9-Elearning-HTML5-v2.zip
+   Bản HTML5 chạy offline — giải nén, mở index.html bằng trình duyệt.
+6. DAP-AN-Bai9-elearning.md
+   Tờ đáp án nhanh toàn bộ câu hỏi, điểm dừng video và bẫy sai điển hình.
+7. Bai9-Elearning-GiamKhao-MoKhoa-SCORM12.zip
+   BẢN MỞ KHÓA DÀNH CHO BAN GIÁM KHẢO (nạp LMS): toàn bộ 18 màn hình mở sẵn,
+   giám khảo xem tự do mọi nội dung — kể cả màn Thử thách, màn Kiểm tra cuối
+   bài và Báo cáo năng lực — mà không phải học tuần tự như học sinh.
+8. Bai9-Elearning-GiamKhao-MoKhoa-HTML5.zip
+   Bản mở khóa chạy offline của file 7 — giải nén, mở index.html bằng trình
+   duyệt. Bản giám khảo có dải nhãn cam ở mục lục để phân biệt với bản học sinh.
+
+LƯU Ý: bản trong các gói là bản v2.5 (nhân vật giáo viên là Thầy Phúc — giáo viên nam trẻ, giọng VieNeu Minh Triết miền Nam; video giới thiệu V0, thuyết minh giọng giáo viên,
+font Be Vietnam Pro, và tầng siêu nhận thức đủ 6 điểm chạm: dự đoán kèm mức tin cậy —
+chọn chiến lược trước bài khó — checklist tự kiểm tra trước khi nộp — tự phân tích lỗi
+của mình sau kiểm tra — đối chiếu hiệu chuẩn và câu tự hỏi mang theo ở màn hình cuối). Yêu cầu thiết bị: trình duyệt web bất kỳ, có loa/tai nghe; không cần mạng sau khi tải gói.

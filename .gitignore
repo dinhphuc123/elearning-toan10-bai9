@@ -1,0 +1,12 @@
+# Hệ thống & Trình duyệt
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Log tạm & IDE
+*.log
+.vscode/
+.idea/
+.vercel

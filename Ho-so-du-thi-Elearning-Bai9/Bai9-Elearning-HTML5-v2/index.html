@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 9 — Tích của một vectơ với một số | E-learning Toán 10 (bản v2.5)</title>
+<link rel="stylesheet" href="katex/katex.min.css">
+<style>
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-400-vietnamese.woff2") format("woff2");font-weight:400;font-display:swap;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0309,U+030B,U+0323,U+0328,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-400-latin.woff2") format("woff2");font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-500-vietnamese.woff2") format("woff2");font-weight:500;font-display:swap;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0309,U+030B,U+0323,U+0328,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-500-latin.woff2") format("woff2");font-weight:500;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-700-vietnamese.woff2") format("woff2");font-weight:700;font-display:swap;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0309,U+030B,U+0323,U+0328,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Be Vietnam Pro";src:url("fonts/bvp-700-latin.woff2") format("woff2");font-weight:700;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--navy:#0b5394;--navy2:#083d6b;--gold:#ffd966;--ink:#1c2430;--ok:#2e7d32;--bad:#c62828;--bg:#eef2f7;--card:#fff;--line:#d8e0ea}
+*{box-sizing:border-box;margin:0;padding:0}
+button,input,select,textarea{font-family:inherit}
+body{font-family:"Be Vietnam Pro","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+header{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;box-shadow:0 2px 10px #083d6b2b}
+header .t1{font-weight:700;font-size:18px;letter-spacing:-.2px}
+header .t2{font-size:13px;opacity:.85}
+#menubtn{display:none;background:none;border:1px solid #ffffff55;color:#fff;border-radius:8px;padding:5px 10px;font-size:16px;cursor:pointer}
+#progress{height:6px;background:#ffffff33;border-radius:3px;flex:1;min-width:60px}
+#progress i{display:block;height:100%;background:var(--gold);border-radius:3px;width:0;transition:width .3s}
+#tierbadge{flex:none;background:var(--gold);color:#4a3500;font-weight:700;font-size:13px;border-radius:999px;padding:3px 12px;display:none}
+#wrap{display:flex;max-width:1240px;margin:0 auto;min-height:calc(100vh - 120px)}
+aside{width:248px;flex:none;background:#fff;border-right:1px solid var(--line);padding:14px 10px}
+aside h3{font-size:12px;text-transform:uppercase;color:#71808f;letter-spacing:.6px;margin:6px 8px;font-weight:700}
+.mi{display:flex;gap:8px;align-items:flex-start;width:100%;text-align:left;background:none;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:14px;color:var(--ink);font-family:inherit}
+.mi:hover{background:#eef4fa}.mi.cur{background:#e2edfa;font-weight:600}
+.mi.lock{opacity:.45;cursor:not-allowed}
+.mi .n{flex:none;width:22px;height:22px;border-radius:50%;background:#e3ecf5;color:var(--navy);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.mi.done .n{background:var(--ok);color:#fff}
+main{flex:1;padding:20px 20px 28px;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;box-shadow:0 2px 12px #0b53940f}
+.phase{display:inline-block;background:#e8f0fe;color:var(--navy);font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px;letter-spacing:.2px}
+h1{font-size:25px;color:var(--navy2);margin-bottom:6px;letter-spacing:-.3px;line-height:1.25}
+h2{font-size:19px;color:var(--navy2);margin:16px 0 6px;letter-spacing:-.2px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+audio{border-radius:10px;background:#f1f5f9}
+p{margin:7px 0}
+.narr{background:#f4f8fd;border-left:4px solid var(--navy);border-radius:0 10px 10px 0;padding:10px 14px;font-style:italic;margin:12px 0}
+.narr .speakbtn{margin-top:8px;font-style:normal;font-size:13.5px;padding:5px 14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.goal{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;background:#fff;text-align:left;font-size:16px}
+.goal.read{border-color:var(--ok);background:#f1f8f1}
+.chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0}
+.char{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:11px;align-items:flex-start}
+.ava{flex:none;width:42px;height:42px;border-radius:50%;color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center}
+.char b{font-size:16.5px}.char span{display:block;font-size:14px;color:#44536a;margin-top:2px}
+.opts{display:grid;gap:9px;margin:12px 0}
+.opt{border:1.5px solid var(--line);border-radius:11px;padding:11px 14px;cursor:pointer;background:#fff;text-align:left;font-size:16.5px;width:100%}
+.opt:hover{border-color:var(--navy)}
+.opt.sel{border-color:var(--navy);background:#e8f0fe}
+.opt.right{border-color:var(--ok);background:#e8f5e9}
+.opt.wrong{border-color:var(--bad);background:#fdecea}
+.fb{border-radius:10px;padding:10px 14px;margin:10px 0;display:none}
+.fb.ok{display:block;background:#e8f5e9;border:1px solid #a5d6a7}
+.fb.no{display:block;background:#fdecea;border:1px solid #ef9a9a}
+.dsrow{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin:8px 0;flex-wrap:wrap}
+.dsbtns{display:flex;gap:8px}
+.dsbtns button{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:6px 16px;cursor:pointer;font-size:15.5px;font-weight:600}
+.dsbtns button.selD{border-color:var(--ok);background:#e8f5e9}
+.dsbtns button.selS{border-color:var(--bad);background:#fdecea}
+input.num{width:110px;padding:8px 10px;font-size:17px;border:1.5px solid var(--line);border-radius:9px;text-align:center}
+select.sel{padding:8px 10px;font-size:16.5px;border:1.5px solid var(--line);border-radius:9px;background:#fff}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:16.5px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn:disabled{background:#b9c6d3;cursor:not-allowed}
+footer{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:20}
+footer .cnt{font-size:14px;color:#5a6b7d}
+video{width:100%;border-radius:12px;background:#000;display:block}
+iframe.lab{width:100%;height:560px;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.kq{border-collapse:collapse;width:100%;margin:10px 0}
+table.kq td,table.kq th{border:1px solid var(--line);padding:7px 10px;text-align:left;font-size:15.5px}
+table.kq th{background:#e8f0fe}
+.chips{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.chip{border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;background:#fff;text-align:left;font-size:16px}
+.chip.picked{border-color:var(--ok);background:#e8f5e9;cursor:default}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;color:#fff;margin-right:6px;vertical-align:middle}
+.tag.nb{background:#38761d}.tag.th{background:#0b5394}.tag.vd{background:#e69138}
+.score{font-size:30px;font-weight:800;color:var(--navy)}
+/* --- video tuong tac --- */
+.vidwrap{position:relative;border-radius:12px;overflow:hidden;background:#000;margin:10px 0}
+.qoverlay{position:absolute;inset:0;background:rgba(8,28,48,.9);display:none;align-items:center;justify-content:center;padding:14px;z-index:5}
+.qoverlay.show{display:flex}
+.qin{background:#fff;border-radius:14px;padding:18px;max-width:560px;width:100%;max-height:94%;overflow:auto}
+.qin .qtag{display:inline-block;background:#f2b705;color:#4a3500;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:9px}
+.qin h3{font-size:17.5px;margin-bottom:12px;line-height:1.45;color:var(--ink)}
+/* --- keo tha ghep the (tap-to-place) --- */
+.dndrow{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:9px 12px;margin:8px 0;flex-wrap:wrap}
+.dndrow .lab2{flex:1;min-width:180px}
+.slot{flex:none;min-width:170px;min-height:44px;border:2px dashed #9db8d2;border-radius:10px;background:#f4f8fd;padding:8px 12px;cursor:pointer;font-size:16px;color:#44536a}
+.slot.filled{border-style:solid;border-color:var(--ok);background:#e8f5e9;color:var(--ink);cursor:default}
+.slot.bad{border-color:var(--bad);background:#fdecea}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.tchip{border:1.5px solid var(--navy);background:#fff;color:var(--navy2);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:15.5px;font-weight:600}
+.tchip.sel{background:var(--navy);color:#fff}
+.tchip.used{opacity:.35;pointer-events:none}
+.tchip{touch-action:none;-webkit-user-select:none;user-select:none}
+.tchip.dragsrc{opacity:.4}
+.chip{touch-action:none;-webkit-user-select:none;user-select:none}
+.chip.dragsrc{opacity:.4}
+.slot.hover{border-style:solid;border-color:var(--navy);background:#dcebfb}
+.dragghost{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);box-shadow:0 10px 24px rgba(11,60,110,.35);opacity:.97;margin:0}
+.sortbox.hover{outline:2px dashed var(--navy);outline-offset:4px}
+.dhint{font-size:13.5px;color:#5b6b7c;margin:6px 0 0}
+/* --- tang hoc --- */
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.tier{border:2px solid var(--line);border-radius:12px;padding:13px 15px;cursor:pointer;background:#fff;text-align:left;font-size:15.5px;width:100%}
+.tier:hover{border-color:var(--navy)}
+.tier.sug{border-color:#f2b705;background:#fffbe8}
+.tier.cur{border-color:var(--ok);background:#f1f8f1}
+.tier b{font-size:16.5px}
+.tier .tg{display:inline-block;font-size:11.5px;font-weight:700;background:#f2b705;color:#4a3500;border-radius:6px;padding:1px 7px;margin-left:6px}
+/* --- bao cao nang luc --- */
+.comp{margin:9px 0}
+.comp .cl{display:flex;justify-content:space-between;font-size:15.5px;margin-bottom:3px}
+.comp .bar{height:11px;background:#e3ecf5;border-radius:6px;overflow:hidden}
+.comp .bar i{display:block;height:100%;background:var(--navy);border-radius:6px}
+.lockbox{border:2px dashed #9db8d2;border-radius:12px;padding:16px;text-align:center;background:#f4f8fd;margin:12px 0}
+.aicard{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin:10px 0;background:#fbfcfe}
+.aicard .who{font-size:13px;font-weight:700;color:#5a6b7d;text-transform:uppercase;letter-spacing:.3px}
+@media (max-width:760px){
+  aside{display:none;position:fixed;z-index:30;top:52px;left:0;bottom:0;box-shadow:2px 0 12px #0003}
+  aside.open{display:block}
+  #menubtn{display:block}
+  main{padding:12px}
+  .card{padding:15px}
+  h1{font-size:21px}
+  iframe.lab{height:520px}
+  .slot{min-width:140px}
+}
+</style>
+</head>
+<body>
+<header>
+  <button id="menubtn" aria-label="Mục lục">☰</button>
+  <div><div class="t1">Bài 9 — Tích của một vectơ với một số</div><div class="t2">E-learning Toán 10 · Kết nối tri thức · Bản v2.5</div></div>
+  <div id="progress"><i></i></div>
+  <span id="tierbadge"></span>
+</header>
+<div id="wrap">
+  <aside id="menu"><h3>Mục lục bài học</h3><div id="menulist"></div></aside>
+  <main><div class="card" id="stage"></div></main>
+</div>
+<footer>
+  <button class="btn ghost" id="prev">← Trước</button>
+  <span class="cnt" id="counter"></span>
+  <button class="btn" id="next">Tiếp →</button>
+</footer>
+<script src="katex/katex.min.js"></script>
+<script src="katex/auto-render.min.js"></script>
+<script>
+"use strict";
+/* ---------- SCORM 1.2 wrapper + localStorage fallback ---------- */
+var SCORM = (function(){
+  var api = null, active = false;
+  function find(w){ var n=0; while(w && n<500){ if(w.API) return w.API; if(w.parent && w.parent!==w) w=w.parent; else break; n++; } return null; }
+  function init(){
+    try{ api = find(window); if(!api && window.opener) api = find(window.opener); }catch(e){}
+    if(api){ try{ active = (api.LMSInitialize("") === "true" || api.LMSInitialize("") === true); }catch(e){ active=false; } }
+    return active;
+  }
+  function get(k){ if(active){ try{ return api.LMSGetValue(k); }catch(e){ return ""; } } return ""; }
+  function set(k,v){ if(active){ try{ api.LMSSetValue(k, String(v)); }catch(e){} } }
+  function save(){ if(active){ try{ api.LMSCommit(""); }catch(e){} } }
+  function finish(){ if(active){ try{ api.LMSFinish(""); }catch(e){} active=false; } }
+  return {init:init, get:get, set:set, save:save, finish:finish, isActive:function(){return active;}};
+})();
+/* ---------- Trang thai ---------- */
+var KEY = "bai9_elearning_v2";
+var S = { cur:0, max:0, done:{}, pred:null, conf03:null, reflection:"", selfcheck:false, plan16:null, planEff:null, err:null, readGoals:false, tier:null, diag:-1, vstops:{}, ch13:null, challenge:false, ai:0,
+          test:{attempts:0, best:-1, passed:false, first:-1, lastItems:null, note:""} };
+function persist(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  if(SCORM.isActive()){ try{ SCORM.set("cmi.core.suspend_data", JSON.stringify(S).slice(0,4000)); SCORM.save(); }catch(e){} }
+}
+function restore(){
+  var raw = null;
+  if(SCORM.isActive()){ raw = SCORM.get("cmi.core.suspend_data"); }
+  if(!raw){ try{ raw = localStorage.getItem(KEY); }catch(e){} }
+  if(raw){ try{ var o = JSON.parse(raw); if(o && typeof o.cur === "number"){ for(var k in S){ if(o[k] !== undefined) S[k] = o[k]; } } }catch(e){} }
+}
+/* ---------- KaTeX ---------- */
+function K(tex){ return "\\(" + tex + "\\)"; }
+function renderK(el){
+  if(window.renderMathInElement && el){
+    try{ renderMathInElement(el, { delimiters:[{left:"\\(", right:"\\)", display:false}] }); }catch(e){}
+  }
+}
+function V1(t){ return K("\\vec{" + t + "}"); }
+function OV(t){ return K("\\overrightarrow{" + t + "}"); }
+function LEN(t){ return K("\\left|" + t + "\\right|"); }
+</script>
+<script>
+"use strict";
+/* ---------- Tien ich tuong tac ---------- */
+function $(id){ return document.getElementById(id); }
+function markDone(id){ if(!S.done[id]){ S.done[id]=true; persist(); renderMenu(); updateNav(); } }
+function fb(el, ok, html){ if(!el) return; el.className = "fb " + (ok ? "ok" : "no"); el.innerHTML = html; renderK(el); }
+function mcq(boxId, fbId, opts, correct, fbOk, fbNo, onDone){
+  var box = $(boxId), f = $(fbId), picked = -1;
+  if(!box) return;
+  box.innerHTML = "";
+  opts.forEach(function(t, i){
+    var b = document.createElement("button"); b.className = "opt"; b.innerHTML = t;
+    b.onclick = function(){
+      if(picked === correct) return;
+      picked = i;
+      box.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel","right","wrong"); });
+      if(i === correct){ b.classList.add("right"); fb(f, true, fbOk); if(onDone) onDone(); }
+      else { b.classList.add("wrong"); fb(f, false, fbNo); }
+    };
+    box.appendChild(b);
+  });
+}
+function narr(t, ak){ return '<div class="narr"' + (ak ? ' data-audio="audio/' + ak + '.mp3"' : '') + '><div class="narrtxt">' + t + '</div><button class="btn ghost speakbtn" type="button">Nghe đọc lời dẫn</button></div>'; }
+function speakNarr(btn){
+  if(!window.speechSynthesis){ showToast("Thiết bị này không hỗ trợ giọng đọc."); return; }
+  var box = btn.closest(".narr"); if(!box) return;
+  var clone = box.cloneNode(true);
+  clone.querySelectorAll(".katex-mathml, button").forEach(function(n){ n.remove(); });
+  var txt = clone.textContent.replace(/([A-Za-z])\u20D7/g, " véc tơ $1 ").replace(/\s+/g, " ").trim();
+  if(!txt) return;
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(txt); u.lang = "vi-VN"; u.rate = 0.95;
+  var vs = speechSynthesis.getVoices();
+  for(var i = 0; i < vs.length; i++){ if(vs[i].lang && vs[i].lang.indexOf("vi") === 0){ u.voice = vs[i]; break; } }
+  speechSynthesis.speak(u);
+}
+function head(code, phase, title){ return '<span class="phase">' + code + ' · ' + phase + '</span><h1>' + title + '</h1>'; }
+function numVal(id){ var el = $(id); if(!el) return NaN; return parseFloat(String(el.value).replace(",", ".")); }
+function TB(y, tbk, g){ return S.tier === "Y" ? y : (S.tier === "G" ? g : tbk); }
+function tierName(){ return S.tier === "Y" ? "Khởi động" : (S.tier === "G" ? "Bứt phá" : "Tăng tốc"); }
+function updateTierBadge(){
+  var b = $("tierbadge");
+  if(S.tier){ b.style.display = "inline-block"; b.textContent = "Chặng: " + tierName(); } else b.style.display = "none";
+}
+/* --- Sap xep the theo thu tu (bam theo thu tu dung) --- */
+/* --- Keo tha bang Pointer Events: chuot tren may tinh + tay tren dien thoai/tablet.
+   Giu nguyen cach cham chon -> cham dat (onclick) lam du phong. --- */
+function enableDrag(el, opts){
+  if(!window.PointerEvent) return;
+  var pid = null, sx = 0, sy = 0, dragging = false, ghost = null, curTarget = null;
+  function clearHover(){ if(curTarget){ curTarget.classList.remove("hover"); curTarget = null; } }
+  el.addEventListener("pointerdown", function(e){
+    if(el.classList.contains("used") || el.classList.contains("picked")) return;
+    pid = e.pointerId; sx = e.clientX; sy = e.clientY; dragging = false;
+    try{ el.setPointerCapture(pid); }catch(_){}
+  });
+  el.addEventListener("pointermove", function(e){
+    if(e.pointerId !== pid) return;
+    if(!dragging){
+      if(Math.hypot(e.clientX - sx, e.clientY - sy) < 8) return;
+      dragging = true;
+      ghost = el.cloneNode(true); ghost.classList.add("dragghost"); ghost.classList.remove("sel");
+      ghost.style.width = el.offsetWidth + "px";
+      document.body.appendChild(ghost); el.classList.add("dragsrc");
+    }
+    ghost.style.left = e.clientX + "px"; ghost.style.top = e.clientY + "px";
+    var ok = null;
+    if(opts.targets){
+      var list = opts.targets();
+      for(var i = 0; i < list.length; i++){
+        var r = list[i].getBoundingClientRect();
+        if(e.clientX >= r.left - 6 && e.clientX <= r.right + 6 && e.clientY >= r.top - 6 && e.clientY <= r.bottom + 6){ ok = list[i]; break; }
+      }
+    }
+    if(ok !== curTarget){ clearHover(); if(ok){ ok.classList.add("hover"); curTarget = ok; } }
+    e.preventDefault();
+  });
+  function finish(e){
+    if(e.pointerId !== pid) return;
+    var was = dragging, target = curTarget;
+    if(ghost){ ghost.remove(); ghost = null; }
+    el.classList.remove("dragsrc"); clearHover(); dragging = false; pid = null;
+    if(was && opts.drop) opts.drop(target);
+  }
+  el.addEventListener("pointerup", finish);
+  el.addEventListener("pointercancel", finish);
+}
+/* --- Sap xep thu tu bang RE KEO len/xuong (chuot + cam ung), bam nut Kiem tra de cham --- */
+function attachSortDrag(chip, box, isDone){
+  var pid = null, startY = 0, lastY = 0, dragging = false, ghost = null;
+  chip.addEventListener("pointerdown", function(e){
+    if(isDone() || chip.classList.contains("picked")) return;
+    pid = e.pointerId; startY = e.clientY; lastY = e.clientY; dragging = false;
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", finish);
+    document.addEventListener("pointercancel", finish);
+  });
+  function onMove(e){
+    if(e.pointerId !== pid) return;
+    if(!dragging){
+      if(Math.abs(e.clientY - startY) < 8) return;
+      dragging = true;
+      ghost = chip.cloneNode(true); ghost.classList.add("dragghost"); ghost.classList.remove("picked");
+      ghost.style.width = chip.offsetWidth + "px";
+      document.body.appendChild(ghost); chip.classList.add("dragsrc");
+    }
+    var r0 = chip.getBoundingClientRect();
+    ghost.style.left = (r0.left + r0.width / 2) + "px";
+    ghost.style.top = e.clientY + "px";
+    var all = Array.prototype.slice.call(box.querySelectorAll(".chip"));
+    var cur = all.indexOf(chip);
+    var sibs = all.filter(function(c){ return c !== chip; });
+    var dest = sibs.length;
+    var movingUp = e.clientY <= lastY;
+    for(var i = 0; i < sibs.length; i++){
+      var r = sibs[i].getBoundingClientRect();
+      var mid = r.top + r.height / 2;
+      if(movingUp ? e.clientY <= mid : e.clientY < mid){ dest = i; break; }
+    }
+    lastY = e.clientY;
+    if(dest !== cur){
+      if(dest >= sibs.length) box.appendChild(chip); else box.insertBefore(chip, sibs[dest]);
+    }
+    e.preventDefault();
+  }
+  function finish(e){
+    if(e.pointerId !== pid) return;
+    if(ghost){ ghost.remove(); ghost = null; }
+    chip.classList.remove("dragsrc"); dragging = false; pid = null;
+    document.removeEventListener("pointermove", onMove);
+    document.removeEventListener("pointerup", finish);
+    document.removeEventListener("pointercancel", finish);
+  }
+}
+function sortChips(boxId, fbId, steps, displayOrder, fbOk, onDone, hooks){
+  var box = $(boxId); if(!box) return;
+  var done = false;
+  box.innerHTML = "";
+  box.classList.add("sortbox");
+  displayOrder.forEach(function(si){
+    var b = document.createElement("button"); b.className = "chip"; b.innerHTML = steps[si]; b.dataset.step = si;
+    box.appendChild(b);
+  });
+  renderK(box);
+  var fbEl = $(fbId);
+  var btn = document.createElement("button"); btn.className = "btn checkord"; btn.textContent = "Kiểm tra thứ tự";
+  if(fbEl && fbEl.parentNode) fbEl.parentNode.insertBefore(btn, fbEl); else box.parentNode.appendChild(btn);
+  btn.onclick = function(){
+    if(done) return;
+    var chips = Array.prototype.slice.call(box.querySelectorAll(".chip"));
+    var order = chips.map(function(c){ return parseInt(c.dataset.step, 10); });
+    var okAll = order.every(function(v, i){ return v === i; });
+    if(hooks && hooks.onAttempt) hooks.onAttempt(okAll);
+    if(okAll){
+      done = true; btn.disabled = true;
+      chips.forEach(function(c, i){ c.classList.add("picked"); c.innerHTML = "<b>" + (i + 1) + ".</b> " + steps[parseInt(c.dataset.step, 10)]; renderK(c); });
+      fb(fbEl, true, fbOk); if(onDone) onDone();
+    } else {
+      var right = order.filter(function(v, i){ return v === i; }).length;
+      fb(fbEl, false, "Chưa đúng thứ tự — mới có " + right + "/" + order.length + " bước đúng vị trí. Hãy kéo các thẻ để sắp xếp lại rồi kiểm tra tiếp.");
+    }
+  };
+  box.querySelectorAll(".chip").forEach(function(chip){
+    attachSortDrag(chip, box, function(){ return done; });
+  });
+}
+/* --- Ghep the vao o trong (cham the -> cham o) --- */
+function matchDnD(prefix, slots, chips, onDone){
+  var selChip = null, filled = 0, suppress = false;
+  var bank = $(prefix + "_bank"), sbox = $(prefix + "_slots");
+  if(!bank || !sbox) return;
+  bank.innerHTML = ""; sbox.innerHTML = "";
+  if(!document.getElementById(prefix + "_hint")){
+    var hint = document.createElement("p"); hint.className = "dhint"; hint.id = prefix + "_hint";
+    hint.textContent = "Cách làm: kéo thẻ thả vào ô trống — hoặc bấm chọn thẻ rồi bấm vào ô cần điền.";
+    bank.insertAdjacentElement("afterend", hint);
+  }
+  function selectChip(c, b){
+    bank.querySelectorAll(".tchip").forEach(function(x){ x.classList.remove("sel"); });
+    selChip = c.id; if(b) b.classList.add("sel");
+  }
+  function placeOnSlot(sl, chipId){
+    if(sl.classList.contains("filled")) return;
+    if(!chipId){ fb($(prefix + "_fb"), false, "Hãy kéo một thẻ từ ngân hàng thẻ vào ô này — hoặc chạm chọn thẻ rồi chạm vào ô cần điền."); return; }
+    if(chipId === sl.dataset.need){
+      sl.classList.add("filled"); sl.innerHTML = chips.filter(function(c){ return c.id === chipId; })[0].html; renderK(sl);
+      var ch = bank.querySelector('[data-cid="' + chipId + '"]'); if(ch) ch.classList.add("used");
+      if(selChip === chipId){ selChip = null; bank.querySelectorAll(".tchip").forEach(function(x){ x.classList.remove("sel"); }); }
+      filled++;
+      fb($(prefix + "_fb"), true, filled === slots.length ? "Hoàn thành! Em đã ghép đúng tất cả các ô." : "Đúng rồi! Còn " + (slots.length - filled) + " ô nữa.");
+      if(filled === slots.length && onDone) onDone();
+    } else {
+      sl.classList.add("bad");
+      fb($(prefix + "_fb"), false, "Thẻ đó chưa khớp với ô này. Hãy đọc lại yêu cầu của ô rồi chọn thẻ khác.");
+      setTimeout(function(){ sl.classList.remove("bad"); }, 700);
+    }
+  }
+  chips.forEach(function(c){
+    var b = document.createElement("button"); b.className = "tchip"; b.innerHTML = c.html; b.dataset.cid = c.id;
+    b.onclick = function(){ if(suppress) return; selectChip(c, b); };
+    enableDrag(b, {
+      targets: function(){ return Array.prototype.slice.call(sbox.querySelectorAll(".slot:not(.filled)")); },
+      drop: function(target){ suppress = true; setTimeout(function(){ suppress = false; }, 350); if(target) placeOnSlot(target, c.id); }
+    });
+    bank.appendChild(b);
+  });
+  slots.forEach(function(s){
+    var row = document.createElement("div"); row.className = "dndrow";
+    row.innerHTML = '<div class="lab2">' + s.label + '</div>';
+    var sl = document.createElement("button"); sl.className = "slot"; sl.textContent = "Kéo thẻ vào đây"; sl.dataset.need = s.need;
+    sl.onclick = function(){ if(suppress) return; placeOnSlot(sl, selChip); };
+    row.appendChild(sl); sbox.appendChild(row);
+  });
+}
+/* --- Video tuong tac co diem dung --- */
+var VQ = {
+  "V2@stop1": { q:"Ngọc vừa vẽ xong " + V1("a") + " + " + V1("a") + ". Kết quả là vectơ nào?",
+    opts:[V1("2a") + ", cùng hướng với " + V1("a"), V1("2a") + ", ngược hướng với " + V1("a"), "Vectơ-không " + V1("0")], ok:0,
+    fb:"Đúng! Cộng một vectơ với chính nó được vectơ cùng hướng, dài gấp đôi." },
+  "V2@stop2": { q:"Vectơ " + K("-3\\vec{a}") + " có hướng thế nào so với " + V1("a") + "?",
+    opts:["Cùng hướng", "Ngược hướng", "Không xác định được"], ok:1,
+    fb:"Đúng! Hệ số âm nên vectơ tích ngược hướng với vectơ gốc. Nghe thầy Phúc chốt lại nhé." },
+  "V3@stop1": { q:"Hà Anh băn khoăn: tính phân phối có thật đúng với vectơ không? Ta nên làm gì?",
+    opts:["Tin ngay, vì nó giống hệt số học", "Kiểm chứng bằng hình vẽ", "Bỏ qua tính chất này"], ok:1,
+    fb:"Đúng tinh thần của bài: đừng tin ngay — hãy kiểm chứng. Xem hình kiểm chứng ngay sau đây." },
+  "V4@stop1": { q:"Hai vật nặng bằng nhau đặt ở hai đầu đoạn " + K("AB") + ". Trụ đỡ phải ở đâu thì đòn cân bằng?",
+    opts:["Sát đầu A hơn", "Ở chính giữa đoạn " + K("AB"), "Sát đầu B hơn"], ok:1,
+    fb:"Đúng! Trụ đỡ ở chính giữa — đó là trung điểm của đoạn. Nghe Ngọc và thầy Phúc giải thích tiếp." },
+  "V5@stop1": { q:"Bước một của quy trình giải bài toán xác định điểm là gì?",
+    opts:["Chèn điểm vào mọi vectơ ngay", "Chọn gốc — điểm mà ta đã biết các vectơ xuất phát từ đó", "Dựng điểm cần tìm trước"], ok:1,
+    fb:"Đúng! Chọn gốc A vì đã biết " + OV("AB") + " và " + OV("AC") + ". Xem tiếp bước hai." }
+};
+function vidHtml(file, track){
+  return '<div class="vidwrap"><video id="vid" controls preload="metadata" src="videos/' + file + '">'
+    + (track ? '<track kind="subtitles" src="videos/' + track + '" srclang="vi" label="Tiếng Việt" default>' : '')
+    + '</video><div class="qoverlay" id="qov"><div class="qin"><span class="qtag">ĐIỂM DỪNG TƯƠNG TÁC</span>'
+    + '<h3 id="vqtext"></h3><div class="opts" id="vqopts"></div><div class="fb" id="vqfb"></div></div></div></div>';
+}
+function vidSetup(screenId, vkey, stops, onAllDone){
+  var v = $("vid"); if(!v) return;
+  var pending = null;
+  function allDone(){ return stops.every(function(s){ return S.vstops[screenId + ":" + s.id]; }); }
+  function showStop(s){
+    pending = s.id;
+    var info = VQ[vkey + "@" + s.id]; if(!info) return;
+    v.pause();
+    $("vqtext").innerHTML = info.q; $("vqopts").innerHTML = ""; fb($("vqfb"), false, ""); $("vqfb").className = "fb"; $("vqfb").style.display = "none";
+    info.opts.forEach(function(o, i){
+      var b = document.createElement("button"); b.className = "opt"; b.innerHTML = o;
+      b.onclick = function(){
+        if(i === info.ok){
+          b.classList.add("right"); fb($("vqfb"), true, info.fb);
+          S.vstops[screenId + ":" + s.id] = true; persist();
+          setTimeout(function(){ $("qov").classList.remove("show"); pending = null; v.play(); if(allDone() && onAllDone) onAllDone(); }, 1200);
+        } else {
+          b.classList.add("wrong"); fb($("vqfb"), false, "Chưa đúng — em nghe lại đoạn vừa rồi và thử lại nhé.");
+        }
+      };
+      $("vqopts").appendChild(b);
+    });
+    renderK($("qov"));
+    $("qov").classList.add("show");
+  }
+  v.addEventListener("timeupdate", function(){
+    if(pending) return;
+    for(var i = 0; i < stops.length; i++){
+      var s = stops[i];
+      if(!S.vstops[screenId + ":" + s.id] && v.currentTime >= s.t){ showStop(s); break; }
+    }
+  });
+}
+var SCREENS = [];
+</script>
+<script>
+"use strict";
+/* ================= MH-01 ================= */
+SCREENS.push({ id:"mh01", code:"MH-01", title:"Giới thiệu và mục tiêu", gate:function(){ return !!S.readGoals; },
+  html:function(){ return head("MH-01","Mở đầu","Bài 9 — Tích của một vectơ với một số")
+    + '<p style="color:#5b6b7c;font-size:14.5px;margin:0 0 10px">Giáo viên biên soạn: <b style="color:#0b5394">Tiêu Đình Phúc</b> — giáo viên Toán, Trường PTDTNT-THPT Bình Thuận</p>'
+    + narr("Chào các em! Thầy là thầy Phúc. Hôm nay chúng ta cùng khám phá một phép toán hoàn toàn mới của vectơ, bắt đầu từ một con tàu đổi hướng trên sông.", "mh01")
+    + '<h2>Video giới thiệu bài học</h2>' + vidHtml("V0-Gioi-thieu.mp4", "V0-Gioi-thieu.vtt")
+    + '<h2>Nhân vật đồng hành</h2><div class="chars">'
+    + '<div class="char"><div class="ava" style="background:#0b5394">P</div><div><b>Thầy Phúc</b> — giáo viên<span>Hướng dẫn khám phá, luôn yêu cầu kiểm chứng trước khi tin.</span></div></div>'
+    + '<div class="char"><div class="ava" style="background:#7fb069">N</div><div><b>Ngọc</b> — chặng Khởi động<span>Học chậm mà chắc, hay hỏi “vì sao”. Bạn ấy sẽ làm mẫu từng bước nhỏ.</span></div></div>'
+    + '<div class="char"><div class="ava" style="background:#e69138">M</div><div><b>Minh</b> — chặng Tăng tốc<span>Nhanh nhẹn nhưng hay vội — coi chừng, bạn ấy hay dính bẫy sai đấy.</span></div></div>'
+    + '<div class="char"><div class="ava" style="background:#8e44ad">H</div><div><b>Hà Anh</b> — chặng Bứt phá<span>Thích phản biện và mở rộng. Bạn ấy dẫn dắt màn Góc AI ở cuối bài.</span></div></div></div>'
+    + '<h2>Mục tiêu bài học — bấm vào cả ba thẻ để đọc</h2><div class="goals">'
+    + '<button class="goal" data-g="0"><b>Phép toán mới:</b> thực hiện được phép nhân một số với một vectơ, biết hướng và độ dài của vectơ tích.</button>'
+    + '<button class="goal" data-g="1"><b>Điểm đặc biệt:</b> mô tả trung điểm, trọng tâm và điểm khối tâm bằng đẳng thức vectơ.</button>'
+    + '<button class="goal" data-g="2"><b>Vận dụng:</b> phân tích một vectơ theo hai vectơ không cùng phương và giải bài toán lực cân bằng.</button></div>'
+    + '<p><b>Cách học:</b> xem video ngắn có điểm dừng, thao tác với mô phỏng, trả lời câu hỏi kéo thả — điền khuyết — trắc nghiệm — đúng/sai. Cuối bài có kiểm tra theo Công văn 7991 (10 điểm, đạt từ 80%). Bài học còn rèn thói quen <b>siêu nhận thức</b> của người học giỏi: dự đoán trước — tự kiểm tra giữa chừng — nhìn lại sau khi xong. Tiến trình của em được lưu tự động.</p>'; },
+  setup:function(){
+    var n = 0;
+    document.querySelectorAll(".goal").forEach(function(g){
+      g.onclick = function(){
+        if(!g.classList.contains("read")){ g.classList.add("read"); n++; }
+        if(document.querySelectorAll(".goal.read").length >= 3){ S.readGoals = true; markDone("mh01"); }
+      };
+    });
+  }});
+
+/* ================= MH-02: chan doan phan tang ================= */
+SCREENS.push({ id:"mh02", code:"MH-02", title:"Chẩn đoán đầu vào", gate:function(){ return !!S.tier; },
+  html:function(){ return head("MH-02","Mở đầu","Chẩn đoán đầu vào")
+    + narr("Trước khi bắt đầu, em làm nhanh bốn câu để thầy biết nên đồng hành cùng em ở mức nào. Đây không phải kiểm tra lấy điểm — cứ làm thật sức mình.", "mh02")
+    + '<h2>Câu 1 — Ghép thẻ: mỗi hệ số k cho vectơ tích thế nào?</h2><div id="dg1_slots"></div><div class="bank" id="dg1_bank"></div><div class="fb" id="dg1_fb"></div>'
+    + '<h2>Câu 2</h2><p>Nếu ' + LEN("\\vec{a}") + ' = 3 thì ' + LEN("2\\vec{a}") + ' bằng:</p><div class="opts" id="dg2"></div><div class="fb" id="fdg2"></div>'
+    + '<h2>Câu 3</h2><p>Vectơ ' + K("-\\vec{a}") + ' so với vectơ ' + V1("a") + ':</p><div class="opts" id="dg3"></div><div class="fb" id="fdg3"></div>'
+    + '<h2>Câu 4</h2><p>Mệnh đề “' + V1("a") + ' + ' + V1("a") + ' = ' + K("2\\vec{a}") + '” là:</p><div class="opts" id="dg4"></div><div class="fb" id="fdg4"></div>'
+    + '<div id="tierbox"></div>'; },
+  setup:function(){
+    var got = { q1:false, q2:false, q3:false, q4:false }, answered = { q2:false, q3:false, q4:false };
+    function finish(){
+      if(!(got.q1 || answered.q2) || !answered.q2 || !answered.q3 || !answered.q4 || !got.q1) return;
+      var score = (got.q1 ? 1 : 0) + (got.q2 ? 1 : 0) + (got.q3 ? 1 : 0) + (got.q4 ? 1 : 0);
+      S.diag = score;
+      var sug = score <= 1 ? "Y" : (score <= 3 ? "TBK" : "G");
+      var names = { Y:"Khởi động — học chậm, từng bước nhỏ, có hình gợi ý (đồng hành cùng Ngọc)",
+                    TBK:"Tăng tốc — đủ dạng bài tập, luyện quy trình (đồng hành cùng Minh)",
+                    G:"Bứt phá — mở rộng, phản biện, thử thách (đồng hành cùng Hà Anh)" };
+      var h = '<h2>Kết quả chẩn đoán: ' + score + '/4 câu đúng</h2>'
+        + '<p>Hệ thống gợi ý chặng <b>' + (sug === "Y" ? "Khởi động" : sug === "G" ? "Bứt phá" : "Tăng tốc") + '</b>. Em có thể chọn lại chặng khác nếu muốn — gợi ý không khóa lựa chọn của em.</p><div class="tiers">';
+      ["Y","TBK","G"].forEach(function(t){
+        h += '<button class="tier" data-t="' + t + '">' + (t === "Y" ? "<b>Khởi động</b>" : t === "G" ? "<b>Bứt phá</b>" : "<b>Tăng tốc</b>")
+           + (t === sug ? '<span class="tg">GỢI Ý</span>' : '') + '<br>' + names[t] + '</button>';
+      });
+      h += '</div>';
+      $("tierbox").innerHTML = h; renderK($("tierbox"));
+      document.querySelectorAll(".tier").forEach(function(b){
+        b.onclick = function(){
+          S.tier = b.dataset.t; persist(); updateTierBadge(); markDone("mh02");
+          document.querySelectorAll(".tier").forEach(function(x){ x.classList.remove("cur"); }); b.classList.add("cur");
+          showToast("Đã chọn chặng " + tierName() + ". Bấm Tiếp để bắt đầu khám phá.");
+        };
+      });
+    }
+    matchDnD("dg1",
+      [ { label:K("k = 2"), need:"c2" }, { label:K("k = -1"), need:"c1" }, { label:K("k = 0"), need:"c0" } ],
+      [ { id:"c1", html:"Ngược hướng, dài bằng nhau" }, { id:"c0", html:"Bằng vectơ-không " + V1("0") }, { id:"c2", html:"Cùng hướng, dài gấp đôi" } ],
+      function(){ got.q1 = true; finish(); });
+    mcq("dg2","fdg2", ["−6","6","3","5"], 1, "Đúng! Độ dài gấp đôi: 2 · 3 = 6.", "Chưa đúng. Độ dài của " + K("2\\vec{a}") + " bằng 2 nhân độ dài của " + V1("a") + ".",
+      function(){ got.q2 = true; });
+    $("dg2").addEventListener("click", function(){ answered.q2 = true; setTimeout(finish, 50); });
+    mcq("dg3","fdg3", ["Ngược hướng, dài bằng nhau","Cùng hướng, dài bằng nhau","Vuông góc với nhau"], 0, "Đúng! Hệ số −1 cho vectơ đối: ngược hướng, dài bằng nhau.", "Chưa đúng. Hệ số âm làm vectơ quay ngược lại.",
+      function(){ got.q3 = true; });
+    $("dg3").addEventListener("click", function(){ answered.q3 = true; setTimeout(finish, 50); });
+    mcq("dg4","fdg4", ["Đúng","Sai"], 0, "Đúng! Cộng một vectơ với chính nó được vectơ gấp đôi.", "Chưa đúng — đây chính là ý tưởng mở đầu của bài hôm nay.",
+      function(){ got.q4 = true; });
+    $("dg4").addEventListener("click", function(){ answered.q4 = true; setTimeout(finish, 50); });
+  }});
+
+/* ================= MH-03: hook ================= */
+SCREENS.push({ id:"mh03", code:"MH-03", title:"Hook · Con tàu quay đầu", gate:function(){ return S.pred !== null && S.pred !== undefined && S.conf03 !== null && S.conf03 !== undefined; },
+  html:function(){ return head("MH-03","Hồi 1 · Engage","Con tàu quay đầu gấp đôi")
+    + narr("Một chiếc tàu chở hàng sắp rời bến. Thuyền trưởng nhận lệnh: đi ba ki-lô-mét về phía đông, rồi quay đầu đi ngược lại gấp đôi quãng đường. Con tàu sẽ dừng ở đâu?", "mh03")
+    + '<h2>Video V1 — Nhiệm vụ con tàu</h2>' + vidHtml("V1-Nhiem-vu-con-tau.mp4", "V1-Nhiem-vu-con-tau.vtt")
+    + '<h2>Mô phỏng 3D — tự tay cho tàu chạy</h2>'
+    + '<iframe class="lab" style="height:470px" src="ship3d/index.html?mode=hook" title="Mô phỏng 3D con tàu quay đầu"></iframe>'
+    + '<p>Tàu đi <b>3 km về phía đông</b>, rồi quay đầu đi ngược lại <b>gấp đôi</b> quãng đường (6 km về phía tây). Bấm <b>Chạy hành trình</b> trong mô phỏng để xem — đáp án về vị trí cuối chỉ mở ở cuối bài.</p>'
+    + '<h2>Theo em, tàu đang ở đâu so với điểm xuất phát?</h2><div class="opts" id="pred"></div><div class="fb" id="predfb"></div>'
+    + '<p style="color:#5a6b7d">Câu hỏi dự đoán — không chấm điểm. Trong video, Minh đoán là 9 km. Em có đồng ý với Minh không? Hãy giữ dự đoán của em, cuối bài ta sẽ kiểm chứng.</p>'
+    + '<h2>Em tin vào dự đoán này đến đâu?</h2><div class="opts" id="conf03"></div><div class="fb" id="conffb"></div>'
+    + '<p style="color:#5a6b7d">Trả lời thật lòng nhé — đây là bài tập “biết mình”: người học giỏi luôn biết rõ khi nào mình chắc chắn, khi nào mình chỉ đang đoán.</p>'; },
+  setup:function(){
+    var opts = ["Cách điểm xuất phát 9 km", "Ở vị trí 6 km về phía tây", "Ở vị trí 3 km về phía tây"];
+    var box = $("pred"); box.innerHTML = "";
+    opts.forEach(function(t, i){
+      var b = document.createElement("button"); b.className = "opt" + (S.pred === i ? " sel" : ""); b.textContent = String.fromCharCode(65+i) + ". " + t;
+      b.onclick = function(){ S.pred = i; box.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel");
+        fb($("predfb"), true, "Đã ghi lại dự đoán của em. Sang màn hình tiếp theo để bắt đầu khám phá."); markDone("mh03"); };
+      box.appendChild(b);
+    });
+    if(S.pred !== null && S.pred !== undefined) fb($("predfb"), true, "Em đã dự đoán phương án " + String.fromCharCode(65+S.pred) + ". Cuối bài sẽ kiểm chứng.");
+    var confs = ["Chỉ đoán mò thôi", "Hơi chắc", "Rất chắc chắn"];
+    var cbox = $("conf03"); cbox.innerHTML = "";
+    confs.forEach(function(t, i){
+      var b = document.createElement("button"); b.className = "opt" + (S.conf03 === i ? " sel" : ""); b.textContent = t;
+      b.onclick = function(){ S.conf03 = i; cbox.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel");
+        fb($("conffb"), true, "Đã ghi nhận mức tin cậy của em. Cuối bài, em sẽ đối chiếu: mình đã đánh giá đúng sức mình chưa."); persist(); };
+      cbox.appendChild(b);
+    });
+    if(S.conf03 !== null && S.conf03 !== undefined) fb($("conffb"), true, "Mức tin cậy đã chọn: " + confs[S.conf03] + ". Cuối bài sẽ đối chiếu.");
+  }});
+
+/* ================= MH-04: mo phong keo vecto + bang quan sat ================= */
+SCREENS.push({ id:"mh04", code:"MH-04", title:"Kéo vectơ, trượt k", gate:function(){ return !!S.done.mh04; },
+  html:function(){
+    var h = head("MH-04","Hồi 2 · Explore","Kéo vectơ, trượt hệ số k")
+    + narr("Hãy kéo đầu mút của véc tơ a để đổi hướng của nó. Sau đó kéo thanh trượt k qua các giá trị âm và dương. Quan sát: độ dài thay đổi thế nào, hướng thay đổi thế nào.", "mh04")
+    + '<iframe class="lab" id="lab1" src="lab/index.html" title="Mô phỏng kéo vectơ, trượt hệ số k"></iframe>'
+    + '<h2>Thử thách trong mô phỏng</h2><p>Đặt <b>k = −2</b> để hoàn thành thử thách của Ngọc. Khi làm đúng, phần này sẽ tự ghi nhận.</p>'
+    + '<div class="fb" id="lab1fb"></div>'
+    + '<p><button class="btn ghost" id="lab1confirm">Em đã hoàn thành thử thách k = −2</button></p>'
+    + '<h2>Bảng quan sát — ghép thẻ mô tả đúng vào từng trường hợp</h2><div id="ob_slots"></div><div class="bank" id="ob_bank"></div><div class="fb" id="ob_fb"></div>';
+    if(S.tier === "TBK" || S.tier === "G"){
+      h += '<h2>Điền khuyết</h2><p>Cho ' + LEN("\\vec{a}") + ' = 4 và k = −3. Khi đó ' + LEN("k\\vec{a}") + ' = <input class="num" id="obx"> </p>'
+        + '<p><button class="btn" id="obchk">Kiểm tra phần điền</button></p><div class="fb" id="obxfb"></div>';
+    }
+    if(S.tier === "G"){
+      h += '<p><b>Thử thách thêm:</b> ' + LEN("\\vec{a}") + ' = 3, vectơ ' + K("k\\vec{a}") + ' ngược hướng với ' + V1("a") + ' và ' + LEN("k\\vec{a}") + ' = 12. Vậy k = <input class="num" id="oby"></p>';
+    }
+    return h; },
+  setup:function(){
+    var st = { lab:false, dnd:false, extra:(S.tier === "Y") };
+    function chk(){ if(st.lab && st.dnd && st.extra) markDone("mh04"); }
+    var stop = false;
+    var iv = setInterval(function(){
+      if(stop || S.done.mh04) { clearInterval(iv); return; }
+      try{
+        var d = $("lab1").contentDocument;
+        if(d && d.body && d.body.innerText.indexOf("Đúng!") >= 0){
+          stop = true; clearInterval(iv);
+          fb($("lab1fb"), true, "Chính xác! Với k = −2, vectơ tích ngược hướng và có độ dài gấp đôi.");
+          st.lab = true; chk();
+        }
+      }catch(e){}
+    }, 800);
+    $("lab1confirm").onclick = function(){
+      fb($("lab1fb"), true, "Đã ghi nhận. Hãy nhớ hai nhận xét: độ dài nhân với trị tuyệt đối của k; k âm thì vectơ tích ngược hướng.");
+      st.lab = true; chk();
+    };
+    if(S.tier === "Y"){
+      matchDnD("ob",
+        [ { label:K("k = 2"), need:"p2" }, { label:K("k = -1"), need:"m1" } ],
+        [ { id:"m1", html:"Ngược hướng, dài bằng nhau" }, { id:"p2", html:"Cùng hướng, dài gấp đôi" }, { id:"dx", html:"Cùng hướng, dài bằng nhau" } ],
+        function(){ st.dnd = true; chk(); });
+    } else {
+      matchDnD("ob",
+        [ { label:K("k = 3"), need:"p3" }, { label:K("k = -2"), need:"m2" }, { label:K("k = 0"), need:"z0" } ],
+        [ { id:"m2", html:"Ngược hướng, dài gấp 2 lần" }, { id:"z0", html:"Bằng vectơ-không " + V1("0") }, { id:"p3", html:"Cùng hướng, dài gấp 3 lần" }, { id:"dx", html:"Cùng hướng, dài bằng nhau" } ],
+        function(){ st.dnd = true; chk(); });
+    }
+    if($("obchk")) $("obchk").onclick = function(){
+      var okx = Math.abs(numVal("obx") - 12) < 0.001;
+      var oky = S.tier !== "G" || Math.abs(numVal("oby") - (-4)) < 0.001;
+      if(okx && oky){ fb($("obxfb"), true, S.tier === "G" ? "Đúng cả hai! |−3 · 4| = 12; và k = −4 vì vectơ ngược hướng nên k âm, |k| = \\(\\dfrac{12}{3}\\) = 4." : "Đúng! |−3| · 4 = 12."); st.extra = true; chk(); }
+      else fb($("obxfb"), false, "Chưa đúng. Độ dài của " + K("k\\vec{a}") + " bằng |k| nhân độ dài của " + V1("a") + ". Với câu thử thách: ngược hướng nghĩa là k âm.");
+    };
+  }});
+</script>
+<script>
+"use strict";
+/* ================= MH-05 ================= */
+SCREENS.push({ id:"mh05", code:"MH-05", title:"Ý tưởng nhân đôi · Video V2", gate:function(){ return !!S.done.mh05; },
+  html:function(){ return head("MH-05","Hồi 2 · Explore","Từ cộng vectơ đến nhân vectơ")
+    + narr("Cộng véc tơ a với chính nó, ta được một vectơ cùng hướng, độ dài gấp đôi. Ta viết gọn là hai nhân véc tơ a. Xem video V2 — video sẽ dừng lại để hỏi em.", "mh05")
+    + vidHtml("V2-Tu-cong-den-nhan.mp4", "V2-Tu-cong-den-nhan.vtt")
+    + '<h2>Câu 1 (Hoạt động 1 SGK)</h2><p>Trên tia Ax, điểm C thỏa mãn ' + OV("AC") + ' = ' + OV("AB") + ' + ' + OV("BC") + ' với B nằm giữa A và C, AB = BC. Vậy ' + OV("AC") + ' bằng:</p>'
+    + '<div class="opts" id="q51"></div><div class="fb" id="f51"></div>'
+    + '<h2>Câu 2 (Hoạt động 2 SGK)</h2><p>Trên trục số, M và N ở hai phía của gốc O sao cho OM = ON = ' + K("\\sqrt{2}") + ' · OA, với ' + V1("a") + ' là vectơ đơn vị trên trục. Vậy ' + OV("ON") + ' bằng:</p>'
+    + '<div class="opts" id="q52"></div><div class="fb" id="f52"></div>'; },
+  setup:function(){
+    var st = { a:false, b:false };
+    function chk(){ if(st.a && st.b && S.vstops["mh05:stop1"]) markDone("mh05"); }
+    vidSetup("mh05", "V2", [{ id:"stop1", t:10.35 }], chk);
+    mcq("q51","f51",[ K("2\\vec{a}"), K("-2\\vec{a}"), V1("a"), "0" ], 0,
+      "Đúng! " + OV("AC") + " = " + K("2\\vec{a}") + " — cùng hướng, dài gấp đôi.",
+      "Chưa đúng. Hai vectơ bằng nhau nối tiếp nhau cho vectơ gấp đôi, cùng hướng.", function(){ st.a = true; chk(); });
+    mcq("q52","f52",[ K("\\sqrt{2}\\,\\vec{a}"), K("-\\sqrt{2}\\,\\vec{a}"), K("2\\vec{a}"), K("-\\vec{a}") ], 1,
+      "Đúng! N ở phía ngược với M nên " + OV("ON") + " = " + K("-\\sqrt{2}\\,\\vec{a}") + ".",
+      "Chưa đúng. Điểm N nằm ở phía ngược lại so với M, nên hệ số phải mang dấu âm.", function(){ st.b = true; chk(); });
+    if(S.vstops["mh05:stop1"]) chk();
+  }});
+
+/* ================= MH-06 ================= */
+SCREENS.push({ id:"mh06", code:"MH-06", title:"Định nghĩa tích vectơ–số", gate:function(){ return !!S.done.mh06; },
+  html:function(){ return head("MH-06","Hồi 3 · Explain","Định nghĩa tích của một số với một vectơ")
+    + narr("Xem tiếp video V2. Chú ý hai điều: hướng của vectơ tích phụ thuộc dấu của k; độ dài nhân với trị tuyệt đối của k — công thức chốt là " + LEN("k\\vec{a}") + " = " + LEN("k") + " · " + LEN("\\vec{a}") + ".", "mh06")
+    + vidHtml("V2-Tu-cong-den-nhan.mp4", "V2-Tu-cong-den-nhan.vtt")
+    + '<p style="color:#5a6b7d">Mẹo: kéo thanh thời gian của video tới khoảng giây 20 để xem tiếp từ sau điểm dừng trước.</p>'
+    + '<h2>Kéo thả phân loại — ghép mô tả đúng vào từng trường hợp</h2><div id="cl_slots"></div><div class="bank" id="cl_bank"></div><div class="fb" id="cl_fb"></div>'; },
+  setup:function(){
+    var st = { v:false, d:false };
+    function chk(){ if(st.v && st.d) markDone("mh06"); }
+    vidSetup("mh06", "V2", [{ id:"stop2", t:30.42 }], function(){ st.v = true; chk(); });
+    if(S.vstops["mh06:stop2"]){ st.v = true; }
+    matchDnD("cl",
+      [ { label:K("k = 2"), need:"a2" }, { label:K("k = -\\dfrac{1}{2}"), need:"b2" }, { label:K("k = 0"), need:"c2" }, { label:K("k = 1"), need:"d2" } ],
+      [ { id:"c2", html:"Là vectơ-không " + V1("0") }, { id:"a2", html:"Cùng hướng, dài gấp 2 lần" }, { id:"d2", html:"Là chính vectơ đó" }, { id:"b2", html:"Ngược hướng, dài bằng " + K("\\dfrac{1}{2}") + " lần" } ],
+      function(){ st.d = true; chk(); });
+  }});
+
+/* ================= MH-07 ================= */
+SCREENS.push({ id:"mh07", code:"MH-07", title:"Bốn tính chất · Video V3", gate:function(){ return !!S.done.mh07; },
+  html:function(){ return head("MH-07","Hồi 3 · Explain","Bốn tính chất của phép nhân vectơ với một số")
+    + narr("Phép nhân vectơ có bốn tính chất quen thuộc. Quan trọng nhất là tính phân phối. Nhưng đừng tin ngay — hãy kiểm chứng như Hà Anh trong video V3.", "mh07")
+    + vidHtml("V3-Bon-tinh-chat.mp4", "V3-Bon-tinh-chat.vtt")
+    + '<h2>Kiểm chứng (Hoạt động 4 SGK)</h2><p>Trên hình vẽ của SGK, hai vectơ ' + K("3(\\vec{u} + \\vec{v})") + ' và ' + K("3\\vec{u} + 3\\vec{v}") + ' trùng nhau. Khẳng định nào đúng?</p>'
+    + '<div class="opts" id="q7"></div><div class="fb" id="f7"></div>'
+    + '<h2>Ghép tính chất với công thức</h2><div id="tp_slots"></div><div class="bank" id="tp_bank"></div><div class="fb" id="tp_fb"></div>'; },
+  setup:function(){
+    var st = { v:false, q:false, d:false };
+    function chk(){ if(st.v && st.q && st.d) markDone("mh07"); }
+    vidSetup("mh07", "V3", [{ id:"stop1", t:19.85 }], function(){ st.v = true; chk(); });
+    if(S.vstops["mh07:stop1"]) st.v = true;
+    mcq("q7","f7",[ K("3(\\vec{u} + \\vec{v}) = 3\\vec{u} + 3\\vec{v}"), K("3(\\vec{u} + \\vec{v}) = \\vec{u} + \\vec{v}"), K("3(\\vec{u} + \\vec{v}) = 3\\vec{u} - 3\\vec{v}"), "Không so sánh được" ], 0,
+      "Đúng! Đó là tính phân phối của phép nhân với phép cộng.",
+      "Chưa đúng. Hai vectơ trên hình trùng nhau hoàn toàn, nên chúng bằng nhau.", function(){ st.q = true; chk(); });
+    matchDnD("tp",
+      [ { label:"Phân phối với phép cộng", need:"pp1" }, { label:"Phân phối với phép cộng hai hệ số", need:"pp2" }, { label:"Kết hợp hai hệ số", need:"kh" }, { label:"Nhân với −1", need:"m1" } ],
+      [ { id:"pp2", html:K("(k + t)\\vec{u} = k\\vec{u} + t\\vec{u}") }, { id:"m1", html:K("(-1)\\vec{u} = -\\vec{u}") }, { id:"pp1", html:K("k(\\vec{u} + \\vec{v}) = k\\vec{u} + k\\vec{v}") }, { id:"kh", html:K("k(t\\vec{u}) = (kt)\\vec{u}") }, { id:"dx", html:K("k\\vec{u} + t\\vec{v} = (k + t)(\\vec{u} + \\vec{v})") } ],
+      function(){ st.d = true; chk(); });
+  }});
+
+/* ================= MH-08 ================= */
+SCREENS.push({ id:"mh08", code:"MH-08", title:"Luyện tập 1", gate:function(){ return !!S.done.mh08; },
+  html:function(){ return head("MH-08","Hồi 3 · Explain","Luyện tập 1 — Đúng hay Sai?")
+    + narr("Đọc kĩ từng mệnh đề. Cẩn thận với mệnh đề nhắc đến tỉ số độ dài: tỉ số độ dài luôn dương, nên hướng phải xét riêng.", "mh08")
+    + '<p>Với điểm M trên đường thẳng AB và hai điểm A, B cố định, xét các mệnh đề:</p><div id="ds8"></div><div class="fb" id="f8"></div>'
+    + '<h2>Kéo thả hoàn chỉnh đẳng thức</h2><div id="lt_slots"></div><div class="bank" id="lt_bank"></div><div class="fb" id="lt_fb"></div>'; },
+  setup:function(){
+    var st = { ds:false, dnd:false };
+    function chk(){ if(st.ds && st.dnd) markDone("mh08"); }
+    var items = [
+      { t:"a) Nếu " + OV("AM") + " = " + K("\\dfrac{1}{2}\\overrightarrow{AB}") + " thì M là trung điểm của đoạn AB.", ans:true,
+        fb:"Đúng — M nằm trên tia AB và AM = \\(\\dfrac{1}{2}\\)AB." },
+      { t:"b) Nếu \\(\\dfrac{AM}{AB}\\) = \\(\\dfrac{1}{3}\\) thì " + OV("AM") + " = " + K("\\dfrac{1}{3}\\overrightarrow{AB}") + ".", ans:false,
+        fb:"Sai — tỉ số độ dài luôn dương. Nếu M ở tia đối của tia AB thì phải có dấu trừ." },
+      { t:"c) Nếu " + OV("AM") + " = " + K("-\\dfrac{2}{3}\\overrightarrow{AB}") + " thì M thuộc tia đối của tia AB và AM = \\(\\dfrac{2}{3}\\)AB.", ans:true,
+        fb:"Đúng — hệ số âm cho biết M ở tia đối, độ dài bằng \\(\\dfrac{2}{3}\\) AB." }
+    ];
+    var box = $("ds8"), state = [null, null, null];
+    items.forEach(function(it, i){
+      var row = document.createElement("div"); row.className = "dsrow";
+      row.innerHTML = "<div style='flex:1;min-width:220px'>" + it.t + "</div>";
+      var bs = document.createElement("div"); bs.className = "dsbtns";
+      [["Đúng", true], ["Sai", false]].forEach(function(pair){
+        var b = document.createElement("button"); b.textContent = pair[0];
+        b.onclick = function(){
+          state[i] = pair[1];
+          bs.querySelectorAll("button").forEach(function(x){ x.className = ""; });
+          b.className = pair[1] ? "selD" : "selS";
+          if(state.every(function(x){ return x !== null; })){
+            var allOk = items.every(function(x, j){ return state[j] === x.ans; });
+            if(allOk){ fb($("f8"), true, "Đúng cả ba mệnh đề! Chú ý mệnh đề b: tỉ số độ dài luôn dương, dấu của hệ số mới cho biết hướng."); st.ds = true; chk(); }
+            else {
+              var wrong = items.map(function(x, j){ return state[j] === x.ans ? null : x.fb; }).filter(Boolean);
+              fb($("f8"), false, "Chưa đúng hết. " + wrong[0] + " Hãy chọn lại mệnh đề sai.");
+            }
+          }
+        };
+        bs.appendChild(b);
+      });
+      row.appendChild(bs); box.appendChild(row);
+    });
+    renderK(box);
+    matchDnD("lt",
+      [ { label:OV("AM") + " = ___ · " + OV("AB") + " (trường hợp mệnh đề c)", need:"neg23" } ],
+      [ { id:"p23", html:K("\\dfrac{2}{3}") }, { id:"neg23", html:K("-\\dfrac{2}{3}") }, { id:"n32", html:K("-\\dfrac{3}{2}") } ],
+      function(){ st.dnd = true; chk(); });
+  }});
+
+/* ================= MH-09 ================= */
+SCREENS.push({ id:"mh09", code:"MH-09", title:"Trung điểm, trọng tâm · V4", gate:function(){ return !!S.done.mh09; },
+  html:function(){ return head("MH-09","Hồi 4 · Elaborate","Trung điểm và trọng tâm của tam giác")
+    + narr("Nếu I là trung điểm của đoạn AB thì tổng hai vectơ IA và IB bằng vectơ không. Nếu G là trọng tâm tam giác thì tổng ba vectơ GA, GB, GC cũng bằng vectơ không. Xem video V4 về điểm cân bằng trước nhé.", "mh09")
+    + vidHtml("V4-Diem-can-bang.mp4", "V4-Diem-can-bang.vtt")
+    + '<h2>Kéo thả điền đẳng thức</h2><div id="eq_slots"></div><div class="bank" id="eq_bank"></div><div class="fb" id="eq_fb"></div>'; },
+  setup:function(){
+    var st = { v:false, d:false };
+    function chk(){ if(st.v && st.d) markDone("mh09"); }
+    vidSetup("mh09", "V4", [{ id:"stop1", t:9.85 }], function(){ st.v = true; chk(); });
+    if(S.vstops["mh09:stop1"]) st.v = true;
+    matchDnD("eq",
+      [ { label:OV("OA") + " + " + OV("OB") + " =", need:"oi2" },
+        { label:OV("OA") + " + " + OV("OB") + " + " + OV("OC") + " =", need:"og3" },
+        { label:OV("GA") + " + " + OV("GB") + " + " + OV("GC") + " =", need:"z0" } ],
+      [ { id:"og3", html:K("3\\overrightarrow{OG}") }, { id:"z0", html:V1("0") }, { id:"oi2", html:K("2\\overrightarrow{OI}") },
+        { id:"dx1", html:OV("OI") }, { id:"dx2", html:K("2\\overrightarrow{OG}") } ],
+      function(){ st.d = true; chk(); });
+  }});
+</script>
+<script>
+"use strict";
+/* ================= MH-10 ================= */
+SCREENS.push({ id:"mh10", code:"MH-10", title:"Đòn cân bằng", gate:function(){ return !!S.done.mh10; },
+  html:function(){
+    var need = S.tier === "Y" ? "1 kg – 2 kg" : "1 kg – 3 kg";
+    var h = head("MH-10","Hồi 4 · Elaborate","Đòn cân bằng và điểm khối tâm")
+    + narr("Đặt hai vật không bằng nhau ở hai đầu đoạn AB. Trụ đỡ phải dịch về phía vật nặng hơn. Kéo thử đi, rồi ghi lại tỉ số em tìm được.", "mh10")
+    + '<iframe class="lab" id="lab2" src="lab/lab2.html" title="Mô phỏng đòn cân bằng"></iframe>'
+    + '<h2>Thử thách trong mô phỏng</h2><p>' + (S.tier === "Y"
+        ? 'Làm lần lượt: bộ <b>1 kg – 1 kg</b> (cân bằng ở chính giữa), rồi bộ <b>1 kg – 2 kg</b>. Khi đòn <b>CÂN BẰNG</b> với bộ 1 kg – 2 kg, phần này sẽ tự ghi nhận.'
+        : 'Dùng nút “Đặt như SGK: 1 kg và 3 kg”, kéo trụ đỡ tới khi đòn <b>CÂN BẰNG</b>. Khi đạt trạng thái cân bằng, phần này sẽ tự ghi nhận.') + '</p>'
+    + '<div class="fb" id="lab2fb"></div>'
+    + '<p><button class="btn ghost" id="lab2confirm">Em đã làm đòn cân bằng với bộ ' + need + '</button></p>'
+    + '<h2>Ghi lại kết quả</h2><p>Với bộ ' + need + ', điểm cân bằng M chia đoạn AB theo tỉ số AM : MB = <input class="num" id="r1" style="width:70px"> : <input class="num" id="r2" style="width:70px"></p>';
+    if(S.tier === "G") h += '<p><b>Bài toán ngược:</b> đòn AB = 12, vật 2 kg ở A và 1 kg ở B. Không kéo vội — tính trước: AM = <input class="num" id="r3"> (đơn vị độ dài)</p>';
+    h += '<p><button class="btn" id="rchk">Kiểm tra kết quả ghi lại</button></p><div class="fb" id="rfb"></div>';
+    return h; },
+  setup:function(){
+    var st = { lab:false, rec:false };
+    function chk(){ if(st.lab && st.rec) markDone("mh10"); }
+    var stop = false;
+    var iv = setInterval(function(){
+      if(stop || S.done.mh10) { clearInterval(iv); return; }
+      try{
+        var d = $("lab2").contentDocument;
+        if(d && d.body && d.body.innerText.indexOf("CÂN BẰNG") >= 0){
+          stop = true; clearInterval(iv);
+          fb($("lab2fb"), true, "Đòn đã cân bằng! Điểm cân bằng luôn gần vật nặng hơn — tỉ số AM : MB bằng tỉ số khối lượng đảo ngược.");
+          st.lab = true; chk();
+        }
+      }catch(e){}
+    }, 800);
+    $("lab2confirm").onclick = function(){
+      fb($("lab2fb"), true, "Đã ghi nhận. Hãy điền tỉ số em quan sát được vào phần ghi kết quả bên dưới.");
+      st.lab = true; chk();
+    };
+    $("rchk").onclick = function(){
+      var exp = S.tier === "Y" ? [2, 1] : [3, 1];
+      var ok = numVal("r1") === exp[0] && numVal("r2") === exp[1];
+      var ok3 = S.tier !== "G" || Math.abs(numVal("r3") - 4) < 0.001;
+      if(ok && ok3){ fb($("rfb"), true, "Đúng! AM : MB = " + exp[0] + " : " + exp[1] + (S.tier === "G" ? " và AM = 4 (vì AM = 12 · 1/(2+1)). Điểm cân bằng này chính là điểm khối tâm." : ". Điểm cân bằng này chính là điểm khối tâm.")); st.rec = true; chk(); }
+      else fb($("rfb"), false, "Chưa đúng. Quy tắc: AM : MB = (khối lượng ở B) : (khối lượng ở A) — tỉ số đảo ngược so với khối lượng.");
+    };
+  }});
+
+/* ================= MH-11 ================= */
+SCREENS.push({ id:"mh11", code:"MH-11", title:"Luyện tập 3 · Phân tích vectơ", gate:function(){ return !!S.done.mh11; },
+  html:function(){
+    var h = head("MH-11","Hồi 4 · Elaborate","Luyện tập 3 — Phân tích vectơ trên lưới")
+    + narr("Đếm theo hai phương của lưới, không đếm theo hàng và cột. Đi theo phương của véc tơ a trước, sau đó đi theo phương của véc tơ b.", "mh11")
+    + '<p>Trên lưới hình bình hành (Hình 4.27 SGK) với hai vectơ cơ số ' + V1("a") + ', ' + V1("b") + ', hãy điền hệ số phân tích:</p>'
+    + '<p>' + V1("u") + ' = <input class="num" id="u1" placeholder="x"> · ' + V1("a") + ' + <input class="num" id="u2" placeholder="y"> · ' + V1("b") + '</p>'
+    + '<p>' + V1("v") + ' = <input class="num" id="v1" placeholder="t"> · ' + V1("a") + ' + <input class="num" id="v2" placeholder="z"> · ' + V1("b") + '</p>';
+    if(S.tier === "G") h += '<p><b>Dựng thêm:</b> ' + V1("w") + ' = <input class="num" id="w1" placeholder="p"> · ' + V1("a") + ' + <input class="num" id="w2" placeholder="q"> · ' + V1("b") + ' sao cho ' + V1("w") + ' = ' + K("3\\vec{a} - \\vec{b}") + '.</p>';
+    h += '<p><button class="btn" id="chk11">Kiểm tra</button></p><div class="fb" id="f11"></div>';
+    return h; },
+  setup:function(){
+    $("chk11").onclick = function(){
+      var needU = numVal("u1") === 1 && numVal("u2") === 2;
+      var needV = S.tier === "Y" ? true : (numVal("v1") === -2 && numVal("v2") === 3);
+      var needW = S.tier !== "G" ? true : (numVal("w1") === 3 && numVal("w2") === -1);
+      if(needU && needV && needW){ fb($("f11"), true, "Đúng hoàn toàn! " + V1("u") + " = " + V1("a") + " + " + K("2\\vec{b}") + " và " + V1("v") + " = " + K("-2\\vec{a} + 3\\vec{b}") + "."); markDone("mh11"); }
+      else fb($("f11"), false, "Chưa đúng hết. Gợi ý: với " + V1("u") + ", đi theo phương của " + V1("a") + " đúng 1 ô, theo phương của " + V1("b") + " đúng 2 ô. Với " + V1("v") + ", phải đi NGƯỢC phương của " + V1("a") + " nên hệ số mang dấu âm.");
+    };
+  }});
+
+/* ================= MH-12 ================= */
+SCREENS.push({ id:"mh12", code:"MH-12", title:"Ví dụ 3 · Tìm điểm M · V5", gate:function(){ return !!S.done.mh12; },
+  html:function(){ return head("MH-12","Hồi 4 · Elaborate","Ví dụ 3 — Xác định điểm M từ đẳng thức vectơ")
+    + narr("Đây là bài toán tìm điểm khó nhất bài. Xem video V5: Hà Anh và thầy Phúc mổ xẻ nó theo đúng ba bước — chọn gốc, biến đổi, dựng điểm. Đừng nhảy cóc nhé.", "mh12")
+    + vidHtml("V5-Giai-ma-Vi-du-3.mp4", "V5-Giai-ma-Vi-du-3.vtt")
+    + '<h2>Sắp xếp các bước giải theo đúng thứ tự</h2><p>Kéo các thẻ lên hoặc xuống để sắp xếp các bước giải theo đúng thứ tự, rồi bấm nút Kiểm tra thứ tự:</p><div class="chips" id="ord12"></div><div class="fb" id="f12a"></div>'
+    + '<h2>Kéo thả điền kết luận</h2><div id="kc_slots"></div><div class="bank" id="kc_bank"></div><div class="fb" id="kc_fb"></div>'; },
+  setup:function(){
+    var st = { v:false, s:false, d:false };
+    function chk(){ if(st.v && st.s && st.d) markDone("mh12"); }
+    vidSetup("mh12", "V5", [{ id:"stop1", t:19.85 }], function(){ st.v = true; chk(); });
+    if(S.vstops["mh12:stop1"]) st.v = true;
+    var steps = [
+      "Chèn điểm A: " + OV("MB") + " = " + OV("MA") + " + " + OV("AB") + ", " + OV("MC") + " = " + OV("MA") + " + " + OV("AC"),
+      "Cộng lại: " + K("6\\overrightarrow{MA} + 3\\overrightarrow{AB} + 2\\overrightarrow{AC} = \\vec{0}"),
+      "Chuyển vế, đổi dấu: " + OV("AM") + " = " + K("\\dfrac{1}{2}\\overrightarrow{AB} + \\dfrac{1}{3}\\overrightarrow{AC}"),
+      "Dựng điểm M: đỉnh thứ tư của hình bình hành EAFM — M là điểm khối tâm"
+    ];
+    sortChips("ord12", "f12a", steps, [2, 0, 3, 1], "Đúng thứ tự! Đây là quy trình ba bước sẽ dùng lại ở màn hình thử thách và bài kiểm tra.", function(){ st.s = true; chk(); });
+    matchDnD("kc",
+      [ { label:OV("AM") + " = ___ · " + OV("AB") + " + ___ · " + OV("AC") + " — hệ số của " + OV("AB"), need:"h12" },
+        { label:"Hệ số của " + OV("AC"), need:"h13" } ],
+      [ { id:"h13", html:K("\\dfrac{1}{3}") }, { id:"h12", html:K("\\dfrac{1}{2}") }, { id:"dx", html:K("\\dfrac{2}{3}") }, { id:"dx2", html:K("\\dfrac{1}{4}") } ],
+      function(){ st.d = true; chk(); });
+  }});
+</script>
+<script>
+"use strict";
+/* ================= MH-13: luyen tap phan tang ================= */
+SCREENS.push({ id:"mh13", code:"MH-13", title:"Luyện tập theo chặng", gate:function(){ return !!S.ch13; },
+  html:function(){ return head("MH-13","Hồi 4 · Elaborate","Luyện tập theo chặng")
+    + narr("Ai cũng có phần việc vừa sức mình — và ai cũng có quyền thử thách ở chặng tiếp theo. Bộ câu hỏi được chấm theo lần trả lời đúng đầu tiên của mỗi câu.", "mh13")
+    + '<p>Tầng hiện tại của em: <b id="curtier"></b></p><div class="tiers" id="switchbox"></div>'
+    + '<div id="setbox"></div><div id="setresult"></div>'; },
+  setup:function(){
+    var curSet = S.tier || "TBK";
+    function renderSwitch(){
+      $("curtier").textContent = tierName() + " (bộ đang làm: " + (curSet === "Y" ? "Khởi động" : curSet === "G" ? "Bứt phá" : "Tăng tốc") + ")";
+      var h = "";
+      [["Y","Khởi động"],["TBK","Tăng tốc"],["G","Bứt phá"]].forEach(function(p){
+        h += '<button class="tier' + (curSet === p[0] ? " cur" : "") + '" data-t="' + p[0] + '"><b>' + p[1] + '</b><br>Làm bộ câu hỏi của chặng này</button>';
+      });
+      $("switchbox").innerHTML = h;
+      document.querySelectorAll("#switchbox .tier").forEach(function(b){
+        b.onclick = function(){ curSet = b.dataset.t; S.tier = curSet; persist(); updateTierBadge(); renderSwitch(); renderSet(); };
+      });
+    }
+    function finishSet(rep){
+      var pct = rep.first / 4;
+      S.ch13 = { tier: curSet, pct: pct }; persist(); markDone("mh13");
+      var sug = "";
+      if(pct >= 0.8 && curSet !== "G") sug = "Em làm rất tốt (đúng ngay lần đầu " + rep.first + "/4 câu). Hệ thống gợi ý: lần luyện sau hãy thử bộ của chặng tiếp theo.";
+      else if(pct < 0.5) sug = "Đúng ngay lần đầu " + rep.first + "/4 câu. Hệ thống gợi ý: em nên ôn lại ở bộ của chặng trước, hoặc xem lại các video V2–V5 trước khi làm tiếp.";
+      else sug = "Đúng ngay lần đầu " + rep.first + "/4 câu. Em đang ở đúng chặng của mình — cứ tiếp tục nhé.";
+      $("setresult").innerHTML = '<div class="fb ok" style="display:block"><b>Hoàn thành bộ ' + (curSet === "Y" ? "Khởi động" : curSet === "G" ? "Bứt phá" : "Tăng tốc") + '.</b> ' + sug + '</div>';
+    }
+    function renderSet(){
+      var box = $("setbox"); box.innerHTML = ""; $("setresult").innerHTML = "";
+      var rep = { done:0, first:0 };
+      function report(ft){ rep.done++; if(ft) rep.first++; if(rep.done === 4) finishSet(rep); }
+      function sMcq(bid, fid, opts, key, okT, noT){
+        var wrongs = 0, doneIt = false;
+        var bx = document.getElementById(bid); bx.innerHTML = "";
+        opts.forEach(function(t, i){
+          var b = document.createElement("button"); b.className = "opt"; b.innerHTML = t;
+          b.onclick = function(){
+            if(doneIt) return;
+            bx.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel","right","wrong"); });
+            if(i === key){ b.classList.add("right"); fb($(fid), true, okT); doneIt = true; report(wrongs === 0); }
+            else { b.classList.add("wrong"); wrongs++; fb($(fid), false, noT); }
+          };
+          bx.appendChild(b);
+        });
+        renderK(bx);
+      }
+      function sFill(bid, fid, fn, okT, noT){
+        var tried = false;
+        $(bid).onclick = function(){
+          var ok = fn();
+          if(ok){ fb($(fid), true, okT); if(!tried){ report(true); } tried = true; $(bid).disabled = true; }
+          else { fb($(fid), false, noT); if(!tried){ tried = true; report(false); } }
+        };
+      }
+      function q(n, title, inner){ return '<h2>Câu ' + n + '</h2><p>' + title + '</p>' + inner; }
+      if(curSet === "Y"){
+        box.innerHTML =
+          q(1, "Ghép thẻ: mỗi hệ số k cho vectơ tích thế nào?", '<div id="sy_slots"></div><div class="bank" id="sy_bank"></div><div class="fb" id="sy_fb"></div>')
+          + q(2, "Nếu " + LEN("\\vec{a}") + " = 2 thì " + LEN("3\\vec{a}") + " bằng:", '<div class="opts" id="sy2"></div><div class="fb" id="fsy2"></div>')
+          + q(3, "Mệnh đề “vectơ " + K("-\\vec{a}") + " cùng hướng với " + V1("a") + "” là:", '<div class="opts" id="sy3"></div><div class="fb" id="fsy3"></div>')
+          + q(4, "Đòn cân bằng với bộ 1 kg – 2 kg khi AM : MB = <input class='num' id='sy41' style='width:70px'> : <input class='num' id='sy42' style='width:70px'> <button class='btn' id='sy4b'>Kiểm tra</button>", '<div class="fb" id="fsy4"></div>');
+        matchDnD("sy",
+          [ { label:K("k = 2"), need:"c2" }, { label:K("k = -1"), need:"c1" }, { label:K("k = 0"), need:"c0" } ],
+          [ { id:"c1", html:"Ngược hướng, dài bằng nhau" }, { id:"c0", html:"Bằng vectơ-không " + V1("0") }, { id:"c2", html:"Cùng hướng, dài gấp đôi" } ],
+          function(){ report(true); });
+        sMcq("sy2","fsy2", ["−6","6","2"], 1, "Đúng! |3| · 2 = 6.", "Chưa đúng. Độ dài luôn dương và bằng |k| nhân độ dài gốc.");
+        sMcq("sy3","fsy3", ["Đúng","Sai"], 1, "Đúng là mệnh đề Sai — hệ số âm thì ngược hướng.", "Chưa đúng. Nhớ lại bảng quan sát ở MH-04.");
+        sFill("sy4b","fsy4", function(){ return numVal("sy41") === 2 && numVal("sy42") === 1; }, "Đúng! AM : MB = 2 : 1.", "Chưa đúng. Tỉ số đảo ngược với khối lượng: vật 2 kg nặng gấp đôi nên điểm cân bằng gần nó hơn.");
+      } else if(curSet === "TBK"){
+        box.innerHTML =
+          q(1, "Biết " + OV("MN") + " = " + K("-\\dfrac{3}{2}\\overrightarrow{AB}") + ". Khẳng định nào đúng?", '<div class="opts" id="st1"></div><div class="fb" id="fst1"></div>')
+          + q(2, "Đúng / Sai — phán quyết cả bốn mệnh đề:", '<div id="st2"></div><div class="fb" id="fst2"></div>')
+          + q(3, "Tam giác có trung tuyến AM = 15 cm. Điền AG = <input class='num' id='st3'> cm <button class='btn' id='st3b'>Kiểm tra</button>", '<div class="fb" id="fst3"></div>')
+          + q(4, "Kéo các thẻ để sắp xếp bốn bước giải Ví dụ 3 theo đúng thứ tự:", '<div class="chips" id="st4"></div><div class="fb" id="fst4"></div>');
+        sMcq("st1","fst1", [OV("MN") + " có độ dài \\(\\dfrac{3}{2}\\)AB, cùng hướng với " + OV("AB"), OV("MN") + " có độ dài \\(\\dfrac{3}{2}\\)AB, ngược hướng với " + OV("AB"), OV("MN") + " có độ dài \\(\\dfrac{2}{3}\\)AB, ngược hướng với " + OV("AB"), OV("MN") + " và " + OV("AB") + " không cùng phương"], 1,
+          "Đúng! Hệ số âm → ngược hướng; độ dài bằng \\(\\dfrac{3}{2}\\)AB.", "Chưa đúng. Xét dấu của hệ số trước (hướng), rồi mới xét độ dài.");
+        var items = [
+          { t:"a) " + K("(-1)\\vec{a}") + " là vectơ đối của " + V1("a") + ".", ans:true },
+          { t:"b) " + LEN("-\\dfrac{1}{2}\\vec{a}") + " = " + K("-\\dfrac{1}{2}") + LEN("\\vec{a}") + ".", ans:false },
+          { t:"c) Với I là trung điểm của AB: " + OV("OA") + " + " + OV("OB") + " = " + K("2\\overrightarrow{OI}") + " với mọi điểm O.", ans:true },
+          { t:"d) Điểm M thỏa " + OV("MA") + " + " + OV("MB") + " + " + K("2\\overrightarrow{MC}") + " = " + V1("0") + " là trung điểm của đoạn AB.", ans:false }
+        ];
+        var dsbox = $("st2"), state = [null,null,null,null], dsReported = false, dsFirstDone = false;
+        items.forEach(function(it, i){
+          var row = document.createElement("div"); row.className = "dsrow";
+          row.innerHTML = "<div style='flex:1;min-width:220px'>" + it.t + "</div>";
+          var bs = document.createElement("div"); bs.className = "dsbtns";
+          [["Đúng", true], ["Sai", false]].forEach(function(pair){
+            var b = document.createElement("button"); b.textContent = pair[0];
+            b.onclick = function(){
+              state[i] = pair[1];
+              bs.querySelectorAll("button").forEach(function(x){ x.className = ""; });
+              b.className = pair[1] ? "selD" : "selS";
+              if(state.every(function(x){ return x !== null; })){
+                var allOk = items.every(function(x, j){ return state[j] === x.ans; });
+                if(allOk){ fb($("fst2"), true, "Đúng cả bốn mệnh đề!"); if(!dsReported){ dsReported = true; report(!dsFirstDone); } }
+                else { fb($("fst2"), false, "Chưa đúng hết — kiểm tra mệnh đề b (độ dài âm?) và mệnh đề d (M là điểm nào?)."); dsFirstDone = true; }
+              }
+            };
+            bs.appendChild(b);
+          });
+          row.appendChild(bs); dsbox.appendChild(row);
+        });
+        renderK(dsbox);
+        sFill("st3b","fst3", function(){ return Math.abs(numVal("st3") - 10) < 0.001; }, "Đúng! AG = \\(\\dfrac{2}{3}\\) · 15 = 10 cm.", "Chưa đúng. Trọng tâm chia trung tuyến theo tỉ số AG : GM = 2 : 1.");
+        var steps = [
+          "Chèn điểm A: " + OV("MB") + " = " + OV("MA") + " + " + OV("AB") + ", " + OV("MC") + " = " + OV("MA") + " + " + OV("AC"),
+          "Cộng lại: " + K("6\\overrightarrow{MA} + 3\\overrightarrow{AB} + 2\\overrightarrow{AC} = \\vec{0}"),
+          "Chuyển vế, đổi dấu: " + OV("AM") + " = " + K("\\dfrac{1}{2}\\overrightarrow{AB} + \\dfrac{1}{3}\\overrightarrow{AC}"),
+          "Dựng điểm M: đỉnh thứ tư của hình bình hành EAFM"
+        ];
+        var st4Wrongs = 0;
+        sortChips("st4", "fst4", steps, [1, 3, 0, 2], "Đúng thứ tự!", function(){ report(st4Wrongs === 0); },
+          { onAttempt: function(ok){ if(!ok) st4Wrongs++; } });
+      } else {
+        box.innerHTML =
+          q(1, "Cho " + LEN("\\vec{a}") + " = 3, vectơ " + K("k\\vec{a}") + " ngược hướng với " + V1("a") + " và " + LEN("k\\vec{a}") + " = 12. Điền k = <input class='num' id='sg1'> <button class='btn' id='sg1b'>Kiểm tra</button>", '<div class="fb" id="fsg1"></div>')
+          + q(2, "Đòn AB = 12, vật 2 kg ở A và 1 kg ở B. Điền AM = <input class='num' id='sg2'> <button class='btn' id='sg2b'>Kiểm tra</button>", '<div class="fb" id="fsg2"></div>')
+          + q(3, "Điểm K thỏa " + OV("KA") + " + " + K("2\\overrightarrow{KB}") + " = " + V1("0") + ". Kết luận nào đúng?", '<div class="opts" id="sg3"></div><div class="fb" id="fsg3"></div>')
+          + q(4, "Phản biện: “Mọi điểm M thỏa " + OV("MA") + " + " + OV("MB") + " + " + K("2\\overrightarrow{MC}") + " = " + V1("0") + " đều là trọng tâm của tam giác ABC.” Mệnh đề này:", '<div class="opts" id="sg4"></div><div class="fb" id="fsg4"></div>');
+        sFill("sg1b","fsg1", function(){ return Math.abs(numVal("sg1") - (-4)) < 0.001; }, "Đúng! k = −4: dấu âm vì ngược hướng, |k| = \\(\\dfrac{12}{3}\\) = 4.", "Chưa đúng. Ngược hướng → k âm; độ dài cho |k| = \\(\\dfrac{12}{3}\\).");
+        sFill("sg2b","fsg2", function(){ return Math.abs(numVal("sg2") - 4) < 0.001; }, "Đúng! AM = 12 · 1/(2 + 1) = 4.", "Chưa đúng. AM : MB = 1 : 2 và AM + MB = 12.");
+        sMcq("sg3","fsg3", [OV("AK") + " = " + K("\\dfrac{2}{3}\\overrightarrow{AB}") + "; K nằm giữa A và B, gần B hơn", OV("AK") + " = " + K("\\dfrac{1}{3}\\overrightarrow{AB}") + "; K nằm giữa A và B, gần A hơn", OV("AK") + " = " + K("\\dfrac{1}{2}\\overrightarrow{AB}") + "; K là trung điểm của AB"], 0,
+          "Đúng! Quy trình ba bước cho AK = \\(\\dfrac{2}{3}\\)AB.", "Chưa đúng. Hệ số của KB là 2 nên mẫu số là 1 + 2 = 3.");
+        sMcq("sg4","fsg4", ["Đúng","Sai"], 1, "Đúng là mệnh đề Sai — trọng tâm cần ba hệ số bằng nhau (1, 1, 1); ở đây hệ số là 1, 1, 2 nên M là điểm khối tâm của hệ vật 1–1–2, không phải trọng tâm.", "Chưa đúng. So sánh hệ số của ba vectơ với trường hợp trọng tâm ở MH-09.");
+      }
+      renderK(box);
+    }
+    renderSwitch(); renderSet();
+  }});
+
+/* ================= MH-14: van dung luc ================= */
+SCREENS.push({ id:"mh14", code:"MH-14", title:"Vận dụng · Lực cân bằng", gate:function(){ return !!S.done.mh14; },
+  html:function(){
+    if(S.tier === "Y"){
+      return head("MH-14","Hồi 4 · Elaborate","Vận dụng — Hợp lực cùng phương")
+      + narr("Vectơ cũng sống ngoài trang sách. Hai lực cùng phương ngược chiều: hợp lực có độ dài bằng hiệu hai độ dài, hướng theo lực lớn hơn.", "mh14y")
+      + '<p>Một vật chịu hai lực cùng phương: lực ' + K("F_1") + ' = 10 N hướng về phía đông và lực ' + K("F_2") + ' = 6 N hướng về phía tây. Hợp lực có độ lớn <input class="num" id="y14"> N và hướng về phía:</p>'
+      + '<div class="opts" id="y14h"></div><p><button class="btn" id="y14b">Kiểm tra</button></p><div class="fb" id="fy14"></div>';
+    }
+    var h = head("MH-14","Hồi 4 · Elaborate","Vận dụng — Ba lực cân bằng (Bài 4.15)")
+    + narr("Tổng ba lực bằng vectơ không vì vật cân bằng. Chiếu lên hai phương vuông góc, ta được hai phương trình. Giải ra hai độ lớn cần tìm.", "mh14")
+    + '<p>Một vật chịu ba lực: ' + K("\\vec{F_1}") + ' có độ lớn 20 N hướng thẳng xuống; ' + K("\\vec{F_2}") + ' nằm ngang; ' + K("\\vec{F_3}") + ' hợp với phương ngang góc 120°. Vật cân bằng. Tính độ lớn hai lực (làm tròn hai chữ số thập phân):</p>'
+    + '<p>' + LEN("\\vec{F_2}") + ' ≈ <input class="num" id="n141"> N &nbsp;&nbsp; ' + LEN("\\vec{F_3}") + ' ≈ <input class="num" id="n142"> N</p>';
+    if(S.tier === "G") h += '<p><b>Câu hỏi ngược:</b> nếu lực treo tăng lên 30 N thì ' + LEN("\\vec{F_2}") + ' ≈ <input class="num" id="n143"> N và ' + LEN("\\vec{F_3}") + ' ≈ <input class="num" id="n144"> N.</p>';
+    h += '<p><button class="btn" id="chk14">Kiểm tra</button></p><div class="fb" id="f14"></div>';
+    return h; },
+  setup:function(){
+    if(S.tier === "Y"){
+      var dir = -1;
+      var box = $("y14h"); box.innerHTML = "";
+      ["Phía đông","Phía tây","Phía bắc"].forEach(function(t, i){
+        var b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+        b.onclick = function(){ dir = i; box.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel"); };
+        box.appendChild(b);
+      });
+      $("y14b").onclick = function(){
+        if(Math.abs(numVal("y14") - 4) < 0.001 && dir === 0){ fb($("fy14"), true, "Đúng! Hợp lực 10 − 6 = 4 N về phía đông — lực lớn hơn thắng hướng."); markDone("mh14"); }
+        else fb($("fy14"), false, "Chưa đúng. Hai lực ngược chiều: độ lớn hợp lực bằng hiệu của chúng, hướng theo lực 10 N.");
+      };
+      return;
+    }
+    $("chk14").onclick = function(){
+      var oka = Math.abs(numVal("n141") - 11.55) <= 0.05, okb = Math.abs(numVal("n142") - 23.09) <= 0.05;
+      var okc = S.tier !== "G" || (Math.abs(numVal("n143") - 17.32) <= 0.05 && Math.abs(numVal("n144") - 34.64) <= 0.05);
+      if(oka && okb && okc){ fb($("f14"), true, "Đúng! |F₂| = 20/√3 ≈ 11,55 N và |F₃| = 40/√3 ≈ 23,09 N" + (S.tier === "G" ? "; với lực treo 30 N, hai lực tỉ lệ theo: 17,32 N và 34,64 N." : ".")); markDone("mh14"); }
+      else fb($("f14"), false, "Chưa đúng. Gợi ý: chiếu lên phương thẳng đứng trước — thành phần đứng của F₃ phải cân bằng lực treo: |F₃| · sin60° = 20.");
+    };
+  }});
+</script>
+<script>
+"use strict";
+/* ================= MH-15: Goc AI ================= */
+SCREENS.push({ id:"mh15", code:"MH-15", title:"Góc AI · Kiểm chứng", gate:function(){ return !!S.done.mh15; },
+  html:function(){ return head("MH-15","Mở rộng","Góc AI — Đừng tin ngay, hãy kiểm chứng")
+    + narr("Hà Anh vừa nhờ một trợ lí AI giải hộ bốn câu của bài này. Thầy dặn rồi: đừng tin ngay — hãy kiểm chứng. Cả lớp cùng soi: câu nào đúng, câu nào sai? Nhớ nhé, không phải lời giải AI nào cũng sai đâu.", "mh15")
+    + '<div class="aicard"><div class="who">Trợ lí AI — lời giải 1</div><p>“Độ dời của con tàu là <b>9 km</b>, vì tàu đi 3 km rồi đi tiếp 6 km nữa.”</p>'
+    + '<div class="dsbtns" id="av1"></div><div class="fb" id="af1"></div><div id="afx1" style="display:none"><div id="ai1_slots"></div><div class="bank" id="ai1_bank"></div><div class="fb" id="ai1_fb"></div></div></div>'
+    + '<div class="aicard"><div class="who">Trợ lí AI — lời giải 2</div><p>“Ta có ' + LEN("-2\\vec{a}") + ' = ' + K("-2") + ' ' + LEN("\\vec{a}") + '.”</p>'
+    + '<div class="dsbtns" id="av2"></div><div class="fb" id="af2"></div><div id="afx2" style="display:none"><div id="ai2_slots"></div><div class="bank" id="ai2_bank"></div><div class="fb" id="ai2_fb"></div></div></div>'
+    + '<div class="aicard"><div class="who">Trợ lí AI — lời giải 3</div><p>“Điểm M thỏa ' + OV("MA") + ' + ' + K("3\\overrightarrow{MB}") + ' + ' + K("2\\overrightarrow{MC}") + ' = ' + V1("0") + ' là <b>trọng tâm</b> của tam giác ABC.”</p>'
+    + '<div class="dsbtns" id="av3"></div><div class="fb" id="af3"></div><div id="afx3" style="display:none"><div id="ai3_slots"></div><div class="bank" id="ai3_bank"></div><div class="fb" id="ai3_fb"></div></div></div>'
+    + '<div class="aicard"><div class="who">Trợ lí AI — lời giải 4</div><p>“Vì G là trọng tâm nên ' + OV("GA") + ' + ' + OV("GB") + ' + ' + OV("GC") + ' = ' + V1("0") + '. Do đó với mọi điểm O: ' + OV("OA") + ' + ' + OV("OB") + ' + ' + OV("OC") + ' = ' + K("3\\overrightarrow{OG}") + '.”</p>'
+    + '<div class="dsbtns" id="av4"></div><div class="fb" id="af4"></div></div>'; },
+  setup:function(){
+    var doneCount = 0;
+    function block(n, hint, slots, chips){
+      var bs = $("av" + n); bs.innerHTML = "";
+      [["Đúng", true], ["Sai", false]].forEach(function(pair){
+        var b = document.createElement("button"); b.textContent = pair[0];
+        b.onclick = function(){
+          if(pair[1] === false){
+            bs.querySelectorAll("button").forEach(function(x){ x.className = ""; }); b.className = "selS";
+            fb($("af" + n), true, "Phán quyết đúng — lời giải này SAI. " + hint + " Bây giờ hãy ghép thẻ sửa đúng vào chỗ trống.");
+            $("afx" + n).style.display = "block";
+            matchDnD("ai" + n, slots, chips, function(){
+              doneCount++; S.ai = doneCount; persist();
+              if(doneCount === 4) markDone("mh15");
+            });
+          } else {
+            bs.querySelectorAll("button").forEach(function(x){ x.className = ""; }); b.className = "selD";
+            fb($("af" + n), false, "Chưa đúng — hãy soi lại lời giải này thật kĩ: " + hint);
+          }
+        };
+        bs.appendChild(b);
+      });
+    }
+    block(1, "Soi vào HƯỚNG của hai chặng đi.",
+      [ { label:"Độ dời đúng của con tàu là:", need:"f1" } ],
+      [ { id:"f1", html:"3 km về phía tây" }, { id:"x1", html:"9 km về phía đông" }, { id:"x2", html:"6 km về phía tây" } ]);
+    block(2, "Soi vào ĐỘ DÀI — độ dài có bao giờ âm không?",
+      [ { label:"Đẳng thức đúng: " + LEN("-2\\vec{a}") + " =", need:"f2" } ],
+      [ { id:"x3", html:K("-2\\left|\\vec{a}\\right|") }, { id:"f2", html:K("2\\left|\\vec{a}\\right|") }, { id:"x4", html:"0" } ]);
+    block(3, "Soi vào HỆ SỐ của ba vectơ — trọng tâm cần điều kiện gì?",
+      [ { label:"Điểm M ấy thực ra là:", need:"f3" } ],
+      [ { id:"x5", html:"Trọng tâm của tam giác ABC" }, { id:"f3", html:"Điểm khối tâm của hệ vật 1 kg – 3 kg – 2 kg" }, { id:"x6", html:"Trung điểm của đoạn BC" } ]);
+    /* Khoi 4: loi giai AI DUNG — phan quyet Dung la hoan thanh, khong can sua */
+    (function(){
+      var bs = $("av4"); bs.innerHTML = "";
+      [["Đúng", true], ["Sai", false]].forEach(function(pair){
+        var b = document.createElement("button"); b.textContent = pair[0];
+        b.onclick = function(){
+          if(pair[1] === true){
+            bs.querySelectorAll("button").forEach(function(x){ x.className = ""; }); b.className = "selD";
+            fb($("af4"), true, "Phán quyết đúng — lời giải này ĐÚNG! Kiểm chứng nhanh: chèn điểm G vào ba vectơ " + OV("OA") + ", " + OV("OB") + ", " + OV("OC") + " rồi cộng lại, ba vectơ " + OV("GA") + ", " + OV("GB") + ", " + OV("GC") + " triệt tiêu nhau. Bài học lớn nhất: kiểm chứng để tin đúng chỗ — không phải để bác bỏ tất cả.");
+            doneCount++; S.ai = doneCount; persist();
+            if(doneCount === 4) markDone("mh15");
+          } else {
+            bs.querySelectorAll("button").forEach(function(x){ x.className = ""; }); b.className = "selS";
+            fb($("af4"), false, "Chưa đúng — khoan nghi ngờ đã! Hãy kiểm chứng từng bước: đẳng thức trọng tâm ở MH-09 và phép chèn điểm ở MH-12 đều ủng hộ lời giải này.");
+          }
+        };
+        bs.appendChild(b);
+      });
+    })();
+  }});
+
+/* ================= MH-16: thu thach nang cao ================= */
+function mh16Unlocked(){ return S.tier === "G" || S.challenge === true || (S.ch13 && S.ch13.pct >= 0.8 && S.ch13.tier !== "Y"); }
+var STRATS16 = ["Chọn A làm gốc — chuyển mọi vectơ trong đẳng thức về AB và AC", "Nhớ lại mô phỏng đòn cân bằng — điểm khối tâm của hệ vật 1–1–2 đặt tại A, B, C", "Đặt AM = x·AB + y·AC với x, y chưa biết, biến đổi rồi suy ra x, y"];
+var ITEM17_LABELS = ["Phần I — Câu 1", "Phần I — Câu 2", "Phần I — Câu 3", "Phần I — Câu 4", "Phần II — Mệnh đề a", "Phần II — Mệnh đề b", "Phần II — Mệnh đề c", "Phần II — Mệnh đề d", "Phần III — Câu 1 (điền khuyết)", "Phần III — Câu 2 (kéo thả)", "Phần IV — Tự luận ngắn"];
+var ERR_CAUSES = ["Chưa vững kiến thức", "Kĩ năng tính toán, biến đổi", "Đọc chưa kĩ đề", "Chọn cách làm chưa hợp"];
+SCREENS.push({ id:"mh16", code:"MH-16", title:"Thử thách · Bài 4.14", gate:function(){ return true; },
+  html:function(){
+    if(!mh16Unlocked()){
+      return head("MH-16","Mở rộng","Thử thách nâng cao — chưa mở khóa")
+      + '<div class="lockbox"><p><b>Cổng thử thách đang khóa.</b></p>'
+      + '<p>Cổng này mở khi: em học ở chặng Bứt phá, <i>hoặc</i> đạt từ 80% đúng ngay lần đầu ở bộ luyện tập Tăng tốc/Bứt phá (MH-13), <i>hoặc</i> em chủ động chọn thử thách.</p>'
+      + '<p><button class="btn" id="unlockBtn">Em muốn thử thách — mở cổng</button></p><div class="fb" id="ufb"></div></div>'
+      + '<p style="color:#5a6b7d">Bỏ qua màn hình này không ảnh hưởng điểm số hay trạng thái hoàn thành của em.</p>';
+    }
+    return head("MH-16","Mở rộng","Thử thách nâng cao — Bài 4.14")
+    + narr("Bài toán này là anh em của Ví dụ 3 — nhưng lần này không có video mẫu, chỉ có em và quy trình ba bước.", "mh16")
+    + '<h2>Lập kế hoạch trước khi bắt đầu (siêu nhận thức)</h2>'
+    + '<p>Đây là bài khó nhất của bài học — đừng lao vào làm ngay. <b>Bài yêu cầu:</b> xác định điểm M từ một đẳng thức vectơ, rồi biểu diễn ' + OV("AM") + ' qua ' + OV("AB") + ' và ' + OV("AC") + '. <b>Điều kiện dễ quên:</b> hệ số 2 trước ' + OV("MC") + ' — đây không phải bài trung điểm quen thuộc.</p>'
+    + '<p><b>Em sẽ bắt đầu bằng chiến lược nào?</b></p><div class="opts" id="planOpts"></div>'
+    + '<p>Dấu mốc tự kiểm tra của em: <input class="inp" id="planMark" style="width:min(430px,92%)" placeholder="VD: biến đổi xong, em kiểm tra tổng hai hệ số có bằng 1 không"></p>'
+    + '<div class="fb" id="planfb"></div>'
+    + '<p><b>Bài toán:</b> Xác định điểm M thỏa ' + OV("MA") + ' + ' + OV("MB") + ' + ' + K("2\\overrightarrow{MC}") + ' = ' + V1("0") + '.</p>'
+    + '<p>Bước 1 — Chọn gốc: <select class="sel" id="s161"><option value="">— chọn —</option><option value="a">A</option><option value="b">B</option><option value="c">C</option></select></p>'
+    + '<p>Bước 2 + 3 — Biến đổi và kết luận: ' + OV("AM") + ' = <select class="sel" id="s162"><option value="">— hệ số —</option><option value="14">¼</option><option value="12">½</option><option value="13">⅓</option><option value="23">⅔</option></select> ' + OV("AB") + ' + <select class="sel" id="s163"><option value="">— hệ số —</option><option value="14">¼</option><option value="12">½</option><option value="13">⅓</option><option value="23">⅔</option></select> ' + OV("AC") + '</p>'
+    + '<p><button class="btn" id="chk16">Kiểm tra</button></p><div class="fb" id="f16"></div>'; },
+  setup:function(){
+    if(!mh16Unlocked()){
+      var armed = false;
+      $("unlockBtn").onclick = function(){
+        if(!armed){ armed = true; $("unlockBtn").textContent = "Bấm lần nữa để xác nhận mở thử thách"; return; }
+        S.challenge = true; persist(); go(S.cur);
+      };
+      return;
+    }
+    var pbox = $("planOpts");
+    STRATS16.forEach(function(t, i){
+      var b = document.createElement("button"); b.className = "opt" + (S.plan16 && S.plan16.strat === i ? " sel" : ""); b.textContent = t;
+      b.onclick = function(){ S.plan16 = { strat: i, mark: $("planMark") ? $("planMark").value : "" }; pbox.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel");
+        fb($("planfb"), true, "Đã ghi kế hoạch của em. Cuối bài, em sẽ đối chiếu xem chiến lược này có hiệu quả không."); persist(); };
+      pbox.appendChild(b);
+    });
+    if(S.plan16 && $("planMark")) $("planMark").value = S.plan16.mark || "";
+    if($("planMark")) $("planMark").addEventListener("input", function(){ if(S.plan16){ S.plan16.mark = $("planMark").value; persist(); } });
+    if(S.plan16) fb($("planfb"), true, "Em đã chọn chiến lược " + (S.plan16.strat + 1) + ". Cuối bài sẽ đối chiếu hiệu quả của nó.");
+    $("chk16").onclick = function(){
+      if(!S.plan16){ fb($("f16"), false, "Trước khi làm bài khó nhất, hãy hoàn thành thẻ Lập kế hoạch ở đầu màn hình: chọn một chiến lược khởi đầu đã — người học giỏi luôn có kế hoạch trước khi bắt tay vào bài khó."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+      var ok = $("s161").value === "a" && $("s162").value === "14" && $("s163").value === "12";
+      if(ok){ fb($("f16"), true, "Đúng! M là điểm khối tâm của hệ vật 1–1–2 đặt tại A, B, C: " + OV("AM") + " = " + K("\\dfrac{1}{4}\\overrightarrow{AB} + \\dfrac{1}{2}\\overrightarrow{AC}") + ". Em đã làm được bài khó nhất của bài học."); markDone("mh16"); }
+      else fb($("f16"), false, "Chưa đúng. Gợi ý: tổng hệ số là 1 + 1 + 2 = 4 — đó là mẫu số của cả hai hệ số; hệ số của mỗi vectơ tỉ lệ với hệ số của điểm đối ứng trong đẳng thức.");
+    };
+  }});
+
+/* ================= MH-17: kiem tra cuoi (CV 7991) ================= */
+var TEST = {
+  mc: [
+    { tag:"nb", q:"Cho " + LEN("\\vec{a}") + " = 4. Tính " + LEN("-2\\vec{a}") + ".", opts:["−8","8","4","2"], key:1, rev:"MH-06" },
+    { tag:"th", q:"Biết " + OV("MN") + " = " + K("-\\dfrac{3}{2}\\overrightarrow{AB}") + ". Khẳng định nào đúng?", opts:[OV("MN") + " có độ dài \\(\\dfrac{3}{2}\\)AB, cùng hướng với " + OV("AB"), OV("MN") + " có độ dài \\(\\dfrac{3}{2}\\)AB, ngược hướng với " + OV("AB"), OV("MN") + " có độ dài \\(\\dfrac{2}{3}\\)AB, ngược hướng với " + OV("AB"), OV("MN") + " và " + OV("AB") + " không cùng phương"], key:1, rev:"MH-06" },
+    { tag:"th", q:"Tam giác ABC có trung tuyến AM = 12 cm. Trọng tâm G có AG bằng:", opts:["4 cm","6 cm","8 cm","9 cm"], key:2, rev:"MH-09" },
+    { tag:"vd", q:"Điểm M thỏa " + OV("MA") + " + " + K("3\\overrightarrow{MB}") + " + " + K("2\\overrightarrow{MC}") + " = " + V1("0") + ". Khi đó " + OV("AM") + " bằng:", opts:[K("\\dfrac{1}{2}\\overrightarrow{AB} + \\dfrac{1}{3}\\overrightarrow{AC}"), K("\\dfrac{1}{3}\\overrightarrow{AB} + \\dfrac{1}{2}\\overrightarrow{AC}"), K("\\dfrac{1}{6}\\overrightarrow{AB} + \\dfrac{1}{3}\\overrightarrow{AC}"), K("3\\overrightarrow{AB} + 2\\overrightarrow{AC}")], key:0, rev:"MH-12" }
+  ],
+  ds: [
+    { t:K("(-1)\\vec{a}") + " là vectơ đối của " + V1("a") + ".", ans:true },
+    { t:LEN("-\\dfrac{1}{2}\\vec{a}") + " = " + K("-\\dfrac{1}{2}") + " " + LEN("\\vec{a}") + ".", ans:false },
+    { t:"Với I là trung điểm của AB: " + OV("OA") + " + " + OV("OB") + " = " + K("2\\overrightarrow{OI}") + " với mọi điểm O.", ans:true },
+    { t:"Điểm M thỏa " + OV("MA") + " + " + OV("MB") + " + " + K("2\\overrightarrow{MC}") + " = " + V1("0") + " là trung điểm của đoạn AB.", ans:false }
+  ],
+  essay: { q:"Xác định điểm K thỏa " + OV("KA") + " + " + K("2\\overrightarrow{KB}") + " = " + V1("0") + " — kết luận nào đúng?", opts:[OV("AK") + " = " + K("\\dfrac{2}{3}\\overrightarrow{AB}") + "; K nằm giữa A và B, gần B hơn", OV("AK") + " = " + K("\\dfrac{1}{3}\\overrightarrow{AB}") + "; K nằm giữa A và B, gần A hơn", OV("AK") + " = " + K("\\dfrac{1}{2}\\overrightarrow{AB}") + "; K là trung điểm của AB", "K trùng với B"], key:0, rev:"MH-12" }
+};
+SCREENS.push({ id:"mh17", code:"MH-17", title:"Kiểm tra cuối bài", gate:function(){ var base = !!S.test.passed || S.test.attempts >= 3; var wrong = (S.test.lastItems || []).indexOf(false) >= 0; return base && (!wrong || !!S.err); },
+  html:function(){
+    var h = head("MH-17","Hồi 5 · Evaluate","Kiểm tra cuối bài — 10 điểm, đạt từ 80%")
+      + narr("Đây là bài kiểm tra cuối bài theo cấu trúc Công văn 7991. Làm cẩn thận từng phần; câu nào chưa chắc, đánh dấu lại quay sau.", "mh17")
+      + (S.tier === "Y" ? '<p style="color:#5a6b7d">Gợi ý cho chặng Khởi động: Phần III câu 1 dùng đúng số liệu của Luyện tập 3 (MH-11); câu 2 là đẳng thức trọng tâm ở MH-09.</p>' : '')
+      + '<h2>Phần I — Nhiều lựa chọn (4 câu × 1 điểm)</h2>';
+    TEST.mc.forEach(function(it, i){
+      h += '<p><span class="tag ' + it.tag + '">' + (it.tag === "nb" ? "Nhận biết" : it.tag === "th" ? "Thông hiểu" : "Vận dụng") + '</span><b>Câu ' + (i+1) + '.</b> ' + it.q + '</p><div class="opts" id="tmc' + i + '"></div>';
+    });
+    h += '<h2>Phần II — Đúng / Sai (4 mệnh đề × 0,5 điểm)</h2><div id="tds"></div>';
+    h += '<h2>Phần III — Tương tác (2 câu × 1 điểm)</h2>'
+      + '<p><b>Câu 1 — Điền khuyết.</b> Phân tích ' + V1("u") + ' = <input class="num" id="tt1a" style="width:70px"> · ' + V1("a") + ' + <input class="num" id="tt1b" style="width:70px"> · ' + V1("b") + ' (số liệu Hình 4.27).</p>'
+      + '<p><b>Câu 2 — Kéo thả.</b> Ghép thẻ đúng vào đẳng thức trọng tâm:</p><div id="t3_slots"></div><div class="bank" id="t3_bank"></div><div class="fb" id="t3_fb"></div>';
+    h += '<h2>Phần IV — Tự luận ngắn (2 điểm)</h2><p>' + TEST.essay.q + '</p><div class="opts" id="tessay"></div>'
+      + '<p style="margin-top:10px">Viết 1–2 câu giải thích vì sao em chọn kết luận đó — phần này không chấm tự động, giáo viên sẽ đọc cùng bài tập về nhà của em:</p>'
+      + '<textarea id="tnote" rows="3" style="width:100%;border:1.5px solid #c9d6e3;border-radius:10px;padding:9px;font:inherit" placeholder="Em viết lời giải thích của mình vào đây..."></textarea>';
+    h += '<h2>Tự kiểm tra trước khi nộp — siêu nhận thức</h2><p>Dừng lại vài giây và tự hỏi mình ba điều. Bấm vào cả ba thẻ khi em đã thật sự tự hỏi — người học giỏi không nộp bài ngay khi vừa làm xong:</p><div class="goals" id="selfcheck">'
+      + '<button class="goal" data-sc="0">Đáp số của em có <b>hợp lí</b> không — độ dài có bị âm không, hướng có khớp với dấu của k không?</button>'
+      + '<button class="goal" data-sc="1">Em đã <b>xét đủ điều kiện</b> chưa — trung điểm khác trọng tâm, các hệ số có bằng nhau không?</button>'
+      + '<button class="goal" data-sc="2">Có câu nào thuộc kiểu em <b>từng sai trước đây</b> không — em đã kiểm tra lại câu đó chưa?</button></div>';
+    h += '<p style="margin-top:14px"><button class="btn" id="submitTest">Nộp bài</button> <span id="attemptInfo"></span></p><div id="testResult"></div><div id="errBox"></div>';
+    return h;
+  },
+  setup:function(){
+    var pick = { mc:[-1,-1,-1,-1], ds:[null,null,null,null], es:-1 }, dndDone = false;
+    function radio(boxId, opts, cb){
+      var box = $(boxId); box.innerHTML = "";
+      opts.forEach(function(t, i){
+        var b = document.createElement("button"); b.className = "opt"; b.innerHTML = String.fromCharCode(65+i) + ". " + t;
+        b.onclick = function(){ box.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel"); cb(i); };
+        box.appendChild(b);
+      });
+      renderK(box);
+    }
+    TEST.mc.forEach(function(it, i){ radio("tmc" + i, it.opts, function(v){ pick.mc[i] = v; }); });
+    radio("tessay", TEST.essay.opts, function(v){ pick.es = v; });
+    if($("tnote")) $("tnote").value = S.test.note || "";
+    var dsbox = $("tds");
+    TEST.ds.forEach(function(it, i){
+      var row = document.createElement("div"); row.className = "dsrow";
+      row.innerHTML = "<div style='flex:1;min-width:220px'>" + String.fromCharCode(97+i) + ") " + it.t + "</div>";
+      var bs = document.createElement("div"); bs.className = "dsbtns";
+      [["Đúng", true], ["Sai", false]].forEach(function(pair){
+        var b = document.createElement("button"); b.textContent = pair[0];
+        b.onclick = function(){ pick.ds[i] = pair[1]; bs.querySelectorAll("button").forEach(function(x){ x.className = ""; }); b.className = pair[1] ? "selD" : "selS"; };
+        bs.appendChild(b);
+      });
+      row.appendChild(bs); dsbox.appendChild(row);
+    });
+    renderK(dsbox);
+    matchDnD("t3",
+      [ { label:OV("OA") + " + " + OV("OB") + " + " + OV("OC") + " =", need:"og3" } ],
+      [ { id:"og3", html:K("3\\overrightarrow{OG}") }, { id:"x1", html:K("2\\overrightarrow{OG}") }, { id:"x2", html:OV("OG") }, { id:"x3", html:V1("0") } ],
+      function(){ dndDone = true; });
+    function updInfo(){ $("attemptInfo").textContent = S.test.attempts > 0 ? ("Đã làm " + S.test.attempts + " lần · điểm lượt đầu: " + (S.test.first >= 0 ? S.test.first.toFixed(1) : "—") + "/10 · điểm cao nhất: " + S.test.best.toFixed(1) + "/10") : ""; }
+    updInfo();
+    function wrongLabels(){ var w = []; (S.test.lastItems || []).forEach(function(ok, j){ if(!ok) w.push(ITEM17_LABELS[j]); }); return w; }
+    function renderErr(){
+      var box = $("errBox"); if(!box) return;
+      var w = wrongLabels();
+      if(S.test.attempts === 0 || w.length === 0){ box.innerHTML = ""; return; }
+      if(S.err){
+        box.innerHTML = '<h2>Nhìn lại một câu em làm sai (siêu nhận thức)</h2>'
+        + '<p>Đã ghi nhận phân tích lỗi của em: câu sai <b>' + S.err.item + '</b> — nguyên nhân: <b>' + ERR_CAUSES[S.err.cause] + '</b> — bước em sẽ đổi: <i>“' + S.err.fix.replace(/</g, "&lt;") + '”</i>. Giáo viên sẽ đọc phần này trong dữ kiện học tập của em. Ở bài sau, phần Tự kiểm tra sẽ nhắc lại đúng nhóm lỗi này.</p>'
+        + '<p><button class="btn" id="errRedo">Phân tích lại</button></p>';
+        $("errRedo").onclick = function(){ S.err = null; persist(); renderErr(); };
+        return;
+      }
+      var opts = w.map(function(t){ return '<option>' + t + '</option>'; }).join("");
+      box.innerHTML = '<h2>Nhìn lại một câu em làm sai (siêu nhận thức)</h2>'
+      + '<p>Đừng chỉ nhìn đáp án đúng — hãy tìm ra <b>vì sao em sai</b> và <b>bước nào cần đổi</b>. Chọn một câu em làm sai ở lượt gần nhất:</p>'
+      + '<p><select class="sel" id="errItem">' + opts + '</select></p>'
+      + '<p>Nguyên nhân chính thuộc nhóm nào?</p><div class="opts" id="errCause"></div>'
+      + '<p>Lần sau em sẽ đổi bước nào? <input class="inp" id="errFix" style="width:min(480px,92%)" placeholder="Viết một câu cụ thể..."></p>'
+      + '<p><button class="btn" id="errSave">Lưu phân tích</button></p><div class="fb" id="errfb"></div>';
+      var causePick = -1;
+      var cb = $("errCause");
+      ERR_CAUSES.forEach(function(t, i){
+        var b = document.createElement("button"); b.className = "opt"; b.textContent = (i + 1) + ". " + t;
+        b.onclick = function(){ causePick = i; cb.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel"); };
+        cb.appendChild(b);
+      });
+      $("errSave").onclick = function(){
+        var fix = $("errFix").value.trim();
+        if(causePick < 0){ fb($("errfb"), false, "Hãy chọn nhóm nguyên nhân trước."); return; }
+        if(fix.length < 8){ fb($("errfb"), false, "Hãy viết cụ thể bước em sẽ đổi (ít nhất vài từ)."); return; }
+        S.err = { item: $("errItem").value, cause: causePick, fix: fix };
+        persist(); go(S.cur);
+      };
+    }
+    renderErr();
+    var scState = [false, false, false];
+    document.querySelectorAll("#selfcheck .goal").forEach(function(g){
+      g.onclick = function(){
+        var i = parseInt(g.getAttribute("data-sc"), 10);
+        scState[i] = !scState[i];
+        g.classList.toggle("read", scState[i]);
+        if(scState.every(Boolean)){ S.selfcheck = true; persist(); }
+      };
+    });
+    $("submitTest").onclick = function(){
+      if(!scState.every(Boolean)){ $("testResult").innerHTML = '<div class="fb no" style="display:block">Khoan nộp đã — hãy hoàn thành phần Tự kiểm tra ở trên: bấm đủ ba thẻ tự hỏi. Vài giây nhìn lại thường cứu được những lỗi sai đáng tiếc nhất.</div>'; window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); return; }
+      if(S.test.attempts >= 3 && !S.test.passed){ $("testResult").innerHTML = '<div class="fb no" style="display:block">Em đã hết lượt làm lại. Hãy quay lại các màn hình được gợi ý, học kĩ rồi nhờ thầy/cô mở thêm lượt.</div>'; return; }
+      var score = 0, rows = "", items = [];
+      TEST.mc.forEach(function(it, i){
+        var ok = pick.mc[i] === it.key; if(ok) score += 1; items.push(ok);
+        rows += "<tr><td>Phần I — Câu " + (i+1) + "</td><td>" + (ok ? "✔ Đúng (+1)" : "✘ Sai — học lại " + it.rev) + "</td></tr>";
+      });
+      TEST.ds.forEach(function(it, i){
+        var ok = pick.ds[i] === it.ans; if(ok) score += 0.5; items.push(ok);
+        rows += "<tr><td>Phần II — Mệnh đề " + String.fromCharCode(97+i) + "</td><td>" + (ok ? "✔ Đúng (+0,5)" : "✘ Sai — đáp án: " + (it.ans ? "Đúng" : "Sai")) + "</td></tr>";
+      });
+      var okA = numVal("tt1a") === 1 && numVal("tt1b") === 2; if(okA) score += 1; items.push(okA);
+      rows += "<tr><td>Phần III — Câu 1 (điền khuyết)</td><td>" + (okA ? "✔ Đúng (+1)" : "✘ Sai — đáp án: hệ số 1 và 2 · học lại MH-11") + "</td></tr>";
+      if(dndDone) score += 1; items.push(!!dndDone);
+      rows += "<tr><td>Phần III — Câu 2 (kéo thả)</td><td>" + (dndDone ? "✔ Đúng (+1)" : "✘ Chưa ghép đúng thẻ " + K("3\\overrightarrow{OG}") + " · học lại MH-09") + "</td></tr>";
+      var okE = pick.es === TEST.essay.key; if(okE) score += 2; items.push(okE);
+      rows += "<tr><td>Phần IV — Tự luận ngắn</td><td>" + (okE ? "✔ Đúng (+2)" : "✘ Sai — học lại " + TEST.essay.rev) + "</td></tr>";
+      S.test.attempts++; if(score > S.test.best) S.test.best = score;
+      S.test.lastItems = items;
+      if(S.test.attempts === 1) S.test.first = score;
+      S.test.note = $("tnote") ? $("tnote").value : "";
+      if(score >= 8) S.test.passed = true;
+      markDone("mh17");
+      if(SCORM.isActive()){
+        SCORM.set("cmi.core.score.raw", Math.round(S.test.best * 10)); SCORM.set("cmi.core.score.min", 0); SCORM.set("cmi.core.score.max", 100); SCORM.set("cmi.core.lesson_status", S.test.passed ? "passed" : "incomplete");
+        try{
+          var cnt = parseInt(SCORM.get("cmi.interactions._count"), 10); if(isNaN(cnt)) cnt = 0;
+          var iIds = ["I.1","I.2","I.3","I.4","II.a","II.b","II.c","II.d","III.1","III.2","IV"];
+          var iTypes = ["choice","choice","choice","choice","true-false","true-false","true-false","true-false","fill-in","fill-in","choice"];
+          var iResp = [pick.mc[0], pick.mc[1], pick.mc[2], pick.mc[3], pick.ds[0], pick.ds[1], pick.ds[2], pick.ds[3], numVal("tt1a") + "|" + numVal("tt1b"), dndDone ? "3OG" : "-", pick.es];
+          var iKeys = [TEST.mc[0].key, TEST.mc[1].key, TEST.mc[2].key, TEST.mc[3].key, TEST.ds[0].ans, TEST.ds[1].ans, TEST.ds[2].ans, TEST.ds[3].ans, "1|2", "3OG", TEST.essay.key];
+          items.forEach(function(ok, j){
+            var b = "cmi.interactions." + (cnt + j) + ".";
+            SCORM.set(b + "id", "MH17-" + iIds[j]);
+            SCORM.set(b + "type", iTypes[j]);
+            SCORM.set(b + "student_response", String(iResp[j]));
+            SCORM.set(b + "correct_responses.0.pattern", String(iKeys[j]));
+            SCORM.set(b + "result", ok ? "correct" : "wrong");
+          });
+        }catch(e){}
+      }
+      persist(); updInfo();
+      $("testResult").innerHTML = '<h2>Kết quả</h2><p class="score">' + score.toFixed(1) + ' / 10 ' + (score >= 8 ? "— ĐẠT ✔" : "— Chưa đạt (cần 8,0)") + '</p>'
+        + '<p>Điểm lượt đầu: <b>' + (S.test.first >= 0 ? S.test.first.toFixed(1) : "—") + ' / 10</b> · Điểm cao nhất sau các lượt: <b>' + S.test.best.toFixed(1) + ' / 10</b>. Điểm gửi lên LMS là điểm cao nhất; còn điểm lượt đầu mới phản ánh đúng nhất sức học độc lập của em khi chưa xem gợi ý.</p>'
+        + (S.test.note ? '<p>Đã ghi nhận phần giải thích tự luận của em — giáo viên sẽ đọc khi chấm bài tập về nhà.</p>' : '')
+        + '<table class="kq"><tr><th>Hạng mục</th><th>Kết quả</th></tr>' + rows + '</table>'
+        + (score >= 8 ? '<p>Nút <b>Tiếp</b> đã mở. Sang màn hình khép vòng để đối chiếu dự đoán đầu bài và xem báo cáo năng lực của em.</p>' : '<p>Hãy học lại các màn hình được ghi chú ở cột kết quả rồi nộp lại (tối đa 3 lượt).</p>');
+      renderK($("testResult"));
+      renderErr();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+  }});
+
+/* ================= MH-18: khep vong + bao cao nang luc ================= */
+SCREENS.push({ id:"mh18", code:"MH-18", title:"Khép vòng · Báo cáo", gate:function(){ return true; },
+  html:function(){
+    var predTxt = (S.pred === 0 || S.pred === 1 || S.pred === 2) ? ["9 km", "6 km về phía tây", "3 km về phía tây"][S.pred] : "(chưa dự đoán)";
+    var h = head("MH-18","Hồi 5 · Evaluate","Khép vòng — Con tàu đang ở đâu?")
+    + narr("Quay lại con tàu ở đầu bài. Tàu đi ba ki-lô-mét về đông, rồi đi sáu ki-lô-mét về tây. Độ dời cuối cùng là ba ki-lô-mét về phía tây.", "mh18")
+    + '<iframe class="lab" style="height:470px" src="ship3d/index.html?mode=answer" title="Mô phỏng 3D — đáp án"></iframe>'
+    + '<p>Dự đoán của em ở MH-03: <b>' + predTxt + '</b>.</p>'
+    + '<p>Đáp án: độ dời = ' + V1("a") + ' + ' + K("(-2)\\vec{a}") + ' = ' + K("-\\vec{a}") + ', tức <b>3 km về phía tây</b>.' + (S.pred === 2 ? ' Em đã dự đoán đúng ngay từ đầu — rất tốt!' : ' Nếu em chọn khác, lỗi thường gặp là cộng số mà quên hướng, hoặc quên đoạn đường đi đầu tiên.') + '</p>'
+    var confTxt = (S.conf03 === 0 || S.conf03 === 1 || S.conf03 === 2) ? ["chỉ đoán mò", "hơi chắc", "rất chắc chắn"][S.conf03] : null;
+    var cal;
+    if(S.pred === 2 && S.conf03 === 2) cal = "Em dự đoán ĐÚNG và biết chắc mình đúng — dấu hiệu của người học vững.";
+    else if(S.pred === 2) cal = "Em dự đoán đúng nhưng chưa dám chắc lắm — khi đã biết cách kiểm chứng, hãy tin mình hơn.";
+    else if(S.pred !== null && S.pred !== undefined && S.conf03 === 2) cal = "Em đã RẤT CHẮC NHƯNG dự đoán sai. Đây là bài học quý nhất của buổi học: sự tự tin phải đi cùng kiểm chứng — Minh ở đầu bài cũng mắc đúng lỗi này.";
+    else if(S.pred !== null && S.pred !== undefined) cal = "Em chưa chắc, và quả thật dự đoán chưa đúng — em đánh giá bản thân khá chính xác. Quan trọng là bây giờ em đã biết cách làm đúng.";
+    else cal = "Em chưa ghi dự đoán ở MH-03. Lần sau đừng bỏ qua bước dự đoán — nó giúp em nhận ra mình đang hiểu đến đâu.";
+    var stratLine = "";
+    if(S.plan16){ stratLine = '<p>Ở MH-16, chiến lược em đã chọn: <b>' + STRATS16[S.plan16.strat] + '</b>' + (S.plan16.mark ? ' — dấu mốc tự kiểm tra em đặt ra: <i>“' + S.plan16.mark.replace(/</g, "&lt;") + '”</i>' : '') + '.</p>'; }
+    var errLine = "";
+    if(S.err){ errLine = '<p>Ở MH-17, em đã tự phân tích câu sai <b>' + S.err.item + '</b>: nguyên nhân thuộc nhóm <b>' + ERR_CAUSES[S.err.cause] + '</b> — bước em sẽ đổi: <i>“' + S.err.fix.replace(/</g, "&lt;") + '”</i>. Hãy nhớ nhóm lỗi này khi sang bài tiếp theo.</p>'; }
+    h += '<h2>Nhìn lại cách em học — siêu nhận thức</h2>'
+    + '<p>Ở MH-03, em dự đoán <b>' + predTxt + '</b>' + (confTxt ? ' với mức tin cậy: <b>' + confTxt + '</b>' : '') + '. ' + cal + '</p>'
+    + stratLine + errLine
+    + (S.plan16 ? '<p><b>Chiến lược đó hiệu quả đến đâu?</b></p><div class="opts" id="planEff"></div>' : '')
+    + '<p><b>Ba câu hỏi mang theo cho mọi bài toán sau:</b> (1) Đáp số có hợp lí không — độ dài có bị âm không, hướng có khớp dấu của k không? (2) Mình đã xét đủ điều kiện chưa? (3) Lỗi này mình đã từng mắc chưa?</p>'
+    + '<p>Viết một câu cho chính em — <i>lần tới, trước khi chốt đáp án, em sẽ tự hỏi mình điều gì?</i></p>'
+    + '<textarea id="refl" rows="2" style="width:100%;border:1.5px solid #c9d6e3;border-radius:10px;padding:9px;font:inherit" placeholder="Em viết câu tự hỏi của riêng mình vào đây...">' + (S.reflection || "").replace(/</g, "&lt;") + '</textarea>';
+    h += '<h2>Video V6 — Khép vòng và tổng kết</h2>' + vidHtml("V6-Khep-vong.mp4", "V6-Khep-vong.vtt")
+    + '<h2>Tổng kết bài — bấm vào từng thẻ</h2>'
+    + '<div class="opts"><button class="opt" data-s="0">1 · Hướng và độ dài của ' + K("k\\vec{a}") + '</button><button class="opt" data-s="1">2 · Tính chất và hai đẳng thức đặc trưng</button><button class="opt" data-s="2">3 · Phân tích vectơ để tìm điểm</button></div>'
+    + '<div class="fb" id="sumfb"></div>'
+    + '<h2>Báo cáo năng lực của em</h2><p style="color:#5a6b7d;font-size:14.5px">Báo cáo này là <b>chỉ báo tham khảo</b>, được suy từ mức hoàn thành các màn hình và kết quả làm bài trong gói học này — không phải kết quả đánh giá năng lực chính thức.</p><div id="compbox"></div>'
+    + '<table class="kq"><tr><th>Hạng mục</th><th>Kết quả</th></tr>'
+    + '<tr><td>Chặng học</td><td>' + (S.tier ? tierName() : "—") + (S.ch13 ? ' · luyện tập chặng: đúng ngay lần đầu ' + Math.round(S.ch13.pct * 4) + '/4 câu (bộ ' + (S.ch13.tier === "Y" ? "Khởi động" : S.ch13.tier === "G" ? "Bứt phá" : "Tăng tốc") + ')' : '') + '</td></tr>'
+    + '<tr><td>Điểm kiểm tra lượt đầu (MH-17)</td><td>' + (S.test.first >= 0 ? S.test.first.toFixed(1) + " / 10" : "chưa làm") + '</td></tr>'
+    + '<tr><td>Điểm kiểm tra cao nhất (MH-17)</td><td>' + (S.test.best >= 0 ? S.test.best.toFixed(1) + " / 10" : "chưa làm") + '</td></tr>'
+    + '<tr><td>Trạng thái</td><td>' + (S.test.passed ? "ĐÃ ĐẠT (từ 80%) ✔" : "Chưa đạt — hãy quay lại MH-17 làm lại") + '</td></tr></table>'
+    + '<h2>Bài tập về nhà theo chặng của em</h2><p>' + TB("Bài 4.11 và 4.12a (SGK trang 59).", "Bài 4.11, 4.12a, 4.13 và 4.15 (SGK trang 59).", "Bài 4.11, 4.12a, 4.13, 4.15 và 4.14 (SGK trang 59) — cùng thử thách ở MH-16.") + '</p>'
+    + '<p><button class="btn" id="finishBtn">Kết thúc bài học</button></p><div class="fb" id="ffin"></div>';
+    return h; },
+  setup:function(){
+    var pe = $("planEff");
+    if(pe){
+      var effs = ["Hiệu quả — em tới được đáp án", "Dùng được một phần", "Không hiệu quả — lần sau đổi cách khác"];
+      effs.forEach(function(t, i){
+        var b = document.createElement("button"); b.className = "opt" + (S.planEff === i ? " sel" : ""); b.textContent = t;
+        b.onclick = function(){ S.planEff = i; pe.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel"); }); b.classList.add("sel"); persist(); };
+        pe.appendChild(b);
+      });
+    }
+    var reflEl = $("refl");
+    if(reflEl){ reflEl.addEventListener("input", function(){ S.reflection = reflEl.value; persist(); }); }
+    var txt = [
+      "k > 0: cùng hướng; k < 0: ngược hướng; k = 0: vectơ không. Độ dài " + LEN("k\\vec{a}") + " = " + LEN("k") + " · " + LEN("\\vec{a}") + ".",
+      "Bốn tính chất (kết hợp, phân phối hai chiều, 1 và −1). Trung điểm: " + OV("IA") + " + " + OV("IB") + " = " + V1("0") + ". Trọng tâm: " + OV("GA") + " + " + OV("GB") + " + " + OV("GC") + " = " + V1("0") + ".",
+      "Mọi vectơ phân tích được duy nhất theo hai vectơ không cùng phương. Muốn tìm điểm: chọn gốc, chèn điểm, chuyển vế — như Ví dụ 3 và bài 4.13a."
+    ];
+    document.querySelectorAll("[data-s]").forEach(function(b){
+      b.onclick = function(){ b.classList.add("sel"); fb($("sumfb"), true, txt[parseInt(b.dataset.s, 10)]); };
+    });
+    /* --- bao cao nang luc --- */
+    function frac(ids){
+      var num = 0, den = 0;
+      ids.forEach(function(id){
+        if(id === "mh17"){ den += 1; num += S.test.passed ? 1 : (S.test.attempts > 0 ? 0.5 : 0); }
+        else if(id === "mh16"){ if(S.done.mh16){ den += 1; num += 1; } else if(mh16Unlocked()){ den += 1; } }
+        else { den += 1; if(S.done[id]) num += 1; }
+      });
+      return den ? num / den : 0;
+    }
+    var comps = [
+      ["Tư duy và lập luận toán học", frac(["mh02","mh06","mh07","mh08","mh15"])],
+      ["Mô hình hoá toán học", frac(["mh03","mh10","mh14"])],
+      ["Giải quyết vấn đề toán học", frac(["mh12","mh13","mh16","mh17"])],
+      ["Giao tiếp toán học", frac(["mh01","mh05","mh09"])],
+      ["Sử dụng công cụ, phương tiện học toán", frac(["mh04","mh10","mh11"])]
+    ];
+    var h = "";
+    comps.forEach(function(c){
+      var lvl = c[1] >= 0.7 ? "Đạt" : (c[1] >= 0.4 ? "Đang phát triển" : "Cần cố gắng");
+      h += '<div class="comp"><div class="cl"><span>' + c[0] + '</span><b>' + lvl + '</b></div><div class="bar"><i style="width:' + Math.round(c[1] * 100) + '%"></i></div></div>';
+    });
+    var sims = (S.done.mh03 ? 1 : 0) + (S.done.mh04 ? 1 : 0) + (S.done.mh10 ? 1 : 0);
+    var stops = Object.keys(S.vstops).length;
+    h += '<div class="comp"><div class="cl"><span>Năng lực số — thao tác mô phỏng và video tương tác</span><b>' + (sims >= 3 ? "Đạt" : sims >= 1 ? "Đang phát triển" : "Cần cố gắng") + '</b></div><div class="bar"><i style="width:' + Math.round((sims / 3) * 100) + '%"></i></div></div>'
+      + '<p style="font-size:14.5px;color:#44536a">Đã hoàn thành ' + sims + '/3 mô phỏng khám phá và trả lời ' + stops + '/5 điểm dừng video.</p>';
+    h += '<div class="comp"><div class="cl"><span>Năng lực AI — kiểm chứng đầu ra của AI</span><b>' + (S.done.mh15 ? "Đạt" : "Chưa thực hiện") + '</b></div><div class="bar"><i style="width:' + (S.done.mh15 ? 100 : 0) + '%"></i></div></div>'
+      + '<p style="font-size:14.5px;color:#44536a">' + (S.done.mh15 ? "Đã phán quyết đúng 4/4 lời giải của trợ lí AI ở MH-15: sửa đúng 3 lời giải sai và công nhận đúng 1 lời giải đúng." : "Hãy quay lại MH-15 (Góc AI) để rèn kĩ năng kiểm chứng lời giải của AI.") + '</p>';
+    $("compbox").innerHTML = h;
+    markDone("mh18");
+    if(SCORM.isActive()){ SCORM.set("cmi.core.lesson_status", S.test.passed ? "passed" : "completed"); SCORM.save(); }
+    $("finishBtn").onclick = function(){
+      persist();
+      if(SCORM.isActive()){ SCORM.set("cmi.core.lesson_status", S.test.passed ? "passed" : "completed"); SCORM.save(); SCORM.finish(); }
+      fb($("ffin"), true, "Đã ghi lại kết quả học tập. Em có thể đóng cửa sổ này.");
+    };
+  }});
+</script>
+<script>
+"use strict";
+/* ---------- Bo may dieu huong ---------- */
+var stage = $("stage"), menuList = $("menulist"), prevBtn = $("prev"), nextBtn = $("next"), counter = $("counter");
+var toast = document.createElement("div");
+toast.style.cssText = "position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:10px 18px;border-radius:10px;font-size:15px;display:none;z-index:50;max-width:90vw;text-align:center";
+document.body.appendChild(toast);
+var toastTimer = null;
+function showToast(msg){ toast.textContent = msg; toast.style.display = "block"; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.style.display = "none"; }, 2600); }
+function renderMenu(){
+var MENU_TITLES = {
+  mh01:"Mở đầu và mục tiêu", mh02:"Chẩn đoán đầu vào", mh03:"Tình huống có vấn đề",
+  mh04:"Kéo vectơ, trượt k", mh05:"Ý tưởng nhân vectơ", mh06:"Định nghĩa tích vectơ–số",
+  mh07:"Bốn tính chất", mh08:"Luyện tập Đúng – Sai", mh09:"Trung điểm và trọng tâm",
+  mh10:"Đòn cân bằng", mh11:"Phân tích vectơ trên lưới", mh12:"Xác định điểm M",
+  mh13:"Luyện tập theo chặng", mh14:"Vận dụng lực cân bằng", mh15:"Góc AI: Kiểm chứng",
+  mh16:"Thử thách nâng cao", mh17:"Kiểm tra cuối bài", mh18:"Tổng kết và báo cáo"
+};
+  menuList.innerHTML = "";
+  SCREENS.forEach(function(sc, i){
+    var b = document.createElement("button");
+    b.className = "mi" + (i === S.cur ? " cur" : "") + (S.done[sc.id] ? " done" : "") + (i > S.max ? " lock" : "");
+    b.innerHTML = '<span class="n">' + (S.done[sc.id] ? "✓" : (i + 1)) + '</span><span>' + (MENU_TITLES[sc.id] || sc.title) + '</span>';
+    b.onclick = function(){
+      if(i > S.max){ showToast("Hãy học lần lượt theo thứ tự — màn hình này chưa mở."); return; }
+      go(i);
+      document.getElementById("menu").classList.remove("open");
+    };
+    menuList.appendChild(b);
+  });
+}
+function updateNav(){
+  prevBtn.disabled = S.cur === 0;
+  nextBtn.style.visibility = S.cur === SCREENS.length - 1 ? "hidden" : "visible";
+  counter.textContent = "Màn hình " + (S.cur + 1) + " / " + SCREENS.length;
+  var doneCount = SCREENS.filter(function(sc){ return S.done[sc.id]; }).length;
+  document.querySelector("#progress i").style.width = Math.round(doneCount / SCREENS.length * 100) + "%";
+}
+function go(i){
+  S.cur = i; if(i > S.max) S.max = i;
+  var sc = SCREENS[i];
+  stage.innerHTML = sc.html();
+  if(sc.setup) sc.setup();
+  stage.querySelectorAll(".speakbtn").forEach(function(b){ b.onclick = function(){ speakNarr(b); }; });
+  stage.querySelectorAll(".narr[data-audio]").forEach(function(nr){
+    var b = nr.querySelector(".speakbtn"); if(!b) return;
+    var a = document.createElement("audio");
+    a.controls = true; a.preload = "none"; a.src = nr.getAttribute("data-audio");
+    a.style.cssText = "width:100%;margin-top:8px;height:38px";
+    a.setAttribute("aria-label", "Thuyết minh của thầy Phúc");
+    b.replaceWith(a);
+  });
+  renderK(stage);
+  renderMenu(); updateNav(); updateTierBadge(); persist();
+  window.scrollTo({ top: 0 });
+}
+prevBtn.onclick = function(){ if(S.cur > 0) go(S.cur - 1); };
+nextBtn.onclick = function(){
+  var sc = SCREENS[S.cur];
+  if(sc.gate && !sc.gate()){ showToast("Hãy hoàn thành yêu cầu trên màn hình này trước khi đi tiếp."); return; }
+  if(S.cur < SCREENS.length - 1) go(S.cur + 1);
+};
+$("menubtn").onclick = function(){ document.getElementById("menu").classList.toggle("open"); };
+window.addEventListener("beforeunload", function(){ persist(); });
+SCORM.init();
+restore();
+if(S.test.first === undefined) S.test.first = -1;
+if(S.test.lastItems === undefined) S.test.lastItems = null;
+if(S.test.note === undefined) S.test.note = "";
+if(S.conf03 === undefined) S.conf03 = null;
+if(S.reflection === undefined) S.reflection = "";
+if(S.plan16 === undefined) S.plan16 = null;
+if(S.planEff === undefined) S.planEff = null;
+if(S.err === undefined) S.err = null;
+if(S.max === undefined || S.max === null) S.max = S.cur || 0;
+go(S.cur || 0);
+</script>
+</body>
+</html>
