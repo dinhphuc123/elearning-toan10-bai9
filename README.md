@@ -1,8 +1,7 @@
 # 🏆 HỒ SƠ DỰ THI BÀI GIẢNG E-LEARNING
 ## BÀI 9: TÍCH CỦA MỘT VECTƠ VỚI MỘT SỐ
-**Môn:** Toán — **Lớp:** 10 (Bộ sách Kết nối tri thức với cuộc sống, SGK tr. 55–59)  
+**Môn:** Toán — **Lớp:** 10  
 **Tác giả:** Thầy Tiêu Đình Phúc — Giáo viên Toán, Trường Phổ thông Dân tộc Nội trú – THPT Bình Thuận  
-**Phiên bản:** v2.5 Chuẩn Sư phạm Quốc gia  
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dinhphuc123/elearning-toan10-bai9)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -16,22 +15,23 @@
 
 | Phiên bản | Mô tả trải nghiệm | Đường dẫn trực tiếp |
 | :--- | :--- | :--- |
-| **🚀 Bản Ban Giám Khảo** | Mở khóa toàn bộ 18 màn hình, giám khảo tự do xem mọi nội dung, bài thi và báo cáo không cần học tuần tự. | [Trải nghiệm Bản Giám Khảo](Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-GiamKhao-MoKhoa-HTML5/index.html) (hoặc `/giam-khao` trên Vercel) |
-| **🎓 Bản Học Sinh** | Tiến trình sư phạm 5E, phân 3 chặng thích ứng (Khởi động / Tăng tốc / Bứt phá), video dừng điều kiện và 6 điểm chạm siêu nhận thức. | [Trải nghiệm Bản Học Sinh](Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/index.html) (hoặc `/hoc-sinh` trên Vercel) |
-| **📑 Cổng Thông Tin Hồ Sơ** | Trang điều hướng trung tâm tổng hợp đầy đủ hồ sơ dự thi, minh chứng, giáo án và thuyết minh. | [Trang Chủ Cổng Thông Tin](index.html) |
+| **📑 Trang Khởi Đầu** | Màn hình khởi đầu bài dự thi E-learning. | [Mở Trang Khởi Đầu](https://dinhphuc123.github.io/elearning-toan10-bai9/) |
+| **🚀 Bản Ban Giám Khảo** | Mở khóa toàn bộ 18 màn hình, giám khảo tự do xem mọi nội dung, bài thi và báo cáo. | [Mở Bản Giám Khảo](https://dinhphuc123.github.io/elearning-toan10-bai9/Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-GiamKhao-MoKhoa-HTML5/index.html) |
+| **🎓 Bản Học Sinh** | Học tuần tự theo tiến trình bài giảng và làm bài kiểm tra. | [Mở Bản Học Sinh](https://dinhphuc123.github.io/elearning-toan10-bai9/Ho-so-du-thi-Elearning-Bai9/Bai9-Elearning-HTML5-v2/index.html) |
+| **📄 Kế Hoạch Bài Dạy (KHBD)** | File Kế hoạch bài dạy (PDF có chữ ký & Word). | [Xem KHBD (PDF)](https://dinhphuc123.github.io/elearning-toan10-bai9/Ho-so-du-thi-Elearning-Bai9/KHBD_tieudinhphuc.pdf) · [Tải Word (.docx)](Ho-so-du-thi-Elearning-Bai9/KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.docx) |
 
 ---
 
 ## 📁 CẤU TRÚC HỒ SƠ VÀ CÁC FILE TRONG THƯ MỤC
 
 ```text
-├── index.html                                 # Cổng thông tin (Landing Portal) hồ sơ dự thi
+├── index.html                                 # Màn hình khởi đầu hồ sơ dự thi
 ├── vercel.json                                # Cấu hình Vercel (rewrites, cleanUrls, media caching)
 ├── README.md                                  # Tài liệu thuyết minh kỹ thuật & hướng dẫn
 ├── .gitignore                                 # Loại trừ tệp tạm hệ thống
 └── Ho-so-du-thi-Elearning-Bai9/               # Thư mục hồ sơ chính
+    ├── KHBD_tieudinhphuc.pdf                                    # Kế hoạch bài dạy chuẩn CV 5512 (PDF có chữ ký)
     ├── KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.docx  # Kế hoạch bài dạy chuẩn CV 5512 (Word)
-    ├── KHBD-TieuDinhPhuc-Toan-Bai9-Tich-vecto-voi-mot-so.pdf   # Kế hoạch bài dạy chuẩn CV 5512 (PDF)
     ├── TieuDinhPhuc_ThuyetMinhBaiGiang-Bai9.docx               # Bản thuyết minh bài giảng (Word)
     ├── TieuDinhPhuc_ThuyetMinhBaiGiang-Bai9.pdf                # Bản thuyết minh bài giảng (PDF)
     ├── Kich-ban-elearning-chi-tiet-Bai9-v2.docx                # Kịch bản chi tiết 18 màn hình (Word)
